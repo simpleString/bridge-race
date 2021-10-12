@@ -32,7 +32,7 @@ public class PlayerController : MonoBehaviour
             // _charControll.Move();
             // transform.Rotate(_movement);
         // _charControll.Move(_movement);
-            playerRigidbody.MoveRotation(Quaternion.LookRotation(_movement)); 
+            playerRigidbody.MoveRotation(Quaternion.LookRotation(_movement));
         playerRigidbody.MovePosition(playerRigidbody.position + _movement);
         }
     }

@@ -6,27 +6,34 @@ public class Brick : MonoBehaviour
 {
 
     Material _material;
+    Renderer _renderer;
+
+    public int x;
+    public int y;
     
-    public System.Action onDestroy;
+    public System.Action<Brick> onDestroy;
 
     void Awake()
     {
-        _material = GetComponent<Renderer>().material;
-        
+        _renderer = GetComponent<Renderer>();
+        _material = _renderer.material;
     }
 
     void Update()
     {
-        
+
     }
 
 
-    public void SetColor(Color color) {
+    public void Init(Color color, int _x, int _y) {
+        x = _x;
+        y = _y;
         _material.color = color;
+        print(_material.color);
     }
 
     public void Destroy() {
-        onDestroy?.Invoke();
+        onDestroy?.Invoke(this);
     }
 }
 

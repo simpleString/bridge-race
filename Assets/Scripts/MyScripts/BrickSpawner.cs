@@ -9,7 +9,7 @@ public class BrickSpawner : MonoBehaviour
         Easy,
         Medium,
         Hard
-    } 
+    }
 
     public enum Colors {
         Red,
@@ -33,7 +33,21 @@ public class BrickSpawner : MonoBehaviour
     int _xCount;
     int _yCount;
 
-    Dictionary<int,int> _playerDict;
+    int _bricksPerPlayer;
+
+    Dictionary<int,int> _playerDict = new Dictionary<int,int>() {
+        {0, 0},
+        {1, 0},
+        {2, 0},
+        {3, 0}
+    };
+
+    Dictionary<int,int> _playerRemovedDict = new Dictionary<int,int>() {
+        {0, 0},
+        {1, 0},
+        {2, 0},
+        {3, 0}
+    };
 
     public int playersCount = 3;
 
@@ -42,23 +56,14 @@ public class BrickSpawner : MonoBehaviour
     int _allCount;
 
     void Awake() {
+        InitBricks();
+        _bricksPerPlayer = (int)(_allCount / playersCount);
         SpawnBricks();
-    }
-
-    void Update() {
-        UpdateBricksArray();
+        StartCoroutine(UpdateBricksArray());
     }
 
 
-    void UpdateBricksArray() {
-
-    }
-
-    void OnBrickDestroy() {
-        _countOfDestroyedBricks++;
-    }
-
-    void SpawnBricks() {
+    void InitBricks() {
         _lengthX = spawnPool.localScale.x;
         _lengthY = spawnPool.localScale.z;
 
@@ -67,15 +72,53 @@ public class BrickSpawner : MonoBehaviour
 
         _xCount = Mathf.RoundToInt(_lengthX / (brickPrefab.localScale.x + _offsetX + xUserOffset) + 1); // TODO:: Fix it shit!!!
         _yCount = Mathf.RoundToInt(_lengthY / (brickPrefab.localScale.z + _offsetY + yUserOffset));
-        
+
         _allCount = _xCount * _yCount;
 
         _bricksMap = new Transform[_xCount, _yCount];
+    }
 
+    IEnumerator UpdateBricksArray() {
+        while(true) {
+            Debug.Log("hello");
+            for (var y = 0; y < _yCount; y++) {
+                for (var x = 0; x < _xCount; x++) {
+                    if (_bricksMap[x, y] == null) {
+                        Transform newBrick;
+                        newBrick = Instantiate(brickPrefab,
+                        new Vector3(
+                            spawnPool.localPosition.x - spawnPool.localScale.x / 2f + x * (brickPrefab.localScale.x + _offsetX + xUserOffset), //+ x * brickPrefab.localScale.x + bricksOffset
+                            basePool.position.y + brickPrefab.localScale.y,
+                            spawnPool.localPosition.z - spawnPool.localScale.z / 2f + y * (brickPrefab.localScale.z + _offsetY + yUserOffset)), Quaternion.identity // + y * brickPrefab.localScale.z + bricksOffset
+                    );
+                        newBrick.parent = spawnPool;
+                        var newBrickObject = newBrick.GetComponentInChildren<Brick>();
+                        newBrickObject.onDestroy += OnBrickDestroy;
+                        GenerateRandomBrick(newBrickObject, x, y);
+                        _bricksMap[x, y] = newBrick;
+                    }
+                }
+            }
+            yield return new WaitForSeconds(2);
+        }
+    }
+
+    void OnBrickDestroy(Brick brick){
+        for (var y = 0; y < _yCount; y++) {
+            for (var x = 0; x < _xCount; x++) {
+                if (x == brick.x && y == brick.y) {
+                    Debug.Log("hello from destroyer");
+                    _bricksMap[x, y] = null;
+                }
+            }
+        }
+    }
+
+    void SpawnBricks() {
         for (var y = 0; y < _yCount; y++) {
             for (var x = 0; x < _xCount; x++) {
                 Transform newBrick;
-                newBrick = Instantiate(brickPrefab, 
+                newBrick = Instantiate(brickPrefab,
                 new Vector3(
                     spawnPool.localPosition.x - spawnPool.localScale.x / 2f + x * (brickPrefab.localScale.x + _offsetX + xUserOffset), //+ x * brickPrefab.localScale.x + bricksOffset
                     basePool.position.y + brickPrefab.localScale.y,
@@ -84,47 +127,35 @@ public class BrickSpawner : MonoBehaviour
                 newBrick.parent = spawnPool;
                 var newBrickObject = newBrick.GetComponentInChildren<Brick>();
                 newBrickObject.onDestroy += OnBrickDestroy;
-                GenerateBricksForPlayers(newBrickObject);
+                GenerateBricksForPlayers(newBrickObject, x, y);
                 _bricksMap[x, y] = newBrick;
             }
         }
     }
 
 
-    void GenerateBricksForPlayers(Brick brick) {
-        var bricksPerPlayer = (int)(_allCount / playersCount);
-        print("bpp: " + bricksPerPlayer);
-        print("allBricks: " + _allCount);
-        _playerDict = new Dictionary<int,int>();
-
-        for (var x = 0; x < playersCount; x++) {
-            _playerDict[x] = 0;
-        }
-        
-        for (var x = 0; x < _allCount; x++) {
+    void GenerateRandomBrick(Brick brick, int x, int y) {
+        var color = Random.Range(0, playersCount);
+        SetupColorForBrick(brick, color, x, y);
+    }
+ 
+    void GenerateBricksForPlayers(Brick brick, int x, int y) {
             var isTrue = true;
             do {
                 var color = Random.Range(0, playersCount);
-                if (_playerDict[color] < bricksPerPlayer) {
+                if (_playerDict[color] < _bricksPerPlayer) {
                     isTrue = false;
                     _playerDict[color]++;
-                    SetupColorForBrick(brick, color);
+                    SetupColorForBrick(brick, color, x, y);
                 }
             } while (isTrue);
-            
-            
-        }
-        foreach(var i in _playerDict) {
-            print("Disctionary: " + i);
-        }
-        
     }
 
-    void SetupColorForBrick(Brick brick, int color) {
+    void SetupColorForBrick(Brick brick, int color, int x, int y) {
         Color setColor;
         switch (color)
         {
-            case 0: 
+            case 0:
                 setColor = Color.red;
                 brick.tag = "red";
                 print("red");
@@ -144,7 +175,7 @@ public class BrickSpawner : MonoBehaviour
                 brick.tag = "black";
                 break;
         }
-        brick.SetColor(setColor);
+        brick.Init(setColor, x, y);
     }
 
 }

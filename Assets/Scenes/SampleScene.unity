@@ -4499,6 +4499,11 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 6
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: b72da429c5025c44f968c317e7c5b46f,
+        type: 3}
+      propertyPath: m_TagString
+      value: platform
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b72da429c5025c44f968c317e7c5b46f, type: 3}
 --- !u!1 &1130249171
@@ -5776,6 +5781,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: 1st floor
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: d2efbffc4188d2e46ae527d85f07f6a2,
+        type: 3}
+      propertyPath: m_TagString
+      value: platform
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d2efbffc4188d2e46ae527d85f07f6a2, type: 3}

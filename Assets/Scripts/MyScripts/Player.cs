@@ -62,7 +62,8 @@ public class Player : MonoBehaviour
     void OnTriggerEnter(Collider collider) {
         if (collider.gameObject.tag == colorName) {
             AddBrickToPlayer(collider.transform);
-            collider.gameObject.GetComponent<Brick>().Destroy();
+            var brick = collider.gameObject.GetComponent<Brick>();
+            brick.Destroy();
             Destroy(collider.gameObject);
         }
         // Debug.Log("name: " + collider.gameObject.name); 
@@ -107,10 +108,9 @@ public class Player : MonoBehaviour
     }
 
     void AddBrickToPlayer(Transform instance) {
-        currentPortableBricksCount++;
         var newPortableBrick = Instantiate(instance, new Vector3(
             BrickHolder.position.x - PortableBrickPrefab.localScale.x,
-            PortableBrickPrefab.localScale.y * currentPortableBricksCount,
+            PortableBrickPrefab.localScale.y * _playerBricks.Count + 1,
             BrickHolder.position.z
         ), Quaternion.Euler(Vector3.down));
         newPortableBrick.parent = BrickHolder;
@@ -123,7 +123,7 @@ public class Player : MonoBehaviour
         Color setColor;
         switch (colorName)
         {
-            case "red": 
+            case "red":
                 setColor = Color.red;
                 brick.tag = "red";
                 break;
