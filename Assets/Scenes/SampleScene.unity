@@ -398,10 +398,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _speed: 3
   _floatingJoystick: {fileID: 0}
+  isCanMove: 1
+  stopVector: {x: 0, y: 0, z: 0}
   BrickHolder: {fileID: 203293642}
   PortableBrickPrefab: {fileID: 6336445598983930458, guid: 1fe227bb953ac194abac0288fc102452,
     type: 3}
   color: {r: 0, g: 0, b: 0, a: 0}
+  collisionOffset: 0.1
 --- !u!114 &42840826
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -414,6 +417,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4786e7f2c6ac26d4b8f3820b60afd111, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerRigidbody: {fileID: 0}
 --- !u!54 &42840827
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -5329,7 +5333,7 @@ GameObject:
   - component: {fileID: 1409437540}
   m_Layer: 6
   m_Name: GameObject (1)
-  m_TagString: Untagged
+  m_TagString: platform
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -8509,7 +8513,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 64
   stepHeight: 1
-  stepSmooth: 3
+  stepSmooth: 3.5
 --- !u!114 &8736877795704690576
 MonoBehaviour:
   m_ObjectHideFlags: 0

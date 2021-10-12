@@ -15,6 +15,9 @@ public class Player : MonoBehaviour
     public Transform BrickHolder;
     public Transform PortableBrickPrefab;
     public Color color;
+    public float collisionOffset = .1f;
+
+    Vector3 movement;
     
     int currentPortableBricksCount = 0;
 
@@ -40,7 +43,7 @@ public class Player : MonoBehaviour
         var vertical = _floatingJoystick.Vertical;
         var horizontal = _floatingJoystick.Horizontal;
     #endif
-        Vector3 movement = new Vector3(horizontal, 0f, vertical);
+        movement = new Vector3(horizontal, 0f, vertical);
         if (movement.magnitude > 0)
         {
             movement.Normalize();
@@ -73,24 +76,30 @@ public class Player : MonoBehaviour
         // Debug.Log(collision.gameObject.transform.tag);
        if (collision.collider.gameObject.layer == LayerMask.NameToLayer("Stairs")) {
            if (collision.gameObject.CompareTag(colorName)) {
-                Debug.Log(collision.gameObject.tag);
-                
+                // Debug.Log(collision.gameObject.tag);
+
            } else {
-               
+
 
                 // Debug.Log(collision.gameObject.tag);
                 if (_playerBricks.Count > 0)
                     AddBrickToBridge(collision.gameObject);
                 else  {
-                    stopVector = transform.forward;
-                    stopVector.Normalize(); 
-                    Debug.Log("colliderPosition: " + collision.gameObject.transform.position);
-                    Debug.Log("postion: " + collision.transform.localToWorldMatrix);
-                    Debug.Log("normolize: " + stopVector);
-                    isCanMove = false;
+                    // stopVector = transform.forward;
+                    // stopVector.Normalize();
+                    // Debug.Log("colliderPosition: " + collision.gameObject.transform.position);
+                    Debug.Log("colliderPositionForward: " + collision.gameObject.transform.forward);
+                    Debug.Log("colliderPositionRight: " + collision.gameObject.transform.right);
+                    // Debug.Log("colliderPositionRoot: " + collision.gameObject.transform.root);
+                    // Debug.Log("postion: " + collision.transform.localToWorldMatrix);
+                    // Debug.Log("normolize: " + stopVector);
+                    // var tempMovement = transform;
+                    // Debug.Log("PlayerMovement: " + tempMovement);
+                    GetComponent<Rigidbody>().MovePosition(transform.position + collision.gameObject.transform.right * collisionOffset);
+                    // isCanMove = false;
                 }
            }
-           
+
        }
         // for(var collider = 0; collider < collision.contactCount; collider++) {
         //     Debug.Log("Collider: " + collision.contacts[collider].thisCollider.gameObject.name);

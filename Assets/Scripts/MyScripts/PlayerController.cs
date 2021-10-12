@@ -7,13 +7,13 @@ public class PlayerController : MonoBehaviour
 {
     Vector3 _movement;
 
-    Rigidbody _playerRigidbody;
+    public Rigidbody playerRigidbody;
 
     Player _player;
 
     void Start()
     {
-        _playerRigidbody = GetComponent<Rigidbody>();
+        playerRigidbody = GetComponent<Rigidbody>();
         _player = GetComponent<Player>();
     }
 
@@ -32,8 +32,8 @@ public class PlayerController : MonoBehaviour
             // _charControll.Move();
             // transform.Rotate(_movement);
         // _charControll.Move(_movement);
-            _playerRigidbody.MoveRotation(Quaternion.LookRotation(_movement)); 
-        _playerRigidbody.MovePosition(_playerRigidbody.position + _movement);
+            playerRigidbody.MoveRotation(Quaternion.LookRotation(_movement)); 
+        playerRigidbody.MovePosition(playerRigidbody.position + _movement);
         }
     }
 }
