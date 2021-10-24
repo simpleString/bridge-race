@@ -30,7 +30,7 @@ public class Player : MonoBehaviour
         _animator = GetComponent<Animator>();
     }
 
-    Queue<Transform> _playerBricks = new Queue<Transform>();
+    Stack<Transform> _playerBricks = new Stack<Transform>();
 
     void Update()
     {
@@ -66,45 +66,21 @@ public class Player : MonoBehaviour
             brick.Destroy();
             Destroy(collider.gameObject);
         }
-        // Debug.Log("name: " + collider.gameObject.name); 
-        // Debug.Log("Layer: " + collider.gameObject.layer);
-        // if (collider.gameObject.layer == LayerMask.NameToLayer("Stairs")) {
-        //     Debug.Log("Collide with a stair");
-        // }
     }
 
     void OnCollisionEnter(Collision collision) {
-        // Debug.Log(collision.gameObject.transform.tag);
        if (collision.collider.gameObject.layer == LayerMask.NameToLayer("Stairs")) {
            if (collision.gameObject.CompareTag(colorName)) {
-                // Debug.Log(collision.gameObject.tag);
 
            } else {
-
-
-                // Debug.Log(collision.gameObject.tag);
                 if (_playerBricks.Count > 0)
                     AddBrickToBridge(collision.gameObject);
                 else  {
-                    // stopVector = transform.forward;
-                    // stopVector.Normalize();
-                    // Debug.Log("colliderPosition: " + collision.gameObject.transform.position);
-                    Debug.Log("colliderPositionForward: " + collision.gameObject.transform.forward);
-                    Debug.Log("colliderPositionRight: " + collision.gameObject.transform.right);
-                    // Debug.Log("colliderPositionRoot: " + collision.gameObject.transform.root);
-                    // Debug.Log("postion: " + collision.transform.localToWorldMatrix);
-                    // Debug.Log("normolize: " + stopVector);
-                    // var tempMovement = transform;
-                    // Debug.Log("PlayerMovement: " + tempMovement);
                     GetComponent<Rigidbody>().MovePosition(transform.position + collision.gameObject.transform.right * collisionOffset);
-                    // isCanMove = false;
                 }
            }
 
        }
-        // for(var collider = 0; collider < collision.contactCount; collider++) {
-        //     Debug.Log("Collider: " + collision.contacts[collider].thisCollider.gameObject.name);
-        // }
     }
 
     void AddBrickToPlayer(Transform instance) {
@@ -114,7 +90,7 @@ public class Player : MonoBehaviour
             BrickHolder.position.z
         ), Quaternion.Euler(Vector3.down));
         newPortableBrick.parent = BrickHolder;
-        _playerBricks.Enqueue(newPortableBrick);
+        _playerBricks.Push(newPortableBrick);
     }
 
 
@@ -143,6 +119,6 @@ public class Player : MonoBehaviour
         var renderer = brick.GetComponent<Renderer>();
         renderer.material.color = setColor;
         renderer.enabled = true;
-        Destroy(_playerBricks.Dequeue().gameObject);
+        Destroy(_playerBricks.Pop().gameObject);
     }
 }
