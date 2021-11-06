@@ -1,33 +1,32 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
+using Random = UnityEngine.Random;
 
 public class BrickSpawner : MonoBehaviour
 {
 
-    enum BotDifficult {
-        Easy,
-        Medium,
-        Hard
-    }
-
-    public enum Colors {
-        Red,
-        Geen,
-        Blue,
-        Black
+    [System.Serializable]
+    public struct BrickPrefab {
+        public string name;
+        public Transform brickPrefab;
     }
 
     public Transform spawnPool;
-    public Transform brickPrefab;
+    public List<BrickPrefab> bricksPrefabs = new List<BrickPrefab>();
     public Transform basePool;
+
+    private GameManager _gameManager;
 
     public float xUserOffset;
     public float yUserOffset;
-    Transform[,] _bricksMap;
+    Brick[,] _bricksMap;
 
     float _lengthX;
     float _lengthY;
+    float _lengthZ;
+    float _offsetZ;
     float _offsetX;
     float _offsetY;
     int _xCount;
@@ -39,99 +38,96 @@ public class BrickSpawner : MonoBehaviour
         {0, 0},
         {1, 0},
         {2, 0},
-        {3, 0}
-    };
-
-    Dictionary<int,int> _playerRemovedDict = new Dictionary<int,int>() {
-        {0, 0},
-        {1, 0},
-        {2, 0},
-        {3, 0}
     };
 
     public int playersCount = 3;
 
-    int _countOfDestroyedBricks = 0;
 
     int _allCount;
 
     void Awake() {
         InitBricks();
-        _bricksPerPlayer = (int)(_allCount / playersCount);
-        SpawnBricks();
+        // SpawnBricks();
         StartCoroutine(UpdateBricksArray());
     }
 
+    void Start() {
+        _gameManager = GameManager.Instance;
+    }
 
     void InitBricks() {
-        _lengthX = spawnPool.localScale.x;
-        _lengthY = spawnPool.localScale.z;
+        _lengthX = (float) Math.Round(spawnPool.GetComponent<Renderer>().bounds.size.x, 2);
+        _lengthY = (float) Math.Round(spawnPool.GetComponent<Renderer>().bounds.size.z, 2);
+        _lengthZ = (float) Math.Round(spawnPool.GetComponent<Renderer>().bounds.size.y, 2);
+        
 
-        _offsetX = brickPrefab.localScale.x;
-        _offsetY = brickPrefab.localScale.z;
+        _offsetX = (float) Math.Round(bricksPrefabs[0].brickPrefab.GetComponent<Renderer>().bounds.size.x, 2);
+        _offsetY = (float) Math.Round(bricksPrefabs[0].brickPrefab.GetComponent<Renderer>().bounds.size.z, 2);
+        _offsetZ = (float) Math.Round(bricksPrefabs[0].brickPrefab.GetComponent<Renderer>().bounds.size.y, 2);
 
-        _xCount = Mathf.RoundToInt(_lengthX / (brickPrefab.localScale.x + _offsetX + xUserOffset) + 1); // TODO:: Fix it shit!!!
-        _yCount = Mathf.RoundToInt(_lengthY / (brickPrefab.localScale.z + _offsetY + yUserOffset));
+        _xCount = Mathf.RoundToInt(_lengthX / (_offsetX + xUserOffset));
+        _yCount = Mathf.RoundToInt(_lengthY / (_offsetY + yUserOffset));
 
         _allCount = _xCount * _yCount;
 
-        _bricksMap = new Transform[_xCount, _yCount];
+        _bricksMap = new Brick[_xCount, _yCount];
+
+        _bricksPerPlayer = Mathf.CeilToInt((float) _allCount / playersCount);
     }
 
     IEnumerator UpdateBricksArray() {
         while(true) {
-            Debug.Log("hello");
             for (var y = 0; y < _yCount; y++) {
                 for (var x = 0; x < _xCount; x++) {
-                    if (_bricksMap[x, y] == null) {
+                    if (_bricksMap[x, y] == null || _bricksMap[x, y].isDead) {
                         Transform newBrick;
-                        newBrick = Instantiate(brickPrefab,
+                        newBrick = Instantiate(bricksPrefabs[0].brickPrefab,
                         new Vector3(
-                            spawnPool.localPosition.x - spawnPool.localScale.x / 2f + x * (brickPrefab.localScale.x + _offsetX + xUserOffset), //+ x * brickPrefab.localScale.x + bricksOffset
-                            basePool.position.y + brickPrefab.localScale.y,
-                            spawnPool.localPosition.z - spawnPool.localScale.z / 2f + y * (brickPrefab.localScale.z + _offsetY + yUserOffset)), Quaternion.identity // + y * brickPrefab.localScale.z + bricksOffset
+                            spawnPool.localPosition.x - _lengthX / 2f + x * (_offsetX + xUserOffset),
+                            basePool.position.y + _lengthZ / 3f,
+                            spawnPool.localPosition.z - _lengthY / 2f + y * (_offsetY + yUserOffset)), 
+                            Quaternion.identity 
                     );
-                        newBrick.parent = spawnPool;
+                        newBrick.parent = basePool;
                         var newBrickObject = newBrick.GetComponentInChildren<Brick>();
-                        newBrickObject.onDestroy += OnBrickDestroy;
                         GenerateRandomBrick(newBrickObject, x, y);
-                        _bricksMap[x, y] = newBrick;
+                        _bricksMap[x, y] = newBrickObject;
                     }
                 }
             }
-            yield return new WaitForSeconds(2);
+            yield return new WaitForSeconds(2f);
         }
     }
 
-    void OnBrickDestroy(Brick brick){
-        for (var y = 0; y < _yCount; y++) {
-            for (var x = 0; x < _xCount; x++) {
-                if (x == brick.x && y == brick.y) {
-                    Debug.Log("hello from destroyer");
-                    _bricksMap[x, y] = null;
-                }
-            }
-        }
-    }
+    // void OnBrickDestroy(Brick brick){
+    //     for (var y = 0; y < _yCount; y++) {
+    //         for (var x = 0; x < _xCount; x++) {
+    //             if (x == brick.x && y == brick.y) {
+    //                 _bricksMap[x, y] = null;
+    //             }
+    //         }
+    //     }
+    // }
 
-    void SpawnBricks() {
-        for (var y = 0; y < _yCount; y++) {
-            for (var x = 0; x < _xCount; x++) {
-                Transform newBrick;
-                newBrick = Instantiate(brickPrefab,
-                new Vector3(
-                    spawnPool.localPosition.x - spawnPool.localScale.x / 2f + x * (brickPrefab.localScale.x + _offsetX + xUserOffset), //+ x * brickPrefab.localScale.x + bricksOffset
-                    basePool.position.y + brickPrefab.localScale.y,
-                    spawnPool.localPosition.z - spawnPool.localScale.z / 2f + y * (brickPrefab.localScale.z + _offsetY + yUserOffset)), Quaternion.identity // + y * brickPrefab.localScale.z + bricksOffset
-            );
-                newBrick.parent = spawnPool;
-                var newBrickObject = newBrick.GetComponentInChildren<Brick>();
-                newBrickObject.onDestroy += OnBrickDestroy;
-                GenerateBricksForPlayers(newBrickObject, x, y);
-                _bricksMap[x, y] = newBrick;
-            }
-        }
-    }
+    // void SpawnBricks() {
+    //     for (var y = 0; y < _yCount; y++) {
+    //         for (var x = 0; x < _xCount; x++) {
+    //             Transform newBrick;
+    //             newBrick = Instantiate(bricksPrefabs[0].brickPrefab,
+    //             new Vector3(
+    //                 spawnPool.localPosition.x - _lengthX / 2f + x * (_offsetX + xUserOffset),
+    //                 basePool.position.y + _lengthZ / 3f, // TODO:: I don't know how it work Fix it!!!
+    //                 spawnPool.localPosition.z - _lengthY / 2f + y * (_offsetY + yUserOffset)), 
+    //                 Quaternion.identity
+    //         );
+    //             newBrick.parent = basePool;
+    //             var newBrickObject = newBrick.GetComponentInChildren<Brick>();
+    //             newBrickObject.onDestroy += OnBrickDestroy;
+    //             GenerateBricksForPlayers(newBrickObject, x, y);
+    //             _bricksMap[x, y] = newBrick;
+    //         }
+    //     }
+    // }
 
 
     void GenerateRandomBrick(Brick brick, int x, int y) {
@@ -151,31 +147,9 @@ public class BrickSpawner : MonoBehaviour
             } while (isTrue);
     }
 
-    void SetupColorForBrick(Brick brick, int color, int x, int y) {
-        Color setColor;
-        switch (color)
-        {
-            case 0:
-                setColor = Color.red;
-                brick.tag = "red";
-                print("red");
-                break;
-            case 1:
-                setColor = Color.green;
-                brick.tag = "green";
-                print("green");
-                break;
-            case 2:
-                setColor = Color.blue;
-                brick.tag = "blue";
-                print("blue");
-                break;
-            default:
-                setColor = Color.black;
-                brick.tag = "black";
-                break;
-        }
-        brick.Init(setColor, x, y);
-    }
+    void SetupColorForBrick(Brick brick, int colorInt, int x, int y) {
 
+        var color = (GameManager.MyColor) colorInt;
+        brick.Init(color, x, y);
+    }
 }

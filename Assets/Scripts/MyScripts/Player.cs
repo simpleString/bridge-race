@@ -9,28 +9,22 @@ public class Player : MonoBehaviour
     [SerializeField] FloatingJoystick _floatingJoystick;
     private PlayerController _playerController;
 
+    public System.Action playerLostBrick;
     public bool isCanMove = true;
-    public Vector3 stopVector;
-    
     public Transform BrickHolder;
     public Transform PortableBrickPrefab;
-    public Color color;
-    public float collisionOffset = .1f;
+    public float collisionOffset = .1f; // Offset for climbing
 
     Vector3 movement;
-    
-    int currentPortableBricksCount = 0;
 
     Animator _animator;
-
-    string colorName = "red";
     void Awake()
     {
         _playerController = GetComponent<PlayerController>();
         _animator = GetComponent<Animator>();
     }
 
-    Stack<Transform> _playerBricks = new Stack<Transform>();
+    Stack<Transform> _countOfBricks = new Stack<Transform>();
 
     void Update()
     {
@@ -60,8 +54,8 @@ public class Player : MonoBehaviour
     }
 
     void OnTriggerEnter(Collider collider) {
-        if (collider.gameObject.tag == colorName) {
-            AddBrickToPlayer(collider.transform);
+        if (collider.gameObject.tag == GameManager.Instance.playerColor.ToString()) {
+            AddBrickToPlayer();
             var brick = collider.gameObject.GetComponent<Brick>();
             brick.Destroy();
             Destroy(collider.gameObject);
@@ -70,12 +64,12 @@ public class Player : MonoBehaviour
 
     void OnCollisionEnter(Collision collision) {
        if (collision.collider.gameObject.layer == LayerMask.NameToLayer("Stairs")) {
-           if (collision.gameObject.CompareTag(colorName)) {
-
+           if (collision.gameObject.CompareTag(GameManager.Instance.playerColor.ToString())) { // FIXME:: Update to work with bots
            } else {
-                if (_playerBricks.Count > 0)
+                if (_countOfBricks.Count > 0)
                     AddBrickToBridge(collision.gameObject);
                 else  {
+                    // Don't let player go to stairs
                     GetComponent<Rigidbody>().MovePosition(transform.position + collision.gameObject.transform.right * collisionOffset);
                 }
            }
@@ -83,42 +77,23 @@ public class Player : MonoBehaviour
        }
     }
 
-    void AddBrickToPlayer(Transform instance) {
-        var newPortableBrick = Instantiate(instance, new Vector3(
-            BrickHolder.position.x - PortableBrickPrefab.localScale.x,
-            PortableBrickPrefab.localScale.y * _playerBricks.Count + 1,
+    void AddBrickToPlayer() {
+        var newPortableBrick = Instantiate(PortableBrickPrefab, new Vector3(
+            BrickHolder.position.x,
+            BrickHolder.position.y + PortableBrickPrefab.GetComponent<Renderer>().bounds.size.y * _countOfBricks.Count, // FIXME:: optimize this shit
             BrickHolder.position.z
         ), Quaternion.Euler(Vector3.down));
+        newPortableBrick.tag = MyConstants.TagNull; // it's save us from bugs, but it's not required
+        newPortableBrick.GetComponent<Renderer>().material.color = GameManager.GetUnityColorByMyColor(GameManager.Instance.playerColor);
         newPortableBrick.parent = BrickHolder;
-        _playerBricks.Push(newPortableBrick);
+        _countOfBricks.Push(newPortableBrick);
     }
 
 
     void AddBrickToBridge(GameObject brick) {
-        brick.tag = colorName;
-        Color setColor;
-        switch (colorName)
-        {
-            case "red":
-                setColor = Color.red;
-                brick.tag = "red";
-                break;
-            case "green":
-                setColor = Color.green;
-                brick.tag = "green";
-                break;
-            case "blue":
-                setColor = Color.blue;
-                brick.tag = "blue";
-                break;
-            default:
-                setColor = Color.black;
-                brick.tag = "black";
-                break;
-        }
-        var renderer = brick.GetComponent<Renderer>();
-        renderer.material.color = setColor;
-        renderer.enabled = true;
-        Destroy(_playerBricks.Pop().gameObject);
+        var brickStript = brick.GetComponent<Stair>();
+        brickStript.ChangeColor(GameManager.Instance.playerColor);
+        Destroy(_countOfBricks.Pop().gameObject);
+        playerLostBrick?.Invoke();
     }
 }

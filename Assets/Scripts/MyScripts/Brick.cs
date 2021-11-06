@@ -10,6 +10,8 @@ public class Brick : MonoBehaviour
 
     public int x;
     public int y;
+
+    public bool isDead = false;
     
     public System.Action<Brick> onDestroy;
 
@@ -25,15 +27,21 @@ public class Brick : MonoBehaviour
     }
 
 
-    public void Init(Color color, int _x, int _y) {
+    public void Init(GameManager.MyColor color, int _x, int _y) {
+        this.tag = color.ToString();
         x = _x;
         y = _y;
-        _material.color = color;
-        print(_material.color);
+        _material.color = GameManager.GetUnityColorByMyColor(color);
+    }
+
+    IEnumerator DeadTimer() {
+        yield return new WaitForSeconds(2f);
+        isDead = true;
     }
 
     public void Destroy() {
-        onDestroy?.Invoke(this);
+        StartCoroutine(DeadTimer());
+        // onDestroy?.Invoke(this);
     }
 }
 

@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 8821163480601116318}
   - component: {fileID: 1693183359}
   - component: {fileID: 1693183360}
+  - component: {fileID: 557358039677399403}
   m_Layer: 3
   m_Name: Stair
   m_TagString: Untagged
@@ -95,3 +96,15 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8821163480601116304}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &557358039677399403
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8821163480601116304}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3fd33f2af608e4746a3e89ce011aede1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

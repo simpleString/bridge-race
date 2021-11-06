@@ -5,8 +5,16 @@ using UnityEngine;
 public class Bot : MonoBehaviour
 {
 
+    void Awake() {
+
+    }
+
     void Start()
     {
+        
+    }
+
+    public void Init(GameManager.MyColor color) {
         
     }
 
