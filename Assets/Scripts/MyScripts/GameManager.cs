@@ -40,6 +40,8 @@ public class GameManager : MonoBehaviour {
     public float xBrickOffset;
     public float yBrickOffset;
 
+    public Bot botPrefab; 
+
     public static GameManager Instance;
 
     void Awake() {
@@ -56,9 +58,14 @@ public class GameManager : MonoBehaviour {
                 // players.Add(Player.)
                 continue;
             }
-            var newBot = new Bot();
-            newBot.Init(color);
+            if (color == MyColor.black) continue;
+            // var newBot = Instantiate(botPrefab.gameObject, Vector3.up, Quaternion.identity);
+            // var newBotScript = newBot.GetComponent<Bot>();
+            // newBotScript.Init(color);
         }
+        var newBot = Instantiate(botPrefab.gameObject, Vector3.up, Quaternion.identity);
+        var newBotScript = newBot.GetComponent<Bot>();
+        newBotScript.Init(MyColor.blue);
     }
 
     public void GameOver() {
