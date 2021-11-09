@@ -17,17 +17,24 @@ public class Bot : BasePlayer {
 
     private NearBrick _currentBrickTarger;
     new void Awake() {
+        base.Awake();
         playerLostBrick += OnBotLostBrick;
         _agent = GetComponent<NavMeshAgent>();
     }
 
-    void OnBotLostBrick() {
-        Debug.Log("hello, current count is : " + _countOfBricks.Count);
-        if (_countOfBricks.Count < 1) {
-            Debug.Log("took, took");
+    void Update() {
+
+        float velocityZ = Vector3.Dot(_agent.velocity.normalized, transform.forward);
+        float velocityX = Vector3.Dot(_agent.velocity.normalized, transform.right);
+
+        _animator.SetFloat("VelocityZ", velocityZ, 0.1f, Time.deltaTime);
+        _animator.SetFloat("VelocityX", velocityX, 0.1f, Time.deltaTime);
+    }
+
+    void OnBotLostBrick(GameManager.MyColor color) {
+        if (countOfBricks.Count < 1) {
             _currentBotState = BotState.TakeBrick;
             FindNearBrick();
-            Debug.Log("new Destination: " + _currentBrickTarger.distance);
             _agent.destination = _currentBrickTarger.transform.position;
         }
     }
@@ -38,6 +45,7 @@ public class Bot : BasePlayer {
         FindNearBrick();
 
         if (_currentBrickTarger.transform != null) {
+            // transform.LookAt(_currentBrickTarger.transform.position);
             _agent.destination = _currentBrickTarger.transform.position;
         }
     }
@@ -51,18 +59,12 @@ public class Bot : BasePlayer {
         }
     }
 
-    // IEnumerator HardStop()
-    // {
-    //     GetComponent<Collider>().isTrigger = false;
-    //     GetComponent<Rigidbody>().MovePosition(transform.position);
-    //     yield return new WaitForSeconds(1f);
-    //     GetComponent<Collider>().isTrigger = true;
-    // }
 
     new void OnTriggerEnter(Collider collider) {
+        // Debug.Log("Collision detected: " + collider.tag);
         if (collider.gameObject.layer == LayerMask.NameToLayer("Stairs")) {
             if (!collider.gameObject.CompareTag(myColor.ToString())) {
-                if (_countOfBricks.Count > 0) {
+                if (countOfBricks.Count > 0) {
                     AddBrickToBridge(collider.gameObject);
                 } else {
                     _agent.velocity = Vector3.zero;
@@ -70,12 +72,12 @@ public class Bot : BasePlayer {
             }
         } else {
             if (collider.gameObject.tag == myColor.ToString()) {
-                if (_countOfBricks.Count > 5) {
+                if (countOfBricks.Count > 5) {
                     _currentBotState = BotState.TakeLadder;
                     FindBestLadder();
                 } else {
                     FindNearBrick(collider.gameObject);
-                    Debug.Log("new Destination: " + _currentBrickTarger.distance);
+                    // transform.LookAt(_currentBrickTarger.transform.position);
                     _agent.destination = _currentBrickTarger.transform.position;
                 }
             }
@@ -85,12 +87,8 @@ public class Bot : BasePlayer {
 
     new void OnCollisionEnter(Collision collision) {
         if (collision.collider.gameObject.layer == LayerMask.NameToLayer("Stairs") && !collision.gameObject.CompareTag(myColor.ToString())) {
-            if (_countOfBricks.Count > 0)
+            if (countOfBricks.Count > 0)
                 AddBrickToBridge(collision.gameObject);
-            else {
-                // Don't let player go to stairs
-                // GetComponent<Rigidbody>().MovePosition(transform.position + collision.gameObject.transform.right * collisionOffset);
-            }
         }
     }
 
@@ -136,14 +134,8 @@ public class Bot : BasePlayer {
 
         var ladders = GameObject.FindObjectsOfType<Ladder>();
         NearLadder nearLadder = null;
-        // if (ladders != null)
-        // {
-        //     nearLadder = new NearLadder(ladders[0].checkPosition,
-        //                                 Vector3.Distance(transform.position, ladders[0].checkPosition.position),
-        //                                 ladders[0].GetCountByColorTag(tag));
-        // }
         foreach (var ladder in ladders) {
-            Debug.Log("Color count: " + ladder.GetCountByColorTag(myColor));
+            // Debug.Log("Color count: " + ladder.GetCountByColorTag(myColor));
             var tempNearLadder = new NearLadder(ladder.checkPosition,
                                                 Vector3.Distance(ladder.checkPosition.position, transform.position),
                                                 ladder.GetCountByColorTag(myColor));
@@ -152,6 +144,7 @@ public class Bot : BasePlayer {
                 nearLadder = tempNearLadder;
             }
         }
+        // transform.LookAt(nearLadder.transform.position);
         _agent.destination = nearLadder.transform.position;
     }
 

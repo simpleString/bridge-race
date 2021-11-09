@@ -5,7 +5,13 @@ public class Player : BasePlayer {
     [SerializeField] FloatingJoystick _floatingJoystick;
     private PlayerController _playerController;
 
+    public static Player Instance = null;
+
     new void Awake() {
+        if (Instance != null) {
+            Destroy(this);
+        }
+        Instance = this;
         _playerController = GetComponent<PlayerController>();
         base.Awake();
     }

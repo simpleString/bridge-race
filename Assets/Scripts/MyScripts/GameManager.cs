@@ -33,7 +33,7 @@ public class GameManager : MonoBehaviour {
         else return MyColor.black;
     }
 
-    public List<Player> players = new List<Player>();
+    public List<BasePlayer> players = new List<BasePlayer>();
 
     public MyColor playerColor = MyColor.blue;  // TODO:: Need to set by user!!!
 
@@ -55,17 +55,16 @@ public class GameManager : MonoBehaviour {
     void InitGame() {
         foreach (MyColor color in System.Enum.GetValues(typeof(MyColor))) {
             if (color == playerColor) {
-                // players.Add(Player.)
+                Player.Instance.myColor = color;
+                players.Add(Player.Instance);
                 continue;
             }
             if (color == MyColor.black) continue;
-            // var newBot = Instantiate(botPrefab.gameObject, Vector3.up, Quaternion.identity);
-            // var newBotScript = newBot.GetComponent<Bot>();
-            // newBotScript.Init(color);
+            var newBot = Instantiate(botPrefab.gameObject, Vector3.up, Quaternion.identity);
+            var newBotScript = newBot.GetComponent<Bot>();
+            players.Add(newBotScript);
+            newBotScript.Init(color);
         }
-        var newBot = Instantiate(botPrefab.gameObject, Vector3.up, Quaternion.identity);
-        var newBotScript = newBot.GetComponent<Bot>();
-        newBotScript.Init(MyColor.blue);
     }
 
     public void GameOver() {
