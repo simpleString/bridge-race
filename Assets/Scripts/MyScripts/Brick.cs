@@ -2,8 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Brick : MonoBehaviour
-{
+public class Brick : MonoBehaviour {
 
     Material _material;
     Renderer _renderer;
@@ -12,17 +11,15 @@ public class Brick : MonoBehaviour
     public int y;
 
     public bool isDead = false;
-    
+
     public System.Action<Brick> onDestroy;
 
-    void Awake()
-    {
+    void Awake() {
         _renderer = GetComponent<Renderer>();
         _material = _renderer.material;
     }
 
-    void Update()
-    {
+    void Update() {
 
     }
 

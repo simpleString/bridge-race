@@ -9,31 +9,29 @@ public class Player : BasePlayer {
         _playerController = GetComponent<PlayerController>();
         base.Awake();
     }
-    void Update()
-    {
-    #if UNITY_EDITOR
-        var vertical = Input.GetAxis ("Vertical");
-        var horizontal = Input.GetAxis ("Horizontal"); 
-        
+    void Update() {
+#if UNITY_EDITOR
+        var vertical = Input.GetAxis("Vertical");
+        var horizontal = Input.GetAxis("Horizontal");
 
-    #else
+
+#else
         var vertical = _floatingJoystick.Vertical;
         var horizontal = _floatingJoystick.Horizontal;
-    #endif
+#endif
         movement = new Vector3(horizontal, 0f, vertical);
-        if (movement.magnitude > 0)
-        {
+        if (movement.magnitude > 0) {
             movement.Normalize();
             movement *= _speed * Time.fixedDeltaTime;
-            
+
         }
         _playerController.Move(movement);
 
         float velocityZ = Vector3.Dot(movement.normalized, transform.forward);
         float velocityX = Vector3.Dot(movement.normalized, transform.right);
-        
+
         _animator.SetFloat("VelocityZ", velocityZ, 0.1f, Time.deltaTime);
         _animator.SetFloat("VelocityX", velocityX, 0.1f, Time.deltaTime);
     }
-    
+
 }

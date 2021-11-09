@@ -3,8 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(PlayerController))]
-public class Player1 : MonoBehaviour
-{
+public class Player1 : MonoBehaviour {
     [SerializeField] float _speed = 3;
     [SerializeField] FloatingJoystick _floatingJoystick;
     private PlayerController _playerController;
@@ -18,37 +17,34 @@ public class Player1 : MonoBehaviour
     Vector3 movement;
 
     Animator _animator;
-    void Awake()
-    {
+    void Awake() {
         _playerController = GetComponent<PlayerController>();
         _animator = GetComponent<Animator>();
     }
 
     Stack<Transform> _countOfBricks = new Stack<Transform>();
 
-    void Update()
-    {
-    #if UNITY_EDITOR
-        var vertical = Input.GetAxis ("Vertical");
-        var horizontal = Input.GetAxis ("Horizontal"); 
-        
+    void Update() {
+#if UNITY_EDITOR
+        var vertical = Input.GetAxis("Vertical");
+        var horizontal = Input.GetAxis("Horizontal");
 
-    #else
+
+#else
         var vertical = _floatingJoystick.Vertical;
         var horizontal = _floatingJoystick.Horizontal;
-    #endif
+#endif
         movement = new Vector3(horizontal, 0f, vertical);
-        if (movement.magnitude > 0)
-        {
+        if (movement.magnitude > 0) {
             movement.Normalize();
             movement *= _speed * Time.fixedDeltaTime;
-            
+
         }
         _playerController.Move(movement);
 
         float velocityZ = Vector3.Dot(movement.normalized, transform.forward);
         float velocityX = Vector3.Dot(movement.normalized, transform.right);
-        
+
         _animator.SetFloat("VelocityZ", velocityZ, 0.1f, Time.deltaTime);
         _animator.SetFloat("VelocityX", velocityX, 0.1f, Time.deltaTime);
     }
@@ -63,18 +59,18 @@ public class Player1 : MonoBehaviour
     }
 
     void OnCollisionEnter(Collision collision) {
-       if (collision.collider.gameObject.layer == LayerMask.NameToLayer("Stairs")) {
-           if (collision.gameObject.CompareTag(GameManager.Instance.playerColor.ToString())) { // FIXME:: Update to work with bots
-           } else {
+        if (collision.collider.gameObject.layer == LayerMask.NameToLayer("Stairs")) {
+            if (collision.gameObject.CompareTag(GameManager.Instance.playerColor.ToString())) { // FIXME:: Update to work with bots
+            } else {
                 if (_countOfBricks.Count > 0)
                     AddBrickToBridge(collision.gameObject);
-                else  {
+                else {
                     // Don't let player go to stairs
                     GetComponent<Rigidbody>().MovePosition(transform.position + collision.gameObject.transform.right * collisionOffset);
                 }
-           }
+            }
 
-       }
+        }
     }
 
     void AddBrickToPlayer() {

@@ -2,8 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class StairClimb : MonoBehaviour
-{
+public class StairClimb : MonoBehaviour {
     Rigidbody rigidBody;
     [SerializeField] GameObject stepRayUpper;
     [SerializeField] GameObject stepRayLower;
@@ -12,29 +11,24 @@ public class StairClimb : MonoBehaviour
     [SerializeField] float stepHeight = 0.3f;
     [SerializeField] float stepSmooth = 2f;
 
-    private void Awake()
-    {
+    private void Awake() {
         rigidBody = GetComponent<Rigidbody>();
 
         stepRayUpper.transform.position = new Vector3(stepRayUpper.transform.position.x, stepHeight, stepRayUpper.transform.position.z);
     }
-    
-    private void FixedUpdate()
-    {
+
+    private void FixedUpdate() {
         stepClimb();
     }
 
-    void stepClimb()
-    {
+    void stepClimb() {
         RaycastHit hitLower;
         if (Physics.Raycast(stepRayLower.transform.position, transform.TransformDirection(Vector3.forward), out hitLower, 0.1f, stairsLayer) ||
-        (Physics.Raycast(stepRayLower.transform.position, transform.TransformDirection(Vector3.forward), out hitLower, 0.1f, bridgeLayer)))
-        {
-            if (hitLower.collider.tag =="Untagged") return;
+        (Physics.Raycast(stepRayLower.transform.position, transform.TransformDirection(Vector3.forward), out hitLower, 0.1f, bridgeLayer))) {
+            if (hitLower.collider.tag == "Untagged") return;
             RaycastHit hitUpper;
-            if (!Physics.Raycast(stepRayUpper.transform.position, transform.TransformDirection(Vector3.forward), out hitUpper, 0.2f, stairsLayer) || 
-            (Physics.Raycast(stepRayUpper.transform.position, transform.TransformDirection(Vector3.forward), out hitUpper, 0.2f, bridgeLayer)))
-            {
+            if (!Physics.Raycast(stepRayUpper.transform.position, transform.TransformDirection(Vector3.forward), out hitUpper, 0.2f, stairsLayer) ||
+            (Physics.Raycast(stepRayUpper.transform.position, transform.TransformDirection(Vector3.forward), out hitUpper, 0.2f, bridgeLayer))) {
                 // Debug.Log("first");
                 //rigidBody.position -= new Vector3(0f, -stepSmooth * Time.deltaTime, 0f);
                 rigidBody.MovePosition(transform.position + Vector3.up * stepSmooth * Time.fixedDeltaTime);

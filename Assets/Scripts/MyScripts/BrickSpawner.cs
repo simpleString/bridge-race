@@ -4,8 +4,7 @@ using UnityEngine;
 using System;
 using Random = UnityEngine.Random;
 
-public class BrickSpawner : MonoBehaviour
-{
+public class BrickSpawner : MonoBehaviour {
 
     [System.Serializable]
     public struct BrickPrefab {
@@ -34,7 +33,7 @@ public class BrickSpawner : MonoBehaviour
 
     int _bricksPerPlayer;
 
-    Dictionary<int,int> _playerDict = new Dictionary<int,int>() {
+    Dictionary<int, int> _playerDict = new Dictionary<int, int>() {
         {0, 0},
         {1, 0},
         {2, 0},
@@ -56,14 +55,14 @@ public class BrickSpawner : MonoBehaviour
     }
 
     void InitBricks() {
-        _lengthX = (float) Math.Round(spawnPool.GetComponent<Renderer>().bounds.size.x, 2);
-        _lengthY = (float) Math.Round(spawnPool.GetComponent<Renderer>().bounds.size.z, 2);
-        _lengthZ = (float) Math.Round(spawnPool.GetComponent<Renderer>().bounds.size.y, 2);
-        
+        _lengthX = (float)Math.Round(spawnPool.GetComponent<Renderer>().bounds.size.x, 2);
+        _lengthY = (float)Math.Round(spawnPool.GetComponent<Renderer>().bounds.size.z, 2);
+        _lengthZ = (float)Math.Round(spawnPool.GetComponent<Renderer>().bounds.size.y, 2);
 
-        _offsetX = (float) Math.Round(bricksPrefabs[0].brickPrefab.GetComponent<Renderer>().bounds.size.x, 2);
-        _offsetY = (float) Math.Round(bricksPrefabs[0].brickPrefab.GetComponent<Renderer>().bounds.size.z, 2);
-        _offsetZ = (float) Math.Round(bricksPrefabs[0].brickPrefab.GetComponent<Renderer>().bounds.size.y, 2);
+
+        _offsetX = (float)Math.Round(bricksPrefabs[0].brickPrefab.GetComponent<Renderer>().bounds.size.x, 2);
+        _offsetY = (float)Math.Round(bricksPrefabs[0].brickPrefab.GetComponent<Renderer>().bounds.size.z, 2);
+        _offsetZ = (float)Math.Round(bricksPrefabs[0].brickPrefab.GetComponent<Renderer>().bounds.size.y, 2);
 
         _xCount = Mathf.RoundToInt(_lengthX / (_offsetX + xUserOffset));
         _yCount = Mathf.RoundToInt(_lengthY / (_offsetY + yUserOffset));
@@ -72,11 +71,11 @@ public class BrickSpawner : MonoBehaviour
 
         _bricksMap = new Brick[_xCount, _yCount];
 
-        _bricksPerPlayer = Mathf.CeilToInt((float) _allCount / playersCount);
+        _bricksPerPlayer = Mathf.CeilToInt((float)_allCount / playersCount);
     }
 
     IEnumerator UpdateBricksArray() {
-        while(true) {
+        while (true) {
             for (var y = 0; y < _yCount; y++) {
                 for (var x = 0; x < _xCount; x++) {
                     if (_bricksMap[x, y] == null || _bricksMap[x, y].isDead) {
@@ -85,8 +84,8 @@ public class BrickSpawner : MonoBehaviour
                         new Vector3(
                             spawnPool.localPosition.x - _lengthX / 2f + x * (_offsetX + xUserOffset),
                             basePool.position.y + _lengthZ / 3f,
-                            spawnPool.localPosition.z - _lengthY / 2f + y * (_offsetY + yUserOffset)), 
-                            Quaternion.identity 
+                            spawnPool.localPosition.z - _lengthY / 2f + y * (_offsetY + yUserOffset)),
+                            Quaternion.identity
                     );
                         newBrick.parent = basePool;
                         var newBrickObject = newBrick.GetComponentInChildren<Brick>();
@@ -134,22 +133,22 @@ public class BrickSpawner : MonoBehaviour
         var color = Random.Range(0, playersCount);
         SetupColorForBrick(brick, color, x, y);
     }
- 
+
     void GenerateBricksForPlayers(Brick brick, int x, int y) {
-            var isTrue = true;
-            do {
-                var color = Random.Range(0, playersCount);
-                if (_playerDict[color] < _bricksPerPlayer) {
-                    isTrue = false;
-                    _playerDict[color]++;
-                    SetupColorForBrick(brick, color, x, y);
-                }
-            } while (isTrue);
+        var isTrue = true;
+        do {
+            var color = Random.Range(0, playersCount);
+            if (_playerDict[color] < _bricksPerPlayer) {
+                isTrue = false;
+                _playerDict[color]++;
+                SetupColorForBrick(brick, color, x, y);
+            }
+        } while (isTrue);
     }
 
     void SetupColorForBrick(Brick brick, int colorInt, int x, int y) {
 
-        var color = (GameManager.MyColor) colorInt;
+        var color = (GameManager.MyColor)colorInt;
         brick.Init(color, x, y);
     }
 }

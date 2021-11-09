@@ -13,7 +13,7 @@ public class GameManager : MonoBehaviour {
         black
     }
 
-    public static Color GetUnityColorByMyColor (MyColor color) {
+    public static Color GetUnityColorByMyColor(MyColor color) {
         switch (color) {
             case MyColor.blue:
                 return Color.blue;
@@ -33,14 +33,14 @@ public class GameManager : MonoBehaviour {
         else return MyColor.black;
     }
 
-    public List<Player> players = new List<Player>(); 
+    public List<Player> players = new List<Player>();
 
     public MyColor playerColor = MyColor.blue;  // TODO:: Need to set by user!!!
 
     public float xBrickOffset;
     public float yBrickOffset;
 
-    public Bot botPrefab; 
+    public Bot botPrefab;
 
     public static GameManager Instance;
 
@@ -53,7 +53,7 @@ public class GameManager : MonoBehaviour {
     }
 
     void InitGame() {
-        foreach(MyColor color in System.Enum.GetValues(typeof(MyColor))) {
+        foreach (MyColor color in System.Enum.GetValues(typeof(MyColor))) {
             if (color == playerColor) {
                 // players.Add(Player.)
                 continue;
