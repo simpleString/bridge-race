@@ -105,7 +105,7 @@ GameObject:
   - component: {fileID: 8746552115072605094}
   - component: {fileID: 8746552115072605089}
   - component: {fileID: 6340603181177987354}
-  - component: {fileID: 1246510411570016976}
+  - component: {fileID: 6708330888626966358}
   m_Layer: 0
   m_Name: Bot
   m_TagString: Player
@@ -258,7 +258,7 @@ MonoBehaviour:
     m_Bits: 64
   stepHeight: 1
   stepSmooth: 3.5
---- !u!54 &1246510411570016976
+--- !u!54 &6708330888626966358
 Rigidbody:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -270,7 +270,7 @@ Rigidbody:
   m_Drag: 0
   m_AngularDrag: 0.05
   m_UseGravity: 1
-  m_IsKinematic: 0
+  m_IsKinematic: 1
   m_Interpolate: 0
-  m_Constraints: 112
-  m_CollisionDetection: 0
+  m_Constraints: 0
+  m_CollisionDetection: 3
