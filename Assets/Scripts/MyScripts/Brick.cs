@@ -34,10 +34,12 @@ public class Brick : MonoBehaviour {
     IEnumerator DeadTimer() {
         yield return new WaitForSeconds(2f);
         isDead = true;
+
     }
 
     public void Destroy() {
-        StartCoroutine(DeadTimer());
+        // StartCoroutine(DeadTimer());
+        Destroy(this.gameObject);
         // onDestroy?.Invoke(this);
     }
 }

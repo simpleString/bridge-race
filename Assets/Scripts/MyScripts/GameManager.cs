@@ -53,6 +53,7 @@ public class GameManager : MonoBehaviour {
     }
 
     void InitGame() {
+
         foreach (MyColor color in System.Enum.GetValues(typeof(MyColor))) {
             if (color == playerColor) {
                 Player.Instance.myColor = color;
@@ -65,6 +66,15 @@ public class GameManager : MonoBehaviour {
             players.Add(newBotScript);
             newBotScript.Init(color);
         }
+        Debug.Log("i'm here");
+        print(GameObject.FindObjectsOfType<BrickSpawner>().Length);
+
+        foreach (var item in GameObject.FindObjectsOfType<BrickSpawner>()) {
+            item.StartSpawn();
+        }
+
+
+
     }
 
     public void GameOver() {

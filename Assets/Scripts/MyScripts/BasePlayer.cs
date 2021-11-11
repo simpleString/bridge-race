@@ -60,7 +60,7 @@ public class BasePlayer : MonoBehaviour {
             AddBrickToPlayer();
             var brick = collider.gameObject.GetComponent<Brick>();
             brick.Destroy();
-            Destroy(collider.gameObject);
+            // Destroy(collider.gameObject);
         }
     }
 

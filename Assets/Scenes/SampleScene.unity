@@ -6533,6 +6533,7 @@ GameObject:
   - component: {fileID: 892536318}
   - component: {fileID: 892536317}
   - component: {fileID: 892536320}
+  - component: {fileID: 892536316}
   m_Layer: 0
   m_Name: HolderFirst
   m_TagString: Untagged
@@ -6540,6 +6541,19 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!65 &892536316
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 892536315}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1.0000001, y: 1, z: 0.99999994}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!23 &892536317
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -6623,6 +6637,7 @@ MonoBehaviour:
   basePool: {fileID: 1698541710}
   xUserOffset: 1.5
   yUserOffset: 1.5
+  isActive: 1
 --- !u!1 &899057409
 GameObject:
   m_ObjectHideFlags: 0
@@ -10701,6 +10716,7 @@ GameObject:
   - component: {fileID: 1477157037}
   - component: {fileID: 1477157036}
   - component: {fileID: 1477157035}
+  - component: {fileID: 1477157038}
   m_Layer: 0
   m_Name: HolderSecond
   m_TagString: Untagged
@@ -10742,6 +10758,7 @@ MonoBehaviour:
   basePool: {fileID: 359717944}
   xUserOffset: 1.5
   yUserOffset: 1.5
+  isActive: 0
 --- !u!23 &1477157036
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -10791,6 +10808,19 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1477157033}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!65 &1477157038
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1477157033}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1.0000001, y: 1, z: 0.99999994}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1001 &1486011442
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -12145,6 +12175,7 @@ GameObject:
   - component: {fileID: 1737972371}
   - component: {fileID: 1737972370}
   - component: {fileID: 1737972369}
+  - component: {fileID: 1737972372}
   m_Layer: 0
   m_Name: HolderSecond (1)
   m_TagString: Untagged
@@ -12186,6 +12217,7 @@ MonoBehaviour:
   basePool: {fileID: 336228656}
   xUserOffset: 1.5
   yUserOffset: 1.5
+  isActive: 0
 --- !u!23 &1737972370
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -12235,6 +12267,19 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1737972367}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!65 &1737972372
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1737972367}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1.0000001, y: 1, z: 0.99999994}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &1762480274 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 388ca1045e74f3a45a399d2f9f46a68b,
