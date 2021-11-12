@@ -6,12 +6,14 @@ public class BasePlayer : MonoBehaviour {
 
     [SerializeField] protected float _speed = 3;
     public System.Action<GameManager.MyColor> playerLostBrick;
+    public System.Action<BasePlayer> playerDead;
 
-    public float playersCollisionForce;
-    public float jumpTime;
+
     public bool isCanMove = true;
     public Transform BrickHolder;
     public Transform PortableBrickPrefab;
+
+    Transform _basePlatform; // Minimal y coord. If player stay smaller that it's he's dead.
 
     public GameManager.MyColor myColor;
 
@@ -27,27 +29,69 @@ public class BasePlayer : MonoBehaviour {
 
     public Stack<Transform> countOfBricks = new Stack<Transform>();
 
-    IEnumerator Jump() {
+    protected IEnumerator Jump(Collider collider) {
+        var agent = GetComponent<UnityEngine.AI.NavMeshAgent>();
+        if (agent != null)
+            agent.enabled = false;
         var rb = GetComponent<Rigidbody>();
+        rb.isKinematic = false;
         var currentPosition = rb.transform.position;
-        var movePosition = rb.position + Vector3.up - new Vector3(Random.Range(-2, 3), 0, Random.Range(-2, 3)) * playersCollisionForce;
+        var movePosition = rb.position + Vector3.up - collider.transform.forward * GameManager.Instance.playersCollisionForce;
+        // var movePosition = rb.position + Vector3.up - new Vector3(Random.Range(-2, 3), 0, Random.Range(-2, 3)) * playersCollisionForce;
         var t = 0f;
-        while (t < jumpTime) {
-            rb.MovePosition(Vector3.Lerp(currentPosition, movePosition, t));
+        while (t < GameManager.Instance.jumpTime) {
+            transform.position = (Vector3.Lerp(currentPosition, movePosition, t));
             t += Time.deltaTime;
             yield return new WaitForFixedUpdate();
+        }
+        if (agent != null) {
+            rb.isKinematic = true;
+            agent.enabled = true;
         }
         yield return null;
     }
 
-    void CheckPlayerCollision(Collider collider) {
+    void DropBrick(Transform brickTransform) {
+        brickTransform.parent = null;
+        var movePosition = brickTransform.position + new Vector3(Random.Range(-2, 3), 0, Random.Range(-2, 3)) * GameManager.Instance.playersCollisionForce;
+        brickTransform.gameObject.AddComponent<Rigidbody>();
+        var rb = brickTransform.GetComponent<Rigidbody>();
+        rb.AddForce(new Vector3(Random.Range(-5, 6), 0, Random.Range(-5, 6)));
+        // for (float t = 0; t < GameManager.Instance.jumpTime; t += Time.deltaTime) {
+        //     rb.MovePosition(Vector3.Lerp(brickTransform.transform.position, movePosition, t));
+        //     yield return new WaitForFixedUpdate();
+        // }
+        // yield return null;
+    }
+
+    void DropBricks() {
+        foreach (var brick in countOfBricks) {
+            brick.GetComponent<Brick>().Init(GameManager.MyColor.black, 0, 0);
+            DropBrick(brick);
+            brick.tag = "Free";
+            playerLostBrick?.Invoke(myColor);
+        }
+        countOfBricks.Clear();
+
+    }
+
+    protected void CheckPlayerCollision(Collider collider) {
         var otherBasePlayerScript = collider.GetComponent<BasePlayer>();
         if (otherBasePlayerScript.countOfBricks.Count > countOfBricks.Count) {
-            StartCoroutine(Jump());
-            // rb.MovePosition(rb.position + (Vector3.up - rb.velocity) * playersCollisionForce);
-            // rb.MovePosition((-rb.velocity + Vector3.up) * playersCollisionForce);
-            // GetComponent<Rigidbody>().AddForce(new Vector3(Random.Range(-5, 6), 0, Random.Range(-5, 6)) * 50);
-            // GetComponent<Rigidbody>().MovePosition(transform.position + Vector3.up * 20 * Time.fixedDeltaTime);
+            DropBricks();
+            StartCoroutine(Jump(collider));
+        }
+    }
+
+    public void Init(GameManager.MyColor color, Transform basePlatform) {
+        myColor = color;
+        _basePlatform = basePlatform;
+    }
+
+    protected void Update() {
+        if (transform.position.y + 1 < _basePlatform.position.y) {
+            playerDead?.Invoke(this);
+            Destroy(gameObject);
         }
     }
 
@@ -56,7 +100,7 @@ public class BasePlayer : MonoBehaviour {
         if (collider.tag == "Player") {
             CheckPlayerCollision(collider);
         }
-        if (collider.tag == myColor.ToString()) {
+        if (collider.tag == myColor.ToString() || collider.tag == "Free") {
             AddBrickToPlayer();
             var brick = collider.gameObject.GetComponent<Brick>();
             brick.Destroy();
@@ -66,7 +110,7 @@ public class BasePlayer : MonoBehaviour {
 
     protected void OnCollisionEnter(Collision collision) {
         if (collision.collider.gameObject.layer == LayerMask.NameToLayer("Stairs")) {
-            if (collision.gameObject.CompareTag(myColor.ToString())) { // FIXME:: Update to work with bots
+            if (collision.gameObject.CompareTag(myColor.ToString())) {
             } else {
                 if (countOfBricks.Count > 0)
                     AddBrickToBridge(collision.gameObject);

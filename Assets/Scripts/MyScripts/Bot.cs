@@ -28,8 +28,8 @@ public class Bot : BasePlayer {
         _agent.speed = 6f;
     }
 
-    void Update() {
-
+    new void Update() {
+        base.Update();
         // if (_agent.velocity != Vector3.zero)
         _rb.MoveRotation(Quaternion.LookRotation(_agent.velocity.normalized));
 
@@ -52,8 +52,9 @@ public class Bot : BasePlayer {
 
     IEnumerator CheckRemainingDistanceForBot() {
         while (true) {
+            UpdateDestination();
             // Check that we a in a last ladder, and switch agent destination to door
-            if (_currentBotState == BotState.TakeLadder && _agent.remainingDistance < 0.2f && _agent.destination != movePositionTransform.position) {
+            if (_agent.enabled && _currentBotState == BotState.TakeLadder && _agent.remainingDistance < 0.2f && _agent.destination != movePositionTransform.position) {
                 FindBestLadder();
             }
             yield return new WaitForSeconds(.4f);
@@ -62,13 +63,13 @@ public class Bot : BasePlayer {
 
 
     void UpdateDestination() {
-        _agent.destination = _currentTarget.position;
+        if (_agent.enabled && _currentTarget != null)
+            _agent.destination = _currentTarget.position;
     }
 
 
 
     new void OnTriggerEnter(Collider collider) {
-        // Debug.Log("Collision detected: " + collider.tag);
         if (collider.gameObject.layer == LayerMask.NameToLayer("Stairs")) {
             if (!collider.gameObject.CompareTag(myColor.ToString())) {
                 if (countOfBricks.Count > 0) {
@@ -78,7 +79,7 @@ public class Bot : BasePlayer {
                 }
             }
         } else {
-            if (collider.gameObject.tag == myColor.ToString()) {
+            if (collider.tag == myColor.ToString()) {
                 if (countOfBricks.Count > 5) {
                     _currentBotState = BotState.TakeLadder;
                     FindBestLadder();
@@ -97,9 +98,10 @@ public class Bot : BasePlayer {
         }
     }
 
-    public void Init(GameManager.MyColor color) {
-        myColor = color;
+    new public void Init(GameManager.MyColor color, Transform basePlatform) {
+        base.Init(color, basePlatform);
         StartCoroutine(FirstStart());
+        StartCoroutine(CheckRemainingDistanceForBot());
         // FindNearBrick();
 
     }
@@ -160,18 +162,6 @@ public class Bot : BasePlayer {
 
         }
 
-
-        // foreach (var brick in GameObject.FindGameObjectsWithTag(myColor.ToString())) { // Find near brick from all bricks with same tag
-        //     if (brick.GetComponent<Stair>() != null) continue; // I fuck this shit!!!!
-        //     if (brick == exceptBrick) continue;
-        //     // if (transform.position.y < brick.transform.position.y) continue;
-        //     var tempDistance = Vector3.Distance(transform.position, brick.transform.position);
-        //     if (tempDistance < nBrick.distance) {
-        //         nBrick.distance = tempDistance;
-        //         nBrick.transform = brick.transform;
-        //     }
-        // }
-
         _currentTarget = nBrick.transform;
         UpdateDestination();
     }
@@ -186,12 +176,10 @@ public class Bot : BasePlayer {
                                                 Vector3.Distance(ladder.checkPosition.position, transform.position),
                                                 ladder.GetCountByColorTag(myColor));
             if (nearLadder == null || (tempNearLadder.colorCount >= nearLadder.colorCount &&
-                                        tempNearLadder.transform.position.y > transform.position.y)) {
+                                        tempNearLadder.transform.position.y > transform.position.y && tempNearLadder.distance > 0.1)) {
                 nearLadder = tempNearLadder;
             }
         }
-        // transform.LookAt(nearLadder.transform.position);
-        // _agent.destination = nearLadder.transform.position;
         _currentTarget = nearLadder.transform;
         UpdateDestination();
     }

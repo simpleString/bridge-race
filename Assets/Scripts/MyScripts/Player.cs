@@ -15,7 +15,8 @@ public class Player : BasePlayer {
         _playerController = GetComponent<PlayerController>();
         base.Awake();
     }
-    void Update() {
+    new void Update() {
+        base.Update();
 #if UNITY_EDITOR
         var vertical = Input.GetAxis("Vertical");
         var horizontal = Input.GetAxis("Horizontal");

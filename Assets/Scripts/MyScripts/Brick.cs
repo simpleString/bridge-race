@@ -36,6 +36,7 @@ public class Brick : MonoBehaviour {
         isDead = true;
 
     }
+    
 
     public void Destroy() {
         // StartCoroutine(DeadTimer());

@@ -9,6 +9,7 @@ TagManager:
   - blue
   - black
   - platform
+  - Free
   layers:
   - Default
   - TransparentFX

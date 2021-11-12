@@ -19,7 +19,7 @@ public class Ladder : MonoBehaviour {
     public int GetCountByColorTag(GameManager.MyColor color) {
         var count = 0;
         foreach (Transform stair in _stairs) {
-            if (stair.tag == color.ToString()) {
+            if (stair.CompareTag(color.ToString())) {
                 count++;
             }
         }

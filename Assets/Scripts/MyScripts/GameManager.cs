@@ -39,6 +39,10 @@ public class GameManager : MonoBehaviour {
 
     public float xBrickOffset;
     public float yBrickOffset;
+    public float playersCollisionForce;
+    public float jumpTime;
+
+    public Transform basePlatform;
 
     public Bot botPrefab;
 
@@ -56,7 +60,7 @@ public class GameManager : MonoBehaviour {
 
         foreach (MyColor color in System.Enum.GetValues(typeof(MyColor))) {
             if (color == playerColor) {
-                Player.Instance.myColor = color;
+                Player.Instance.Init(color, basePlatform);
                 players.Add(Player.Instance);
                 continue;
             }
@@ -64,10 +68,8 @@ public class GameManager : MonoBehaviour {
             var newBot = Instantiate(botPrefab.gameObject, Vector3.up, Quaternion.identity);
             var newBotScript = newBot.GetComponent<Bot>();
             players.Add(newBotScript);
-            newBotScript.Init(color);
+            newBotScript.Init(color, basePlatform);
         }
-        Debug.Log("i'm here");
-        print(GameObject.FindObjectsOfType<BrickSpawner>().Length);
 
         foreach (var item in GameObject.FindObjectsOfType<BrickSpawner>()) {
             item.StartSpawn();
