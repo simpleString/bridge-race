@@ -21,6 +21,8 @@ public class Ladder : MonoBehaviour {
         foreach (Transform stair in _stairs) {
             if (stair.CompareTag(color.ToString())) {
                 count++;
+            } else if (!stair.CompareTag(MyConstants.TagNull)) {
+                count--;
             }
         }
         return count;

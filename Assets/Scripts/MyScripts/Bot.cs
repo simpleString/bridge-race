@@ -5,8 +5,8 @@ using UnityEngine.AI;
 
 public class Bot : BasePlayer {
     public Transform movePositionTransform;
-    NavMeshAgent _agent;
-    private Rigidbody _rb;
+
+    public int botBricksThreshold = 5;
 
     private bool _isFirstStart = true;
 
@@ -17,42 +17,47 @@ public class Bot : BasePlayer {
     }
     BotState _currentBotState = BotState.TakeBrick;
 
-    private NearBrick _currentBrickTarget;
 
     private Transform _currentTarget;
+
+
     new void Awake() {
+        actionPlayerLostBrick += OnBotLostBrick;
         base.Awake();
-        playerLostBrick += OnBotLostBrick;
-        _agent = GetComponent<NavMeshAgent>();
-        _rb = GetComponent<Rigidbody>();
-        _agent.speed = 6f;
     }
 
     new void Update() {
         base.Update();
-        // if (_agent.velocity != Vector3.zero)
-        _rb.MoveRotation(Quaternion.LookRotation(_agent.velocity.normalized));
 
+        // transform.rotation = Quaternion.LookRotation(new Vector3())
+    }
 
+    void FixedUpdate() {
 
-        float velocityZ = Vector3.Dot(_agent.velocity.normalized, transform.forward);
-        float velocityX = Vector3.Dot(_agent.velocity.normalized, transform.right);
-
-        _animator.SetFloat("VelocityZ", velocityZ, 0.1f, Time.deltaTime);
-        _animator.SetFloat("VelocityX", velocityX, 0.1f, Time.deltaTime);
+        // if (_movement.magnitude > 0) {
+        //     _movement.Normalize();
+        //     _movement *= _speed;
+        //     transform.rotation = Quaternion.LookRotation(new Vector3(_movement.x, 0, _movement.z));
+        // }
+        // _agent.Move(_movement * Time.deltaTime);
     }
 
     void OnBotLostBrick(GameManager.MyColor color) {
-        if (countOfBricks.Count < 1) {
+        if (bricks.Count < 1) {
             _currentBotState = BotState.TakeBrick;
             FindNearBrick();
         }
     }
 
+    void Start() {
+        _currentBotState = BotState.TakeBrick;
+        StartCoroutine(FirstStart());
+        StartCoroutine(CheckRemainingDistanceForBot());
+        StartCoroutine(UpdateDestination());
+    }
 
     IEnumerator CheckRemainingDistanceForBot() {
         while (true) {
-            UpdateDestination();
             // Check that we a in a last ladder, and switch agent destination to door
             if (_agent.enabled && _currentBotState == BotState.TakeLadder && _agent.remainingDistance < 0.2f && _agent.destination != movePositionTransform.position) {
                 FindBestLadder();
@@ -62,57 +67,46 @@ public class Bot : BasePlayer {
     }
 
 
-    void UpdateDestination() {
-        if (_agent.enabled && _currentTarget != null)
-            _agent.destination = _currentTarget.position;
-    }
+    IEnumerator UpdateDestination() {
+        while (true) {
+            if (_agent.enabled && _currentTarget != null) {
 
-
-
-    new void OnTriggerEnter(Collider collider) {
-        if (collider.gameObject.layer == LayerMask.NameToLayer("Stairs")) {
-            if (!collider.gameObject.CompareTag(myColor.ToString())) {
-                if (countOfBricks.Count > 0) {
-                    AddBrickToBridge(collider.gameObject);
-                } else {
-                    _agent.velocity = Vector3.zero;
-                }
+                _agent.destination = _currentTarget.position;
+                // transform.rotation = Quaternion.LookRotation(new Vector3(_currentTarget.position.x, 0, _currentTarget.position.z));
             }
-        } else {
-            if (collider.tag == myColor.ToString()) {
-                if (countOfBricks.Count > 5) {
-                    _currentBotState = BotState.TakeLadder;
-                    FindBestLadder();
-                } else {
-                    FindNearBrick(collider.gameObject);
-                }
-            }
-            base.OnTriggerEnter(collider);
+            yield return new WaitForSeconds(.4f);
         }
     }
 
-    new void OnCollisionEnter(Collision collision) {
-        if (collision.collider.gameObject.layer == LayerMask.NameToLayer("Stairs") && !collision.gameObject.CompareTag(myColor.ToString())) {
-            if (countOfBricks.Count > 0)
-                AddBrickToBridge(collision.gameObject);
+
+    private void OnTriggerEnter(Collider collider) {
+        if (collider.gameObject.layer == LayerMask.NameToLayer("Stairs") && !collider.CompareTag(color.ToString())) {
+            if (bricks.Count > 0)
+                AddBrickToBridge(collider.gameObject);
+            else {
+                // Don't let player go to stairs
+                _agent.velocity = Vector3.zero;
+                // _agent.Move(collider.gameObject.transform.right * collisionOffset);
+            }
+        } else if (collider.tag == "Player") {
+        } else if ((collider.tag == color.ToString() || collider.tag == "Free") && collider.gameObject.layer != LayerMask.NameToLayer("Stairs")) {
+            AddBrickToPlayer();
+            var brick = collider.gameObject.GetComponent<Brick>();
+            brick.Destroy();
+            if (bricks.Count > botBricksThreshold) {
+                _currentBotState = BotState.TakeLadder;
+                FindBestLadder();
+            } else {
+                FindNearBrick(brick.gameObject);
+            }
         }
     }
 
-    new public void Init(GameManager.MyColor color, Transform basePlatform) {
-        base.Init(color, basePlatform);
-        StartCoroutine(FirstStart());
-        StartCoroutine(CheckRemainingDistanceForBot());
-        // FindNearBrick();
-
-    }
 
     void FindNearBrick() {
-
         NearBrick nBrick = null;
-        Debug.Log("CurrentCount: " + GameObject.FindObjectsOfType<Brick>().Length);
         foreach (var brickScript in GameObject.FindObjectsOfType<Brick>()) {
-            if (brickScript.tag != myColor.ToString()) continue;
-            // if (transform.position.y < brickScript.transform.position.y) continue;
+            if (brickScript.tag != color.ToString()) continue;
             var tempDistance = Vector3.Distance(transform.position, brickScript.transform.position);
             if (nBrick == null || (tempDistance < nBrick.distance)) {
                 nBrick = new NearBrick
@@ -124,10 +118,7 @@ public class Bot : BasePlayer {
 
         }
         if (nBrick != null) {
-
             _currentTarget = nBrick.transform;
-            Debug.Log("_current Targer is: " + nBrick.transform);
-            UpdateDestination();
         }
     }
 
@@ -149,8 +140,7 @@ public class Bot : BasePlayer {
 
         foreach (var brickScript in GameObject.FindObjectsOfType<Brick>()) {
             if (brickScript.gameObject == exceptBrick) continue;
-            if (brickScript.tag != myColor.ToString()) continue;
-            // if (transform.position.y < brickScript.transform.position.y) continue;
+            if (brickScript.tag != color.ToString()) continue;
             var tempDistance = Vector3.Distance(transform.position, brickScript.transform.position);
             if (nBrick == null || (tempDistance < nBrick.distance)) {
                 nBrick = new NearBrick
@@ -163,7 +153,6 @@ public class Bot : BasePlayer {
         }
 
         _currentTarget = nBrick.transform;
-        UpdateDestination();
     }
 
     void FindBestLadder() {
@@ -171,22 +160,21 @@ public class Bot : BasePlayer {
         var ladders = GameObject.FindObjectsOfType<Ladder>();
         NearLadder nearLadder = null;
         foreach (var ladder in ladders) {
-            // Debug.Log("Color count: " + ladder.GetCountByColorTag(myColor));
             var tempNearLadder = new NearLadder(ladder.checkPosition,
                                                 Vector3.Distance(ladder.checkPosition.position, transform.position),
-                                                ladder.GetCountByColorTag(myColor));
+                                                ladder.GetCountByColorTag(color));
             if (nearLadder == null || (tempNearLadder.colorCount >= nearLadder.colorCount &&
-                                        tempNearLadder.transform.position.y > transform.position.y && tempNearLadder.distance > 0.1)) {
+                                        tempNearLadder.transform.position.y > transform.position.y &&
+                                        tempNearLadder.transform.position.y - 1 < nearLadder.transform.position.y)) {
                 nearLadder = tempNearLadder;
             }
         }
         _currentTarget = nearLadder.transform;
-        UpdateDestination();
     }
 
     class NearBrick {
         public Transform transform;
-        public float distance = 999999999f;
+        public float distance;
     }
 
     class NearLadder : NearBrick {

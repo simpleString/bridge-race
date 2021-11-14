@@ -496,15 +496,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fcd2bad81031ba043bc06eac70bbcc90, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  color: 0
   _speed: 3
-  isCanMove: 1
-  BrickHolder: {fileID: 7147466408836219590}
-  PortableBrickPrefab: {fileID: 5151990165357570883, guid: 79a1690dd2204244989126c2518f8fee,
+  brickHolder: {fileID: 7147466408836219590}
+  portableBrick: {fileID: 5151990165357570883, guid: 79a1690dd2204244989126c2518f8fee,
     type: 3}
-  myColor: 0
-  collisionOffset: 0.1
   movePositionTransform: {fileID: 5644942160148445460, guid: 1f446e6682f98ac438a0027c8ef0c74b,
     type: 3}
+  botBricksThreshold: 5
 --- !u!1 &2306760864508331333
 GameObject:
   m_ObjectHideFlags: 0

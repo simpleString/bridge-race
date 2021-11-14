@@ -36,10 +36,6 @@ public class GameManager : MonoBehaviour {
     public List<BasePlayer> players = new List<BasePlayer>();
 
     public MyColor playerColor = MyColor.blue;  // TODO:: Need to set by user!!!
-
-    public float xBrickOffset;
-    public float yBrickOffset;
-    public float playersCollisionForce;
     public float jumpTime;
 
     public Transform basePlatform;
@@ -60,7 +56,7 @@ public class GameManager : MonoBehaviour {
 
         foreach (MyColor color in System.Enum.GetValues(typeof(MyColor))) {
             if (color == playerColor) {
-                Player.Instance.Init(color, basePlatform);
+                // Player.Instance.Init(color, basePlatform);
                 players.Add(Player.Instance);
                 continue;
             }
@@ -68,14 +64,9 @@ public class GameManager : MonoBehaviour {
             var newBot = Instantiate(botPrefab.gameObject, Vector3.up, Quaternion.identity);
             var newBotScript = newBot.GetComponent<Bot>();
             players.Add(newBotScript);
-            newBotScript.Init(color, basePlatform);
+            // newBotScript.Init(color, basePlatform);
+            newBotScript.color = color;
         }
-
-        foreach (var item in GameObject.FindObjectsOfType<BrickSpawner>()) {
-            item.StartSpawn();
-        }
-
-
 
     }
 
