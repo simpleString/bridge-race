@@ -11,32 +11,9 @@ public class Player : BasePlayer {
     ///////////////////////////////////
 
 
-    public float brickForce = 100f;
+
 
     public float collisionOffset = .1f;
-
-
-    protected void CheckPlayerCollision(Collider collider) {
-        var otherBasePlayerScript = collider.GetComponent<BasePlayer>();
-        if (otherBasePlayerScript.bricks.Count > bricks.Count) {
-            DropBricks();
-        }
-    }
-
-    private void DropBricks() {
-        foreach (var brick in bricks) {
-            Debug.Log("i'm here");
-            brick.GetComponent<Brick>().Init(GameManager.MyColor.black, 0, 0);
-            brick.GetComponent<Collider>().isTrigger = false;
-            brick.tag = "test";
-            brick.transform.parent = null;
-            var rb = brick.gameObject.AddComponent<Rigidbody>();
-            rb.AddForce(new Vector3(Random.Range(-2f, 3f), Random.Range(0, 3f), Random.Range(-2f, 3f)) * brickForce);
-            actionPlayerLostBrick?.Invoke(color);
-        }
-        bricks.Clear();
-
-    }
 
 
     private void OnTriggerEnter(Collider collider) {
@@ -48,11 +25,10 @@ public class Player : BasePlayer {
                 _agent.Move(collider.gameObject.transform.right * collisionOffset);
             }
         } else if (collider.tag == "Player") {
+            Debug.Log("im's here");
             CheckPlayerCollision(collider);
         } else if ((collider.tag == color.ToString() || collider.tag == "Free") && collider.gameObject.layer != LayerMask.NameToLayer("Stairs")) {
-            AddBrickToPlayer();
-            var brick = collider.gameObject.GetComponent<Brick>();
-            brick.Destroy();
+            AddBrickToPlayer(collider.gameObject);
         }
     }
 
@@ -90,7 +66,7 @@ public class Player : BasePlayer {
     }
 
     void FixedUpdate() {
-
+        if (!_agent.enabled) return;
         // Debug.Log(_characterController.transform.position);
         if (_movement.magnitude > 0) {
             _movement.Normalize();

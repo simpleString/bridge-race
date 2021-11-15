@@ -36,7 +36,6 @@ public class GameManager : MonoBehaviour {
     public List<BasePlayer> players = new List<BasePlayer>();
 
     public MyColor playerColor = MyColor.blue;  // TODO:: Need to set by user!!!
-    public float jumpTime;
 
     public Transform basePlatform;
 
@@ -44,7 +43,10 @@ public class GameManager : MonoBehaviour {
 
     public static GameManager Instance;
 
+    public UI.MainUI managerUI;
+
     void Awake() {
+        Time.timeScale = 1;
         if (Instance != null) {
             DestroyImmediate(this);
         }
@@ -71,10 +73,13 @@ public class GameManager : MonoBehaviour {
     }
 
     public void GameOver() {
-
     }
 
-    public void GameWin() {
-
+    public void GameWin(GameObject player) {
+        if (player.GetComponent<BasePlayer>().color == playerColor) {
+            managerUI.OnWinTrigger();
+        } else {
+            managerUI.OnLoseTrigger();
+        }
     }
 }

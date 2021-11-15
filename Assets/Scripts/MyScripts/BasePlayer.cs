@@ -2,6 +2,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 using UnityEngine.AI;
+using Random = UnityEngine.Random;
+using System.Collections;
 
 public class BasePlayer : MonoBehaviour {
     public GameManager.MyColor color;
@@ -18,10 +20,17 @@ public class BasePlayer : MonoBehaviour {
     public Transform portableBrick;
     protected NavMeshAgent _agent;
 
+    private Rigidbody _rb;
+
+    public float brickForce = 100f;
+
+    public float playerForce = 100f;
 
     protected void Awake() {
         _animator = GetComponent<Animator>();
         _agent = GetComponent<NavMeshAgent>();
+        _rb = GetComponent<Rigidbody>();
+        _agent.autoTraverseOffMeshLink = false;
     }
 
     protected void Update() {
@@ -43,7 +52,10 @@ public class BasePlayer : MonoBehaviour {
     }
 
 
-    protected void AddBrickToPlayer() {
+    protected void AddBrickToPlayer(GameObject brick) {
+        var brickScript = brick.GetComponent<Brick>();
+        if (!brickScript.isPickable) return;
+        brickScript.Destroy();
         var newPortableBrick = Instantiate(portableBrick, new Vector3(
             brickHolder.position.x,
             brickHolder.position.y + portableBrick.GetComponent<Renderer>().bounds.size.y * bricks.Count,
@@ -53,5 +65,38 @@ public class BasePlayer : MonoBehaviour {
         newPortableBrick.GetComponent<Renderer>().material.color = GameManager.GetUnityColorByMyColor(color);
         newPortableBrick.parent = brickHolder;
         bricks.Push(newPortableBrick);
+    }
+
+
+    protected void CheckPlayerCollision(Collider collider) {
+        var otherBasePlayerScript = collider.GetComponent<BasePlayer>();
+        if (otherBasePlayerScript.bricks.Count > bricks.Count) {
+            DropBricks();
+            StartCoroutine(KickPlayer());
+        }
+    }
+
+    private void DropBricks() {
+        foreach (var brick in bricks) {
+            Debug.Log("i'm here");
+            brick.GetComponent<Brick>().InitAfterDrop(GameManager.MyColor.black);
+            brick.GetComponent<Collider>().isTrigger = false;
+            brick.tag = "Free";
+            brick.transform.parent = null;
+            var rb = brick.gameObject.AddComponent<Rigidbody>();
+            rb.AddForce(new Vector3(Random.Range(-2f, 3f), Random.Range(0, 3f), Random.Range(-2f, 3f)) * brickForce);
+            actionPlayerLostBrick?.Invoke(color);
+        }
+        bricks.Clear();
+
+    }
+
+    private IEnumerator KickPlayer() {
+        _agent.enabled = false;
+        _agent.isStopped = true;
+        _rb.AddForce(new Vector3(transform.forward.x, 10, transform.forward.z) * playerForce);
+        yield return new WaitForSeconds(.5f);
+        _agent.isStopped = false;
+        _agent.enabled = true;
     }
 }

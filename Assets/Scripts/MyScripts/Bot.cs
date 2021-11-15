@@ -89,15 +89,17 @@ public class Bot : BasePlayer {
                 // _agent.Move(collider.gameObject.transform.right * collisionOffset);
             }
         } else if (collider.tag == "Player") {
+            CheckPlayerCollision(collider);
+            if (bricks.Count < 1) {
+                FindNearBrick();
+            }
         } else if ((collider.tag == color.ToString() || collider.tag == "Free") && collider.gameObject.layer != LayerMask.NameToLayer("Stairs")) {
-            AddBrickToPlayer();
-            var brick = collider.gameObject.GetComponent<Brick>();
-            brick.Destroy();
+            AddBrickToPlayer(collider.gameObject);
             if (bricks.Count > botBricksThreshold) {
                 _currentBotState = BotState.TakeLadder;
                 FindBestLadder();
             } else {
-                FindNearBrick(brick.gameObject);
+                FindNearBrick(collider.gameObject);
             }
         }
     }
