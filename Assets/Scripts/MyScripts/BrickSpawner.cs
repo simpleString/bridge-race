@@ -7,8 +7,6 @@ using Random = UnityEngine.Random;
 
 public class BrickSpawner : MonoBehaviour {
     public Transform brickPrefab; // prefab of brick whitch used by spawner
-
-    public Transform spawnPool;
     public Transform basePool;
 
     public float xUserOffset; // additional user offset between brick
@@ -55,9 +53,9 @@ public class BrickSpawner : MonoBehaviour {
 
     void InitBricks() {
 
-        _lengthX = (float)Math.Round(spawnPool.GetComponent<Renderer>().bounds.size.x, 2);
-        _lengthY = (float)Math.Round(spawnPool.GetComponent<Renderer>().bounds.size.z, 2);
-        _lengthZ = (float)Math.Round(spawnPool.GetComponent<Renderer>().bounds.size.y, 2);
+        _lengthX = (float)Math.Round(GetComponent<Renderer>().bounds.size.x, 2);
+        _lengthY = (float)Math.Round(GetComponent<Renderer>().bounds.size.z, 2);
+        _lengthZ = (float)Math.Round(GetComponent<Renderer>().bounds.size.y, 2);
 
 
         _offsetY = (float)Math.Round(brickPrefab.GetComponent<Renderer>().bounds.size.z, 2);
@@ -103,9 +101,9 @@ public class BrickSpawner : MonoBehaviour {
 
                 Transform newBrick = Instantiate(brickPrefab,
                                     new Vector3(
-                                        spawnPool.localPosition.x - _lengthX / 2f + randomPosition.x * (_offsetX + xUserOffset),
+                                        transform.position.x - _lengthX / 2f + randomPosition.x * (_offsetX + xUserOffset),
                                         basePool.position.y + _lengthZ / 3f,
-                                        spawnPool.localPosition.z - _lengthY / 2f + randomPosition.y * (_offsetY + yUserOffset)),
+                                        transform.position.z - _lengthY / 2f + randomPosition.y * (_offsetY + yUserOffset)),
                                         Quaternion.identity
                                     );
                 newBrick.parent = basePool;

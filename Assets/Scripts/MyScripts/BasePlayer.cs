@@ -21,15 +21,17 @@ public class BasePlayer : MonoBehaviour {
     protected NavMeshAgent _agent;
 
     private Rigidbody _rb;
+    private Collider _collider;
 
     public float brickForce = 100f;
 
-    public float playerForce = 100f;
+    public float playerForce = 1000f;
 
     protected void Awake() {
         _animator = GetComponent<Animator>();
         _agent = GetComponent<NavMeshAgent>();
         _rb = GetComponent<Rigidbody>();
+        _collider = GetComponent<Collider>();
         _agent.autoTraverseOffMeshLink = false;
     }
 
@@ -92,11 +94,17 @@ public class BasePlayer : MonoBehaviour {
     }
 
     private IEnumerator KickPlayer() {
-        _agent.enabled = false;
-        _agent.isStopped = true;
-        _rb.AddForce(new Vector3(transform.forward.x, 10, transform.forward.z) * playerForce);
-        yield return new WaitForSeconds(.5f);
-        _agent.isStopped = false;
-        _agent.enabled = true;
+        // TODO:: Need's set jump force and add checking onFloor trigger!!!
+        // _agent.isStopped = true;
+        // _agent.enabled = false;
+        // _rb.isKinematic = false;
+        // _collider.isTrigger = false;
+        // _rb.AddForce(new Vector3(transform.forward.x, 10, transform.forward.z) * playerForce);
+        // yield return new WaitForSeconds(1f);
+        // _collider.isTrigger = true;
+        // _rb.isKinematic = true;
+        // _agent.enabled = true;
+        // _agent.isStopped = false;
+        yield return null;
     }
 }

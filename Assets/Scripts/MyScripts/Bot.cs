@@ -4,7 +4,6 @@ using UnityEngine;
 using UnityEngine.AI;
 
 public class Bot : BasePlayer {
-    public Transform movePositionTransform;
 
     public int botBricksThreshold = 5;
 
@@ -59,7 +58,7 @@ public class Bot : BasePlayer {
     IEnumerator CheckRemainingDistanceForBot() {
         while (true) {
             // Check that we a in a last ladder, and switch agent destination to door
-            if (_agent.enabled && _currentBotState == BotState.TakeLadder && _agent.remainingDistance < 0.2f && _agent.destination != movePositionTransform.position) {
+            if (_agent.enabled && _currentBotState == BotState.TakeLadder && _agent.remainingDistance < 0.2f) {
                 FindBestLadder();
             }
             yield return new WaitForSeconds(.4f);
@@ -165,9 +164,12 @@ public class Bot : BasePlayer {
             var tempNearLadder = new NearLadder(ladder.checkPosition,
                                                 Vector3.Distance(ladder.checkPosition.position, transform.position),
                                                 ladder.GetCountByColorTag(color));
+            Debug.Log("Ladder position " + tempNearLadder.transform.position);
+            Debug.Log("Bot Position " + transform.position.y); // Fix it. It cam pick first ladder where already has bricks.
+            // TODO:: Fix bots bug when they stop on second floor. It's fixed by set nearLadder to final position!!!
             if (nearLadder == null || (tempNearLadder.colorCount >= nearLadder.colorCount &&
-                                        tempNearLadder.transform.position.y > transform.position.y &&
-                                        tempNearLadder.transform.position.y - 1 < nearLadder.transform.position.y)) {
+                                        tempNearLadder.transform.position.y - 1 > transform.position.y &&
+                                        tempNearLadder.transform.position.y <= nearLadder.transform.position.y)) {
                 nearLadder = tempNearLadder;
             }
         }
