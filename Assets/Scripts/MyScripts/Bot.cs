@@ -164,8 +164,7 @@ public class Bot : BasePlayer {
             var tempNearLadder = new NearLadder(ladder.checkPosition,
                                                 Vector3.Distance(ladder.checkPosition.position, transform.position),
                                                 ladder.GetCountByColorTag(color));
-            Debug.Log("Ladder position " + tempNearLadder.transform.position);
-            Debug.Log("Bot Position " + transform.position.y); // Fix it. It cam pick first ladder where already has bricks.
+            // Fix it. It cam pick first ladder where already has bricks.
             // TODO:: Fix bots bug when they stop on second floor. It's fixed by set nearLadder to final position!!!
             if (nearLadder == null || (tempNearLadder.colorCount >= nearLadder.colorCount &&
                                         tempNearLadder.transform.position.y - 1 > transform.position.y &&

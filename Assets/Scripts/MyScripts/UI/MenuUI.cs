@@ -6,7 +6,7 @@ namespace UI {
     public class MenuUI : MonoBehaviour {
 
         public void OnPlayButtonClicked() {
-            SceneManager.LoadScene("SampleScene");
+            SceneManager.LoadScene("Game");
         }
 
         public void OnExitButtonClicked() {

@@ -38,7 +38,7 @@ namespace UI {
         }
 
         public void OnPlayAgainButtonClicked() {
-            SceneManager.LoadScene("SampleScene");
+            SceneManager.LoadScene("Game");
         }
     }
 }
