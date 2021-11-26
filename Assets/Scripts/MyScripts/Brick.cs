@@ -34,7 +34,8 @@ public class Brick : MonoBehaviour {
     }
 
     private void OnCollisionEnter(Collision collision) {
-        if (collision.gameObject.layer == LayerMask.NameToLayer("platform"))
+        Debug.Log(collision.gameObject.layer);
+        if (collision.gameObject.layer != LayerMask.NameToLayer("platform"))
             isPickable = true;
     }
 

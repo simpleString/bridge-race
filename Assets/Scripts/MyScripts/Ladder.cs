@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class Ladder : MonoBehaviour {
@@ -26,5 +27,14 @@ public class Ladder : MonoBehaviour {
             }
         }
         return count;
+    }
+
+    public int GetCountAnotherColorByTag(GameManager.MyColor color) {
+        var count = 0;
+        var colors = new Dictionary<string, int>();
+        foreach (Transform stair in _stairs) {
+            colors[stair.tag]++;
+        }
+        return colors.Values.Max();
     }
 }

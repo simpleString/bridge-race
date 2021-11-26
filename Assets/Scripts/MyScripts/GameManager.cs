@@ -57,6 +57,7 @@ public class GameManager : MonoBehaviour {
     public static GameManager Instance;
 
     public UI.MainUI managerUI;
+    public float enemyBullingThreshold = 2; // collider radius multiplier for player bulling
 
     void Awake() {
         Time.timeScale = 1;
