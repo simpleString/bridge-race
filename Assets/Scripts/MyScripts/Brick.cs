@@ -10,8 +10,6 @@ public class Brick : MonoBehaviour {
     public int x;
     public int y;
 
-    public bool isDead = false;
-
     public bool isPickable = true;
 
     public System.Action<Brick> onDestroy;
@@ -32,26 +30,17 @@ public class Brick : MonoBehaviour {
         tag = color.ToString();
         _material.color = GameManager.GetUnityColorByMyColor(color);
         isPickable = false;
-        StartCoroutine(BrickPickTimer());
 
     }
 
-    private IEnumerator BrickPickTimer() {
-        yield return new WaitForSeconds(3f);
-        isPickable = true;
-    }
-
-    IEnumerator DeadTimer() {
-        yield return new WaitForSeconds(2f);
-        isDead = true;
-
+    private void OnCollisionEnter(Collision collision) {
+        if (collision.gameObject.layer == LayerMask.NameToLayer("platform"))
+            isPickable = true;
     }
 
 
     public void Destroy() {
-        // StartCoroutine(DeadTimer());
         Destroy(this.gameObject);
-        // onDestroy?.Invoke(this);
     }
 }
 

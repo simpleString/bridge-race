@@ -80,7 +80,6 @@ public class BasePlayer : MonoBehaviour {
 
     private void DropBricks() {
         foreach (var brick in bricks) {
-            Debug.Log("i'm here");
             brick.GetComponent<Brick>().InitAfterDrop(GameManager.MyColor.black);
             brick.GetComponent<Collider>().isTrigger = false;
             brick.tag = "Free";
