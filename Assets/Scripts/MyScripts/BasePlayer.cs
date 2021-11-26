@@ -4,6 +4,7 @@ using System;
 using UnityEngine.AI;
 using Random = UnityEngine.Random;
 using System.Collections;
+using static GameManager;
 
 public class BasePlayer : MonoBehaviour {
     public GameManager.MyColor color;
@@ -11,6 +12,8 @@ public class BasePlayer : MonoBehaviour {
     public Action<GameManager.MyColor> actionPlayerLostBrick;
     public Action<BasePlayer> actionPlayerDead;
 
+
+    private bool _isDoubleBonusActive = false;
 
     [SerializeField] protected float _speed = 5f;
 
@@ -21,7 +24,7 @@ public class BasePlayer : MonoBehaviour {
     protected NavMeshAgent _agent;
 
     private Rigidbody _rb;
-    private Collider _collider;
+    private CapsuleCollider _collider;
 
     public float brickForce = 100f;
 
@@ -31,7 +34,7 @@ public class BasePlayer : MonoBehaviour {
         _animator = GetComponent<Animator>();
         _agent = GetComponent<NavMeshAgent>();
         _rb = GetComponent<Rigidbody>();
-        _collider = GetComponent<Collider>();
+        _collider = GetComponent<CapsuleCollider>();
         _agent.autoTraverseOffMeshLink = false;
     }
 
@@ -67,6 +70,18 @@ public class BasePlayer : MonoBehaviour {
         newPortableBrick.GetComponent<Renderer>().material.color = GameManager.GetUnityColorByMyColor(color);
         newPortableBrick.parent = brickHolder;
         bricks.Push(newPortableBrick);
+        //FIXME:: WFT???
+        if (_isDoubleBonusActive) {
+            newPortableBrick = Instantiate(portableBrick, new Vector3(
+            brickHolder.position.x,
+            brickHolder.position.y + portableBrick.GetComponent<Renderer>().bounds.size.y * bricks.Count,
+            brickHolder.position.z
+        ), Quaternion.Euler(Vector3.down));
+            newPortableBrick.tag = MyConstants.TagNull; // it's save us from bugs, but it's not required
+            newPortableBrick.GetComponent<Renderer>().material.color = GameManager.GetUnityColorByMyColor(color);
+            newPortableBrick.parent = brickHolder;
+            bricks.Push(newPortableBrick);
+        }
     }
 
 
@@ -90,6 +105,68 @@ public class BasePlayer : MonoBehaviour {
         }
         bricks.Clear();
 
+    }
+
+
+    public void GetBunusEffect(BonusType bonusType) {
+        switch (bonusType) {
+            case BonusType.Magnet:
+                StartCoroutine(MagnetPlayer());
+                break;
+            case BonusType.Freeze:
+                foreach (var player in GameManager.Instance.players) {
+                    if (player != this) {
+                        player.FreezePlayer();
+                    }
+                }
+                break;
+            case BonusType.Double:
+                StartCoroutine(DoublePlayer());
+                break;
+            case BonusType.Speed:
+                StartCoroutine(SpeedPlayer());
+                break;
+        }
+    }
+
+    public void FreezePlayer() {
+        StartCoroutine(Freezing());
+
+        IEnumerator Freezing() {
+            _agent.enabled = false;
+            yield return new WaitForSeconds(GameManager.Instance.bonusTime);
+            _agent.enabled = true;
+        }
+    }
+
+    public IEnumerator SpeedPlayer() {
+        Player playerThis = null;
+        if (this is Player) {
+            playerThis = (Player)this;
+            playerThis.collisionOffset *= 2;
+        }
+        _speed *= 2;
+
+        yield return new WaitForSeconds(GameManager.Instance.bonusTime);
+        _speed /= 2;
+        if (playerThis != null) {
+            playerThis.collisionOffset /= 2;
+        }
+        yield return null;
+    }
+
+    public IEnumerator DoublePlayer() {
+        _isDoubleBonusActive = true;
+        yield return new WaitForSeconds(GameManager.Instance.bonusTime);
+        _isDoubleBonusActive = false;
+    }
+
+    public IEnumerator MagnetPlayer() {
+        // FIXME:: now it's increase main collider. NEeds add another collider for picking bricks
+        var initRadius = _collider.radius;
+        _collider.radius *= 2;
+        yield return new WaitForSeconds(GameManager.Instance.bonusTime);
+        _collider.radius = initRadius;
     }
 
     private IEnumerator KickPlayer() {

@@ -100,6 +100,10 @@ public class Bot : BasePlayer {
             } else {
                 FindNearBrick(collider.gameObject);
             }
+        } else if (collider.CompareTag("Bonus")) {
+            var bonusScript = collider.GetComponent<Bonus>();
+            GetBunusEffect(bonusScript.type);
+            bonusScript.Destory();
         }
     }
 

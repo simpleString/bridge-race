@@ -6,6 +6,9 @@ using Random = UnityEngine.Random;
 
 
 public class BrickSpawner : MonoBehaviour {
+
+    public List<Transform> bonusPlaces; // places where can spawn bonuses
+
     public Transform brickPrefab; // prefab of brick whitch used by spawner
     public Transform basePool;
 
@@ -48,6 +51,7 @@ public class BrickSpawner : MonoBehaviour {
             isActive = true;
             InitBricks();
             UpdateBricksArray();
+            StartCoroutine(GenerateBonus());
         }
     }
 
@@ -119,5 +123,25 @@ public class BrickSpawner : MonoBehaviour {
 
         var color = (GameManager.MyColor)colorInt;
         brick.Init(color, x, y);
+    }
+
+    // Generate bonus. Now it's generate only one bonus per platform
+    IEnumerator GenerateBonus() {
+        bool isGiveBonus = false;
+        while (!isGiveBonus) {
+            if (_currentPlayersOnSpawner.Count > 2) {
+                // get place for bonus
+                var place = bonusPlaces[Random.Range(0, bonusPlaces.Count)];
+                // get random bonus
+                if (place == null) isGiveBonus = true; // If platform without places don't generate bonuses for it
+                var bonus = GameManager.Instance.bonuses[Random.Range(0, GameManager.Instance.bonuses.Count)];
+                // var bonus = GameManager.Instance.bonuses[Random.Range(1, 1)];
+                isGiveBonus = true;
+                Debug.Log("imfdskjlfsdjk");
+                var newBonus = Instantiate(bonus, place);
+            }
+            yield return new WaitForSeconds(1f);
+        }
+
     }
 }

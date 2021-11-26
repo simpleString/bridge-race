@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &2787363456769634223
+--- !u!1 &3964817935141912293
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,49 +8,49 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 2787363456769634208}
-  - component: {fileID: 2787363456769634212}
-  - component: {fileID: 2787363456769634211}
-  - component: {fileID: 2787363456769634210}
-  - component: {fileID: 2787363456769634209}
+  - component: {fileID: 4345424208156386399}
+  - component: {fileID: 856202752987261946}
+  - component: {fileID: 3171977349651799856}
+  - component: {fileID: 4306766387930858410}
+  - component: {fileID: 1675663988274753182}
   m_Layer: 0
-  m_Name: BrickSpawner
-  m_TagString: Untagged
+  m_Name: Snowflake
+  m_TagString: Bonus
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &2787363456769634208
+--- !u!4 &4345424208156386399
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2787363456769634223}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.3, y: 0, z: -0.56}
-  m_LocalScale: {x: 17.30216, y: 1, z: 17.65321}
+  m_GameObject: {fileID: 3964817935141912293}
+  m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!33 &2787363456769634212
+--- !u!33 &856202752987261946
 MeshFilter:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2787363456769634223}
-  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
---- !u!23 &2787363456769634211
+  m_GameObject: {fileID: 3964817935141912293}
+  m_Mesh: {fileID: -2687483342731999757, guid: eeaaf35bd894d0b41a0c2c2051bff937, type: 3}
+--- !u!23 &3171977349651799856
 MeshRenderer:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2787363456769634223}
+  m_GameObject: {fileID: 3964817935141912293}
   m_Enabled: 1
-  m_CastShadows: 3
+  m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
   m_MotionVectors: 1
@@ -61,7 +61,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 5916704789616494275, guid: eeaaf35bd894d0b41a0c2c2051bff937, type: 3}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -83,35 +83,30 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!114 &2787363456769634210
+--- !u!114 &4306766387930858410
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2787363456769634223}
+  m_GameObject: {fileID: 3964817935141912293}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3be9f080d077ab24aa52650754d2aead, type: 3}
+  m_Script: {fileID: 11500000, guid: 8f1a17221175da14fa084c41c22c40d2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bonusPlaces: []
-  brickPrefab: {fileID: 5151990165357570883, guid: 79a1690dd2204244989126c2518f8fee,
-    type: 3}
-  basePool: {fileID: 0}
-  xUserOffset: 1.5
-  yUserOffset: 1.5
-  isActive: 0
---- !u!65 &2787363456769634209
-BoxCollider:
+  type: 1
+--- !u!136 &1675663988274753182
+CapsuleCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2787363456769634223}
+  m_GameObject: {fileID: 3964817935141912293}
   m_Material: {fileID: 0}
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1.0000001, y: 1, z: 0.99999994}
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Radius: 0.37626183
+  m_Height: 0.7525234
+  m_Direction: 1
+  m_Center: {x: -0.00014676154, y: -0.0028960854, z: -0.0005068481}

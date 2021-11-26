@@ -25,10 +25,13 @@ public class Player : BasePlayer {
                 _agent.Move(collider.gameObject.transform.right * collisionOffset);
             }
         } else if (collider.tag == "Player") {
-            Debug.Log("im's here");
             CheckPlayerCollision(collider);
         } else if ((collider.tag == color.ToString() || collider.tag == "Free") && collider.gameObject.layer != LayerMask.NameToLayer("Stairs")) {
             AddBrickToPlayer(collider.gameObject);
+        } else if (collider.CompareTag("Bonus")) {
+            var bonusScript = collider.GetComponent<Bonus>();
+            GetBunusEffect(bonusScript.type);
+            bonusScript.Destory();
         }
     }
 

@@ -10,6 +10,11 @@ TagManager:
   - black
   - platform
   - Free
+  - Stop
+  - Esquina
+  - Marcador
+  - Blocks
+  - Bonus
   layers:
   - Default
   - TransparentFX

@@ -6,12 +6,25 @@ public class GameManager : MonoBehaviour {
 
     public int playersCount = 3;
 
+    public float bonusTime = 5f;
+
+
     public enum MyColor {
         green,
         blue,
         red,
         black
     }
+
+    public enum BonusType {
+        Magnet,
+        Freeze,
+        Double,
+        Speed,
+
+    }
+
+    public List<Transform> bonuses;
 
     public static Color GetUnityColorByMyColor(MyColor color) {
         switch (color) {
@@ -82,4 +95,7 @@ public class GameManager : MonoBehaviour {
             managerUI.OnLoseTrigger();
         }
     }
+
+
+
 }
