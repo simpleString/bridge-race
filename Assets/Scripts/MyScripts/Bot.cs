@@ -24,22 +24,14 @@ public class Bot : BasePlayer {
     new void Awake() {
         actionPlayerLostBrick += OnBotLostBrick;
         base.Awake();
+        _agent.angularSpeed = 2000f; // TODO:: check it out
     }
 
     new void Update() {
         base.Update();
 
-        // transform.rotation = Quaternion.LookRotation(new Vector3())
-    }
 
-    void FixedUpdate() {
 
-        // if (_movement.magnitude > 0) {
-        //     _movement.Normalize();
-        //     _movement *= _speed;
-        //     transform.rotation = Quaternion.LookRotation(new Vector3(_movement.x, 0, _movement.z));
-        // }
-        // _agent.Move(_movement * Time.deltaTime);
     }
 
     void OnBotLostBrick(GameManager.MyColor color) {
@@ -54,7 +46,7 @@ public class Bot : BasePlayer {
         StartCoroutine(FirstStart());
         StartCoroutine(CheckRemainingDistanceForBot());
         StartCoroutine(UpdateDestination());
-        StartCoroutine(CheckEnemiesBricks());
+
     }
 
     struct PlayerScriptAndDistancePlusTranform {
@@ -82,6 +74,7 @@ public class Bot : BasePlayer {
 
             foreach (var player in GameManager.Instance.players) {
                 // TODO:: Check that it's correct way to compare objects
+                if (player == null) continue;
                 if (player.gameObject != this.gameObject) {
                     var distance = Vector3.Distance(this.transform.position, player.transform.position);
                     if (distance < GameManager.Instance.enemyBullingThreshold) {
@@ -148,9 +141,7 @@ public class Bot : BasePlayer {
     IEnumerator UpdateDestination() {
         while (true) {
             if (_agent.enabled && _currentTarget != null) {
-
                 _agent.destination = _currentTarget.position;
-                // transform.rotation = Quaternion.LookRotation(new Vector3(_currentTarget.position.x, 0, _currentTarget.position.z));
             }
             yield return new WaitForSeconds(.4f);
         }
@@ -220,6 +211,7 @@ public class Bot : BasePlayer {
             }
             yield return new WaitForSeconds(.1f);
         }
+        StartCoroutine(CheckEnemiesBricks());
         yield return null;
     }
 

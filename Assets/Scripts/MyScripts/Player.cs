@@ -18,17 +18,20 @@ public class Player : BasePlayer {
 
     private void OnTriggerEnter(Collider collider) {
         if (collider.gameObject.layer == LayerMask.NameToLayer("Stairs") && !collider.CompareTag(color.ToString())) {
-            if (bricks.Count > 0)
+            if (bricks.Count > 0) {
+                GameManager.Vibrate();
                 AddBrickToBridge(collider.gameObject);
-            else {
+            } else {
                 // Don't let player go to stairs
                 _agent.Move(collider.gameObject.transform.right * collisionOffset);
             }
         } else if (collider.tag == "Player") {
             CheckPlayerCollision(collider);
         } else if ((collider.tag == color.ToString() || collider.tag == "Free") && collider.gameObject.layer != LayerMask.NameToLayer("Stairs")) {
+            GameManager.Vibrate();
             AddBrickToPlayer(collider.gameObject);
         } else if (collider.CompareTag("Bonus")) {
+            GameManager.Vibrate();
             var bonusScript = collider.GetComponent<Bonus>();
             GetBunusEffect(bonusScript.type);
             bonusScript.Destory();
