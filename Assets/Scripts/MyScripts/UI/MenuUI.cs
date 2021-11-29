@@ -8,9 +8,8 @@ namespace UI {
 
         public GameObject SettingsMenu;
         public GameObject MainMenu;
-
-        public Image VolumeImageObject;
-        public Image VibrateImageObject;
+        public GameObject ShopMenu;
+        
 
 
         void Awake() {
@@ -31,13 +30,12 @@ namespace UI {
             MainMenu.SetActive(true);
         }
 
-        public void OnVolumeButtonClicked() {
-            // VolumeSprite.GetComponent<Image
+        public void OnShopButtonClicked()
+        {
+            MainMenu.SetActive(false);
+            ShopMenu.SetActive(true);
         }
 
-        public void OnVibrateButtonClicked() {
-
-        }
     }
 }
 

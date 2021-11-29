@@ -247,6 +247,7 @@
               </e>
               <e p="MainUI.cs" t="Include" />
               <e p="MenuUI.cs" t="Include" />
+              <e p="ShopMenu.cs" t="Include" />
             </e>
             <e p="WinZone.cs" t="Include" />
           </e>

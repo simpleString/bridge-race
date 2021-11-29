@@ -16,74 +16,25 @@
         <item name="GROUP_NODE:origin" type="e8cecc67:BranchNodeDescriptor" />
       </path>
     </expand>
-    <select />
+    <select>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="LOCAL_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="BRANCH:git" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+    </select>
   </component>
   <component name="ChangeListManager">
     <list default="true" id="06d18977-fa0e-43c1-8d22-cdfdeb726e68" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/Assets/Animations/MainController.controller" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Animations/MainController.controller.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Assets Store Packages/LaserBeam.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Assets Store Packages/LaserBeam/LaserBeam HardEdges.mat" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Assets Store Packages/LaserBeam/LaserBeam HardEdges.mat.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Assets Store Packages/LaserBeam/LaserBeam.mat" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Assets Store Packages/LaserBeam/LaserBeam.mat.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Assets Store Packages/LaserBeam/LaserBeam.shader" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Assets Store Packages/LaserBeam/LaserBeam.shader.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Assets Store Packages/LaserBeam/LaserBeam.tif" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Assets Store Packages/LaserBeam/LaserBeam.tif.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Assets Store Packages/LaserBeam/LaserBeamEmitter.prefab" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Assets Store Packages/LaserBeam/LaserBeamEmitter.prefab.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Assets Store Packages/LaserBeam/LaserBeamHardEdges.shader" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Assets Store Packages/LaserBeam/LaserBeamHardEdges.shader.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/MyModels.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/MyModels/CH_Stickman.fbx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/MyModels/CH_Stickman.fbx.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/MyModels/Fast Run.fbx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/MyModels/Fast Run.fbx.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/MyModels/Idle.fbx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/MyModels/Idle.fbx.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/MyModels/Kick.fbx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/MyModels/Kick.fbx.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/MyScripts/Store.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/MyScripts/Store.cs.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/MyScripts/UI/MainMenu.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/MyScripts/UI/MainMenu/VibrateButtonScript.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/MyScripts/UI/MainMenu/VibrateButtonScript.cs.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/MyScripts/UI/MainMenu/VolumeButtonScript.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/MyScripts/UI/MainMenu/VolumeButtonScript.cs.meta" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.simple-bridge-race/.idea/contentModel.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.simple-bridge-race/.idea/contentModel.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.simple-bridge-race/.idea/indexLayout.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.simple-bridge-race/.idea/indexLayout.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.simple-bridge-race/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.simple-bridge-race/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Animations/Drunk Run Forward.anim" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Animations/Drunk Run Forward.anim.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Animations/Idle.anim" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Animations/Idle.anim.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Animations/Walking.anim" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Animations/Walking.anim.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Animations/YBotController.controller" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Animations/YBotController.controller" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Art/Robot/Player.controller" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Art/Robot/Player.controller" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Assets Store Packages/Fantastic City Generator/Player/Player/CharacterControl.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Assets Store Packages/Fantastic City Generator/Player/Player/CharacterControl.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/MyPrefabs/BotRigit.prefab" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/MyPrefabs/BotRigit.prefab.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/MyPrefabs/Game/PlayerModel.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/MyPrefabs/Game/PlayerModel.prefab" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scenes/CH_Stickman (3).fbx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scenes/CH_Stickman (3).fbx.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scenes/Game.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/Game.unity" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scenes/ManuGame.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scenes/ManuGame/NavMesh.asset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scenes/ManuGame/NavMesh.asset.meta" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scenes/Menu.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/Menu.unity" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scenes/PhysicPlayground.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/PhysicPlayground.unity" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/MyScripts/BasePlayer.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/MyScripts/BasePlayer.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/MyScripts/Bot.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/MyScripts/Bot.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/MyScripts/BrickSpawner.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/MyScripts/BrickSpawner.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/MyScripts/GameManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/MyScripts/GameManager.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/MyScripts/Player.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/MyScripts/Player.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/MyScripts/StairClimb.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/MyScripts/StairClimb.cs.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/MyScripts/StepClimber.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/MyScripts/StepClimber.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scenes/MenuGame.unity" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scenes/MenuGame.unity.meta" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/MyScripts/UI/MenuUI.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/MyScripts/UI/MenuUI.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/UI/mute.png.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/UI/mute.png.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/UI/phone-vibration.png.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/UI/phone-vibration.png.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/UI/volume.png.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/UI/volume.png.meta" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -116,6 +67,8 @@
         <option value="$PROJECT_DIR$/Assets/Scripts/MyScripts/Player.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/MyScripts/BasePlayer.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/MyScripts/GameManager.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/MyScripts/UI/ShopMenu.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/MyScripts/UI/MenuUI.cs" />
       </list>
     </option>
   </component>
@@ -167,7 +120,7 @@
       <workItem from="1636630026662" duration="267000" />
       <workItem from="1636630330069" duration="6000" />
       <workItem from="1638112748410" duration="6168000" />
-      <workItem from="1638172496618" duration="382000" />
+      <workItem from="1638172496618" duration="3060000" />
     </task>
     <servers />
   </component>
@@ -284,9 +237,9 @@
       <screen x="0" y="0" width="1858" height="1080" />
     </state>
     <state x="742" y="274" key="com.intellij.openapi.vcs.changes.SpecificFilesViewDialog/0.0.1858.1080@0.0.1858.1080" timestamp="1638172870221" />
-    <state x="592" y="235" width="672" height="678" key="search.everywhere.popup" timestamp="1638172563079">
+    <state x="592" y="235" width="672" height="678" key="search.everywhere.popup" timestamp="1638179486915">
       <screen x="0" y="0" width="1858" height="1080" />
     </state>
-    <state x="592" y="235" width="672" height="678" key="search.everywhere.popup/0.0.1858.1080@0.0.1858.1080" timestamp="1638172563079" />
+    <state x="592" y="235" width="672" height="678" key="search.everywhere.popup/0.0.1858.1080@0.0.1858.1080" timestamp="1638179486915" />
   </component>
 </project>
