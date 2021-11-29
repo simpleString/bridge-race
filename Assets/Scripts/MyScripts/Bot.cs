@@ -41,7 +41,9 @@ public class Bot : BasePlayer {
         }
     }
 
-    void Start() {
+    new void Start()
+    {
+        base.Start();
         _currentBotState = BotState.TakeBrick;
         StartCoroutine(FirstStart());
         StartCoroutine(CheckRemainingDistanceForBot());

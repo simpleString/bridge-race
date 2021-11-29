@@ -23,6 +23,8 @@ public class BasePlayer : MonoBehaviour {
     public Transform portableBrick;
     protected NavMeshAgent _agent;
 
+    protected Renderer _renderer;
+
     private Rigidbody _rb;
     private CapsuleCollider _collider;
 
@@ -30,7 +32,9 @@ public class BasePlayer : MonoBehaviour {
 
     public float playerForce = 1000f;
 
-    protected void Awake() {
+    protected void Awake()
+    {
+        _renderer = GetComponentInChildren<Renderer>();
         _animator = GetComponent<Animator>();
         _agent = GetComponent<NavMeshAgent>();
         _rb = GetComponent<Rigidbody>();
@@ -42,8 +46,14 @@ public class BasePlayer : MonoBehaviour {
         float velocityZ = Vector3.Dot(_agent.velocity.normalized, transform.forward);
         float velocityX = Vector3.Dot(_agent.velocity.normalized, transform.right);
 
-        _animator.SetFloat("VelocityZ", velocityZ, 0.1f, Time.deltaTime);
-        _animator.SetFloat("VelocityX", velocityX, 0.1f, Time.deltaTime);
+        // TODO:: Implement it code to both player and bot
+        if (velocityX != 0 || velocityZ != 0)
+            _animator.SetBool("IsRun", true);
+        else 
+            _animator.SetBool("IsRun", false);
+        
+        // _animator.SetFloat("VelocityZ", velocityZ, 0.1f, Time.deltaTime);
+        // _animator.SetFloat("VelocityX", velocityX, 0.1f, Time.deltaTime);
 
     }
 
@@ -82,6 +92,11 @@ public class BasePlayer : MonoBehaviour {
             newPortableBrick.parent = brickHolder;
             bricks.Push(newPortableBrick);
         }
+    }
+
+    protected void Start()
+    {
+        _renderer.material.color = GameManager.GetUnityColorByMyColor(color);
     }
 
 

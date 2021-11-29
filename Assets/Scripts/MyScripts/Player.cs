@@ -48,7 +48,8 @@ public class Player : BasePlayer {
         base.Awake();
     }
 
-    void Start() {
+    new void Start() {
+        base.Start();
         color = GameManager.Instance.playerColor;
     }
 
@@ -67,8 +68,7 @@ public class Player : BasePlayer {
         float velocityZ = Vector3.Dot(_movement.normalized, transform.forward);
         float velocityX = Vector3.Dot(_movement.normalized, transform.right);
 
-        _animator.SetFloat("VelocityZ", velocityZ, 0.1f, Time.deltaTime);
-        _animator.SetFloat("VelocityX", velocityX, 0.1f, Time.deltaTime);
+        _animator.SetBool("IsRun", _movement.magnitude > 0);
     }
 
     void FixedUpdate() {

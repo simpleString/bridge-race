@@ -10,7 +10,7 @@ public class CharacterControl : MonoBehaviour
     public float sensitivity = 100f;
     float xRotation = 0f;
 
-    private Transform cam;
+    public Transform cam;
 
     private CharacterController charController;
 
@@ -21,14 +21,14 @@ public class CharacterControl : MonoBehaviour
 
         charController = GetComponent<CharacterController>();
 
-        cam = transform.Find("Camera");
+        // cam = transform.Find("Camera");
 
     }
     
     void Update()
     {
 
-        CameraMovement();
+        // CameraMovement();
 
         Vector3 move = (transform.right * Input.GetAxis("Horizontal")) + (transform.forward * Input.GetAxis("Vertical"));
 

@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -10,8 +9,8 @@ public class GameManager : MonoBehaviour {
 
 
     public enum MyColor {
-        green,
         blue,
+        green,
         red,
         orange,
         purple,
@@ -31,7 +30,7 @@ public class GameManager : MonoBehaviour {
     public List<Transform> bonuses;
 
     public static void Vibrate() {
-        if (isVidrationOn)
+        if (Store.Store.IsVibrationOn)
             Handheld.Vibrate();
     }
 
@@ -44,7 +43,7 @@ public class GameManager : MonoBehaviour {
             case MyColor.red:
                 return Color.red;
             case MyColor.brown:
-                return new Color(0.64f, .16f, .16f); //TODO:: check it
+                return new Color(0.64f, .16f, .16f);
             case MyColor.orange:
                 return new Color(1, 0.64f, 0);
             case MyColor.purple:
@@ -54,13 +53,6 @@ public class GameManager : MonoBehaviour {
             default:
                 return Color.black;
         }
-    }
-
-    public static MyColor GetMyColorByUnityColor(Color color) {
-        if (color == Color.blue) return MyColor.blue;
-        else if (color == Color.green) return MyColor.green;
-        else if (color == Color.red) return MyColor.red;
-        else return MyColor.black;
     }
 
     public List<BasePlayer> players = new List<BasePlayer>();
@@ -77,9 +69,10 @@ public class GameManager : MonoBehaviour {
 
     public UI.MainUI managerUI;
     public float enemyBullingThreshold = 2; // collider radius multiplier for player bulling
-    private static bool isVidrationOn;
 
     void Awake() {
+        if (Store.Store.PlayerColor != null)
+            playerColor = Store.Store.PlayerColor;
         Time.timeScale = 1;
         if (Instance != null) {
             DestroyImmediate(this);
@@ -92,7 +85,6 @@ public class GameManager : MonoBehaviour {
         for (int i = 0; i < playersCount; i++) {
             var color = (MyColor)i;
             if (IsPlayedWithPlayer && color == playerColor) {
-                // Player.Instance.Init(color, basePlatform);
                 players.Add(Player.Instance);
                 continue;
             }
@@ -100,22 +92,9 @@ public class GameManager : MonoBehaviour {
             var newBot = Instantiate(botPrefab.gameObject, Vector3.up, Quaternion.identity);
             var newBotScript = newBot.GetComponent<Bot>();
             players.Add(newBotScript);
-            // newBotScript.Init(color, basePlatform);
             newBotScript.color = color;
         }
-        // foreach (MyColor color in System.Enum.GetValues(typeof(MyColor))) {
-        //     if (IsPlayedWithPlayer && color == playerColor) {
-        //         // Player.Instance.Init(color, basePlatform);
-        //         players.Add(Player.Instance);
-        //         continue;
-        //     }
-        //     if (color == MyColor.black) continue;
-        //     var newBot = Instantiate(botPrefab.gameObject, Vector3.up, Quaternion.identity);
-        //     var newBotScript = newBot.GetComponent<Bot>();
-        //     players.Add(newBotScript);
-        //     // newBotScript.Init(color, basePlatform);
-        //     newBotScript.color = color;
-        // }
+
 
     }
 

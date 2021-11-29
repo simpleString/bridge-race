@@ -9,18 +9,18 @@ public class BrickSpawner : MonoBehaviour {
 
     public List<Transform> bonusPlaces; // places where can spawn bonuses
 
-    public Transform brickPrefab; // prefab of brick whitch used by spawner
+    public Transform brickPrefab; // prefab of brick which used by spawner
     public Transform basePool;
 
     public float xUserOffset; // additional user offset between brick
     public float yUserOffset;
 
-    public bool isActive = false;
+    private bool _isActive = false;
     Brick[,] _bricksMap;
 
     float _lengthX;
     float _lengthY;
-    float _lengthZ; // length of basePlatform
+    float _lengthZ;     // length of basePlatform
     float _offsetX; // length of brickPrefab
     float _offsetY;
     int _xCount;
@@ -37,18 +37,18 @@ public class BrickSpawner : MonoBehaviour {
 
 
     void OnTriggerEnter(Collider collider) {
-        if (collider.tag == "Player" && !_currentPlayersOnSpawner.Contains(collider.gameObject)) {
+        if (collider.CompareTag("Player") && !_currentPlayersOnSpawner.Contains(collider.gameObject)) {
             var basePlayer = collider.GetComponent<BasePlayer>();
             _playerDict.Add((int)basePlayer.color, 0);
             basePlayer.actionPlayerLostBrick += OnPlayerLostBrick;
             _currentPlayersOnSpawner.Add(collider.gameObject);
-            if (isActive) {
+            if (_isActive) {
                 UpdateBricksArray();
             }
         }
 
-        if (!isActive) {
-            isActive = true;
+        if (!_isActive) {
+            _isActive = true;
             InitBricks();
             UpdateBricksArray();
             StartCoroutine(GenerateBonus());

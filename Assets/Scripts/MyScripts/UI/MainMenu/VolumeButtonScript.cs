@@ -5,7 +5,7 @@ using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 namespace UI {
-    public class VibrateButtonScript : MonoBehaviour {
+    public class VolumeButtonScript : MonoBehaviour {
 
         public Sprite ActiveImage;
         public Sprite DisableImage;
@@ -16,16 +16,13 @@ namespace UI {
             UpdateImage();
         }
 
-        void UpdateImage() {
-            if (Store.Store.IsVibrationOn) {
-                image.sprite = ActiveImage;
-            } else {
-                image.sprite = DisableImage;
-            }
+        void UpdateImage()
+        {
+            image.sprite = Store.Store.IsSoundOn ? ActiveImage : DisableImage;
         }
 
         public void OnButtonClick() {
-            Store.Store.IsVibrationOn = !Store.Store.IsVibrationOn;
+            Store.Store.IsSoundOn = !Store.Store.IsSoundOn;
             UpdateImage();
         }
     }
