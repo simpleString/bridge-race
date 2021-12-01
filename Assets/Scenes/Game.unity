@@ -347,7 +347,7 @@ PrefabInstance:
     - target: {fileID: 4115202813683830938, guid: 11ddabdd57e0575498ad74c3f98a0c12,
         type: 3}
       propertyPath: playersCount
-      value: 2
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 4115202813683830938, guid: 11ddabdd57e0575498ad74c3f98a0c12,
         type: 3}
@@ -1410,7 +1410,7 @@ PrefabInstance:
     - target: {fileID: 5409675624015364157, guid: fc13392163095904e91604fd75e58cb9,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: -4.74
+      value: -5.14
       objectReference: {fileID: 0}
     - target: {fileID: 5915367238883032118, guid: fc13392163095904e91604fd75e58cb9,
         type: 3}
@@ -2710,7 +2710,7 @@ PrefabInstance:
     - target: {fileID: 5409675624015364157, guid: fc13392163095904e91604fd75e58cb9,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: -4.83
+      value: -5.14
       objectReference: {fileID: 0}
     - target: {fileID: 7503690044413626943, guid: fc13392163095904e91604fd75e58cb9,
         type: 3}

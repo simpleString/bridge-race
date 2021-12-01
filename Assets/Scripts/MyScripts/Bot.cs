@@ -9,55 +9,141 @@ public class Bot : BasePlayer {
 
     private bool _isFirstStart = true;
 
-    enum BotState {
+    public enum BotState {
         Idle,
         TakeBrick,
         TakeLadder,
-        Bulling
+        Bulling,
+        Escape,
     }
-    BotState _currentBotState = BotState.TakeBrick;
+    public BotState _currentBotState = BotState.TakeBrick;
 
 
     private Transform _currentTarget;
 
 
     new void Awake() {
-        actionPlayerLostBrick += OnBotLostBrick;
+        // actionPlayerLostBrick += OnBotLostBrick;
         base.Awake();
         _agent.angularSpeed = 2000f;
         _currentBotState = BotState.Idle;
     }
 
+    private Coroutine bullingCoroutineStatus;
+    private Vector3 _botPosition;
+    private bool _checkStayBrick = false;
+
+
+
+
     new void Update() {
         base.Update();
 
-        switch (_currentBotState)
-        {
+
+
+        NearBrick nearBrickTarget = null;
+        BestLadder bestLadderTarget = null;
+        PlayerScriptAndDistancePlusTranform targetPlayer = null;
+
+        var nearPlayer = GetNearPlayerWithBricksMoreThatMe();
+        // antiBulling checking
+        if (nearPlayer != null) {
+            Debug.Log("start avoiding");
+        }
+
+        switch (_currentBotState) {
             case BotState.Idle:
+                //TODO:: Now it check only one state. Needs add more
+                nearBrickTarget = GetNearBrick();
+                if (nearBrickTarget != null) {
+                    _currentTarget = nearBrickTarget.transform;
+                    _currentBotState = BotState.TakeBrick;
+                }
                 break;
+
+            case BotState.TakeLadder:
+                // Check that bot has bricks
+                if (bricks.Count < 2) {
+                    _currentBotState = BotState.TakeBrick;
+                }
+                bestLadderTarget = GetBestLadder();
+
+                _currentTarget = bestLadderTarget.transform;
+                break;
+
+            case BotState.TakeBrick:
+
+                // TODO:: Check bulling transaction
+                // targetPlayer = CheckEnemiesBricks();
+                // if (targetPlayer != null) {
+                //     _currentBotState = BotState.Bulling;
+                // }
+
+                // Check that bot has enouth bricks
+                if (bricks.Count > botBricksThreshold) {
+                    // Check that near hasn't any bricks
+                    nearBrickTarget = GetNearBrick();
+                    if (nearBrickTarget != null && nearBrickTarget.distance < .5f) {
+                        _currentTarget = nearBrickTarget.transform;
+                    } else {
+                        // If not blocks find best ladder
+                        _currentBotState = BotState.TakeLadder;
+                    }
+                } else {
+                    nearBrickTarget = GetNearBrick();
+                    if (nearBrickTarget != null) {
+                        _currentTarget = nearBrickTarget.transform;
+                    } // Do nothing
+                    else if (bricks.Count > 1) { // If in spawner ends bricks, go to ladder
+                        _currentBotState = BotState.TakeLadder;
+                    }
+                }
+                break;
+            case BotState.Bulling:
+                break;
+                // // if already doing bulling
+                // if (bullingCoroutineStatus != null) return;
+                // targetPlayer = CheckEnemiesBricks();
+                // if (targetPlayer == null) _currentBotState = BotState.Idle;
+                // bullingCoroutineStatus = StartCoroutine(EnemyBulling(targetPlayer));
+                // if (bullingCoroutineStatus == null) {
+                //     _currentBotState = BotState.Idle;
+                // }
+                // break;
         }
 
 
     }
 
-    void OnBotLostBrick(GameManager.MyColor color) {
-        if (bricks.Count < 1) {
-            _currentBotState = BotState.TakeBrick;
-            FindNearBrick();
-        }
-    }
+    // void OnBotLostBrick(GameManager.MyColor color) {
+    //     if (bricks.Count < 1) {
+    //         _currentBotState = BotState.TakeBrick;
+    //         FindNearBrick();
+    //     }
+    // }
 
-    new void Start()
-    {
+    new void Start() {
         base.Start();
-        _currentBotState = BotState.TakeBrick;
-        StartCoroutine(FirstStart());
-        StartCoroutine(CheckRemainingDistanceForBot());
         StartCoroutine(UpdateDestination());
 
     }
 
-    struct PlayerScriptAndDistancePlusTranform {
+    private NearPlayer GetNearPlayerWithBricksMoreThatMe() {
+        NearPlayer tempPlayer = null;
+        var players = GameObject.FindObjectsOfType<BasePlayer>();
+        foreach (var player in players) {
+            if (player.gameObject == this.gameObject) continue;
+            if ((tempPlayer == null && player.bricks.Count > bricks.Count && Vector3.Distance(player.transform.position, transform.position) < 2f) ||
+                (player.bricks.Count > bricks.Count && Vector3.Distance(player.transform.position, transform.position) < tempPlayer?.distance)) {
+                tempPlayer = new NearPlayer();
+                tempPlayer.distance = Vector3.Distance(player.transform.position, transform.position);
+                tempPlayer.player = player;
+            }
+        }
+        return tempPlayer;
+    }
+
+    class PlayerScriptAndDistancePlusTranform {
         public float distance;
 
         public Transform transform;
@@ -70,41 +156,38 @@ public class Bot : BasePlayer {
         }
     }
 
-    private IEnumerator CheckEnemiesBricks() {
+    private PlayerScriptAndDistancePlusTranform CheckEnemiesBricks() {
         // get all player's brics, and if bricks less that in bot, and distance not far, go to it.
-        while (true) {
-            while (_currentBotState == BotState.Bulling) {
-                yield return new WaitForSeconds(.2f);
-            }
-            var playersBricks = new List<PlayerScriptAndDistancePlusTranform>();
-            PlayerScriptAndDistancePlusTranform? instance = null;
+        var playersBricks = new List<PlayerScriptAndDistancePlusTranform>();
+        PlayerScriptAndDistancePlusTranform instance = null;
 
-            foreach (var player in GameManager.Instance.players) {
-                if (player == null) continue;
-                if (player.gameObject != this.gameObject) {
-                    var distance = Vector3.Distance(this.transform.position, player.transform.position);
-                    if (distance < GameManager.Instance.enemyBullingThreshold) {
-                        playersBricks.Add((new PlayerScriptAndDistancePlusTranform(player, distance, player.transform)));
-                    }
+        foreach (var player in GameManager.Instance.players) {
+            if (player == null) continue;
+            if (player.gameObject != this.gameObject) {
+                var distance = Vector3.Distance(this.transform.position, player.transform.position);
+                if (distance < GameManager.Instance.enemyBullingThreshold) {
+                    playersBricks.Add((new PlayerScriptAndDistancePlusTranform(player, distance, player.transform)));
                 }
             }
-
-
-            foreach (var item in playersBricks) {
-                if ((instance == null && bricks.Count > 2 && item.playerScript.bricks.Count > 0 && bricks.Count > item.playerScript.bricks.Count) ||
-                (item.playerScript.bricks.Count > instance?.playerScript.bricks.Count && item.playerScript.bricks.Count < bricks.Count && item.playerScript.bricks.Count > 0)) {
-                    instance = item;
-                }
-            }
-
-            if (instance != null) {
-                _currentBotState = BotState.Bulling;
-                StartCoroutine(EnemyBulling((PlayerScriptAndDistancePlusTranform)instance));
-            }
-
-            yield return new WaitForSeconds(.2f);
         }
+
+
+        foreach (var item in playersBricks) {
+            if ((instance == null && bricks.Count > 2 && item.playerScript.bricks.Count > 0 && bricks.Count > item.playerScript.bricks.Count) ||
+            (item.playerScript.bricks.Count > instance?.playerScript.bricks.Count && item.playerScript.bricks.Count < bricks.Count && item.playerScript.bricks.Count > 0)) {
+                instance = item;
+            }
+        }
+
+        if (instance != null) {
+            return instance;
+            // _currentBotState = BotState.Bulling;
+            // StartCoroutine(EnemyBulling((PlayerScriptAndDistancePlusTranform)instance));
+        }
+        return null;
+
     }
+
 
 
     IEnumerator EnemyBulling(PlayerScriptAndDistancePlusTranform instance) {
@@ -115,7 +198,7 @@ public class Bot : BasePlayer {
         while (isTrue && timeToBulling > 0) {
             yield return new WaitForSeconds(checkingTime);
             timeToBulling -= checkingTime;
-            if (instance.playerScript.bricks.Count < bricks.Count &&
+            if (instance.playerScript.bricks.Count < bricks.Count && instance.playerScript.bricks.Count > 0 &&
             Vector3.Distance(instance.transform.position, transform.position) <= GameManager.Instance.enemyBullingThreshold) {
                 _currentTarget = instance.transform;
             } else {
@@ -123,39 +206,33 @@ public class Bot : BasePlayer {
             }
         }
         _currentBotState = BotState.TakeBrick;
-        FindNearBrick();
+        // FindNearBrick();
         yield return null;
     }
 
 
     IEnumerator CheckRemainingDistanceForBot() {
         var botPosition = transform.position;
-        while (true)
-        {
+        while (true) {
             // If bot stopped and don't move let's kick him :)))
-            if (botPosition == transform.position)
-            {
-                if (_currentBotState == BotState.TakeBrick)
-                {
+            if (botPosition == transform.position) {
+                if (_currentBotState == BotState.TakeBrick) {
                     _currentBotState = BotState.TakeBrick;
                     FindNearBrick();
-                }
-                else
-                {
+                } else {
                     _currentBotState = BotState.TakeLadder;
-                    FindBestLadder();
+                    GetBestLadder();
                 }
             }
 
             botPosition = transform.position;
             // Check that we a in a last ladder, and switch agent destination to door
-            if (_currentTarget == null && _currentBotState == BotState.TakeBrick)
-            {
+            if (_currentTarget == null && _currentBotState == BotState.TakeBrick) {
                 _currentBotState = BotState.TakeLadder;
-                FindBestLadder();
+                GetBestLadder();
             }
             if (_agent.enabled && _currentBotState == BotState.TakeLadder && _agent.remainingDistance < 0.2f) {
-                FindBestLadder();
+                GetBestLadder();
             }
             yield return new WaitForSeconds(.4f);
         }
@@ -165,6 +242,13 @@ public class Bot : BasePlayer {
     IEnumerator UpdateDestination() {
         while (true) {
 
+
+            if (_botPosition == transform.position) {
+                _checkStayBrick = true;
+            }
+
+            _botPosition = transform.position;
+
             if (_agent.enabled && _currentTarget != null) {
                 _agent.destination = _currentTarget.position;
             }
@@ -172,6 +256,13 @@ public class Bot : BasePlayer {
         }
     }
 
+
+    private void OnTriggerStay(Collider collider) {
+        if (_checkStayBrick && (collider.tag == color.ToString() || collider.tag == "Free") && collider.gameObject.layer != LayerMask.NameToLayer("Stairs")) {
+            _checkStayBrick = false;
+            AddBrickToPlayer(collider.gameObject);
+        }
+    }
 
     private void OnTriggerEnter(Collider collider) {
         if (collider.gameObject.layer == LayerMask.NameToLayer("Stairs") && !collider.CompareTag(color.ToString())) {
@@ -181,22 +272,21 @@ public class Bot : BasePlayer {
                 // Don't let player go to stairs
                 _agent.velocity = Vector3.zero;
             }
-        } else if (collider.tag == "Player")
-        {
+        } else if (collider.tag == "Player") {
             if (!Physics.Raycast(transform.position, Vector3.down, 10f, LayerMask.NameToLayer("Stairs"))) return;
             CheckPlayerCollision(collider);
-            if (bricks.Count < 1) {
-                FindNearBrick();
-            }
+            // if (bricks.Count < 1) {
+            //     FindNearBrick();
+            // }
 
         } else if ((collider.tag == color.ToString() || collider.tag == "Free") && collider.gameObject.layer != LayerMask.NameToLayer("Stairs")) {
             AddBrickToPlayer(collider.gameObject);
-            if (bricks.Count > botBricksThreshold) {
-                _currentBotState = BotState.TakeLadder;
-                FindBestLadder();
-            } else {
-                FindNearBrick(collider.gameObject);
-            }
+            // if (bricks.Count > botBricksThreshold) {
+            //     _currentBotState = BotState.TakeLadder;
+            //     GetBestLadder();
+            // } else {
+            //     FindNearBrick(collider.gameObject);
+            // }
         } else if (collider.CompareTag("Bonus")) {
             var bonusScript = collider.GetComponent<Bonus>();
             GetBunusEffect(bonusScript.type);
@@ -207,7 +297,7 @@ public class Bot : BasePlayer {
     NearBrick GetNearBrick() {
         NearBrick nBrick = null;
         foreach (var brickScript in GameObject.FindObjectsOfType<Brick>()) {
-            if (brickScript.tag == color.ToString() || brickScript.tag == "Free") {
+            if (brickScript.CompareTag(color.ToString()) || brickScript.CompareTag("Free")) {
                 var tempDistance = Vector3.Distance(transform.position, brickScript.transform.position);
                 if (nBrick == null || (tempDistance < nBrick.distance)) {
                     nBrick = new NearBrick
@@ -230,48 +320,15 @@ public class Bot : BasePlayer {
         }
     }
 
-    IEnumerator FirstStart() {
-        while (_isFirstStart) {
-            FindNearBrick();
-            Debug.Log("current dtate");
-            if (_currentTarget != null) {
-                _isFirstStart = false;
-            }
-            yield return new WaitForSeconds(.1f);
-        }
-        StartCoroutine(CheckEnemiesBricks());
-        yield return null;
-    }
 
-    void FindNearBrick(GameObject exceptBrick) { // it fixed bug when it stay on taked brick
-
-        NearBrick nBrick = null;
-
-        foreach (var brickScript in GameObject.FindObjectsOfType<Brick>()) {
-            if (brickScript.gameObject == exceptBrick) continue;
-            if (brickScript.CompareTag(color.ToString()) || brickScript.CompareTag("Free")) {
-                var tempDistance = Vector3.Distance(transform.position, brickScript.transform.position);
-                if (nBrick == null || (tempDistance < nBrick.distance)) {
-                    nBrick = new NearBrick
-                    {
-                        distance = tempDistance,
-                        transform = brickScript.transform
-                    };
-                }
-            }
-        }
-
-        _currentTarget = nBrick.transform;
-    }
-
-    void FindBestLadder() {
+    BestLadder GetBestLadder() {
 
         var ladders = GameObject.FindObjectsOfType<Ladder>();
-        var laddersValues = new List<NearLadder>();
+        var laddersValues = new List<BestLadder>();
 
-        NearLadder nearLadder = null;
+        BestLadder bestLadder = null;
         foreach (var ladder in ladders) {
-            var tempNearLadder = new NearLadder(ladder.checkPosition,
+            var tempNearLadder = new BestLadder(ladder.checkPosition,
                                                 Vector3.Distance(ladder.checkPosition.position, transform.position),
                                                 ladder.GetCountByColorTag(color),
                                                 ladder);
@@ -279,61 +336,32 @@ public class Bot : BasePlayer {
             // TODO:: Fix bots bug when they stop on second floor. It's fixed by set nearLadder to final position!!!
             laddersValues.Add(tempNearLadder);
 
-            Debug.Log("Ladder position " + tempNearLadder.transform.position.y + " bot position: " + transform.position.y);
-            if ((nearLadder == null && tempNearLadder.transform.position.y - 2 > transform.position.y) ||
-                (tempNearLadder.colorCount >= nearLadder?.colorCount && tempNearLadder.transform.position.y - 2 > transform.position.y && tempNearLadder.transform.position.y <= nearLadder?.transform.position.y)) {
-                
-                nearLadder = tempNearLadder;
+            // Debug.Log("Ladder position " + tempNearLadder.transform.position.y + " bot position: " + transform.position.y);
+            if ((bestLadder == null && tempNearLadder.transform.position.y - 2 > transform.position.y) ||
+                (tempNearLadder.colorCount >= bestLadder?.colorCount && tempNearLadder.transform.position.y - 2 > transform.position.y && tempNearLadder.transform.position.y <= bestLadder?.transform.position.y)) {
+
+                bestLadder = tempNearLadder;
             }
         }
 
-        // if we see ladder enemy winner enemy, we wanna break  him ladder
-
-        // foreach (var ladder in laddersValues) {
-        //     if (ladder.ladderScript.GetCountAnotherColorByTag(color))
-        // }
-
-
-        // Check that ladder distance less that near brick distance
-        var nBrick = GetNearBrick();
-        Debug.Log("Brick Distance: " + nBrick.distance + " Ladder distance: " + nearLadder.distance);
-        if (nBrick != null && nBrick.distance < .5f) {
-            _currentBotState = BotState.TakeBrick;
-            _currentTarget = nBrick.transform;
-        } else {
-            _currentTarget = nearLadder.transform;
-        }
+        return bestLadder;
     }
 
-    //     void FindBestLadder() {
-
-    //     var ladders = GameObject.FindObjectsOfType<Ladder>();
-    //     NearLadder nearLadder = null;
-    //     foreach (var ladder in ladders) {
-    //         var tempNearLadder = new NearLadder(ladder.checkPosition,
-    //                                             Vector3.Distance(ladder.checkPosition.position, transform.position),
-    //                                             ladder.GetCountByColorTag(color));
-    //         // Fix it. It cam pick first ladder where already has bricks.
-    //         // TODO:: Fix bots bug when they stop on second floor. It's fixed by set nearLadder to final position!!!
-    //         if (nearLadder == null || (tempNearLadder.colorCount >= nearLadder.colorCount &&
-    //                                     tempNearLadder.transform.position.y - 1 > transform.position.y &&
-    //                                     tempNearLadder.transform.position.y <= nearLadder.transform.position.y)) {
-    //             nearLadder = tempNearLadder;
-    //         }
-    //     }
-    //     _currentTarget = nearLadder.transform;
-    // }
+    class NearPlayer {
+        public BasePlayer player;
+        public float distance;
+    }
 
     class NearBrick {
         public Transform transform;
         public float distance;
     }
 
-    class NearLadder : NearBrick {
+    class BestLadder : NearBrick {
         public int colorCount = 0;
         public Ladder ladderScript;
 
-        public NearLadder(Transform transform, float distance, int colorCount, Ladder ladderScript) {
+        public BestLadder(Transform transform, float distance, int colorCount, Ladder ladderScript) {
             this.transform = transform;
             this.colorCount = colorCount;
             this.distance = distance;

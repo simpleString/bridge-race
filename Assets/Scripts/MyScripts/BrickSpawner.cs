@@ -45,6 +45,7 @@ public class BrickSpawner : MonoBehaviour {
             _currentPlayersOnSpawner.Add(collider.gameObject);
             if (_isActive) {
                 UpdateBricksArray();
+                // UpdateBrickRandom();
             }
         }
 
@@ -52,6 +53,7 @@ public class BrickSpawner : MonoBehaviour {
             _isActive = true;
             InitBricks();
             UpdateBricksArray();
+            // UpdateBrickRandom();
             StartCoroutine(GenerateBonus());
         }
     }
@@ -79,21 +81,107 @@ public class BrickSpawner : MonoBehaviour {
     }
 
 
-    private void OnPlayerGetBrick(BasePlayer player, Brick brick)
-    {
-        
+    private void OnPlayerGetBrick(BasePlayer player, Brick brick) {
+
     }
-    
+
     private void OnPlayerLostBrick(GameManager.MyColor color) {
         // TODO:: needs to check if it's active now it's decrease from all spawners
-        
+
+        // Debug.LogWarning("Color count " + color + "    " + _playerDict[(int)color]);
         if (_playerDict[(int)color] > 0) {
             _playerDict[(int)color]--;
-            UpdateBricksArray();
+            UpdateByColor(color);
+            // UpdateBricksArray();
+            // UpdateOneRandomBrick();
         }
 
     }
 
+    void UpdateByColor(GameManager.MyColor color) {
+        var nullBrickArray = new List<Vector2Int>();
+        for (var y = 0; y < _yCount; y++) {
+            for (var x = 0; x < _xCount; x++) {
+                if (_bricksMap[x, y] == null) {
+                    nullBrickArray.Add(new Vector2Int(x, y));
+                }
+
+            }
+        }
+        if (nullBrickArray.Count < 1) return;
+        var randomPosition = nullBrickArray[Random.Range(0, nullBrickArray.Count)];
+        nullBrickArray.Remove(randomPosition);
+
+        Transform newBrick = Instantiate(brickPrefab,
+                               new Vector3(
+                                   transform.position.x - _lengthX / 2f + randomPosition.x * (_offsetX + xUserOffset),
+                                   basePool.position.y + _lengthZ / 3f,
+                                   transform.position.z - _lengthY / 2f + randomPosition.y * (_offsetY + yUserOffset)),
+                                   Quaternion.identity
+                               );
+        newBrick.parent = basePool;
+        var newBrickObject = newBrick.GetComponentInChildren<Brick>();
+        SetupColorForBrick(newBrickObject, (int)color, randomPosition.x, randomPosition.y);
+        _bricksMap[randomPosition.x, randomPosition.y] = newBrickObject;
+    }
+
+
+    void UpdateOneRandomBrick() {
+        var nullBrickArray = new List<Vector2Int>();
+        for (var y = 0; y < _yCount; y++) {
+            for (var x = 0; x < _xCount; x++) {
+                if (_bricksMap[x, y] == null) {
+                    nullBrickArray.Add(new Vector2Int(x, y));
+                }
+
+            }
+        }
+        if (nullBrickArray.Count < 1) return;
+        var randomPosition = nullBrickArray[Random.Range(0, nullBrickArray.Count)];
+        nullBrickArray.Remove(randomPosition);
+
+        Transform newBrick = Instantiate(brickPrefab,
+                               new Vector3(
+                                   transform.position.x - _lengthX / 2f + randomPosition.x * (_offsetX + xUserOffset),
+                                   basePool.position.y + _lengthZ / 3f,
+                                   transform.position.z - _lengthY / 2f + randomPosition.y * (_offsetY + yUserOffset)),
+                                   Quaternion.identity
+                               );
+        newBrick.parent = basePool;
+        var newBrickObject = newBrick.GetComponentInChildren<Brick>();
+        SetupColorForBrick(newBrickObject, Random.Range(0, GameManager.Instance.playersCount), randomPosition.x, randomPosition.y);
+        _bricksMap[randomPosition.x, randomPosition.y] = newBrickObject;
+    }
+
+    void UpdateBrickRandom() {
+        var nullBrickArray = new List<Vector2Int>();
+        for (var y = 0; y < _yCount; y++) {
+            for (var x = 0; x < _xCount; x++) {
+                if (_bricksMap[x, y] == null) {
+                    nullBrickArray.Add(new Vector2Int(x, y));
+                }
+
+            }
+        }
+        while (nullBrickArray.Count > 0) {
+
+            var randomPosition = nullBrickArray[Random.Range(0, nullBrickArray.Count)];
+            nullBrickArray.Remove(randomPosition);
+
+            Transform newBrick = Instantiate(brickPrefab,
+                                   new Vector3(
+                                       transform.position.x - _lengthX / 2f + randomPosition.x * (_offsetX + xUserOffset),
+                                       basePool.position.y + _lengthZ / 3f,
+                                       transform.position.z - _lengthY / 2f + randomPosition.y * (_offsetY + yUserOffset)),
+                                       Quaternion.identity
+                                   );
+            newBrick.parent = basePool;
+            var newBrickObject = newBrick.GetComponentInChildren<Brick>();
+            SetupColorForBrick(newBrickObject, Random.Range(0, GameManager.Instance.playersCount), randomPosition.x, randomPosition.y);
+            _bricksMap[randomPosition.x, randomPosition.y] = newBrickObject;
+        }
+
+    }
 
     void UpdateBricksArray() {
         // get array of null bricks on map
