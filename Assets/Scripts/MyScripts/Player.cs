@@ -26,6 +26,7 @@ public class Player : BasePlayer {
                 _agent.Move(collider.gameObject.transform.right * collisionOffset);
             }
         } else if (collider.tag == "Player") {
+            if (!Physics.Raycast(transform.position, Vector3.down, 10f, LayerMask.NameToLayer("Stairs"))) return;
             CheckPlayerCollision(collider);
         } else if ((collider.tag == color.ToString() || collider.tag == "Free") && collider.gameObject.layer != LayerMask.NameToLayer("Stairs")) {
             GameManager.Vibrate();
@@ -63,17 +64,14 @@ public class Player : BasePlayer {
         var horizontal = _floatingJoystick.Horizontal;
 #endif
         _movement = new Vector3(horizontal, 0f, vertical);
-
-        // FIXME:: Needs to optimize for work with bots!!!
-        float velocityZ = Vector3.Dot(_movement.normalized, transform.forward);
-        float velocityX = Vector3.Dot(_movement.normalized, transform.right);
+        
 
         _animator.SetBool("IsRun", _movement.magnitude > 0);
     }
 
-    void FixedUpdate() {
-        if (!_agent.enabled) return;
-        // Debug.Log(_characterController.transform.position);
+    void FixedUpdate()
+    {
+        
         if (_movement.magnitude > 0) {
             _movement.Normalize();
             _movement *= _speed;
@@ -81,7 +79,12 @@ public class Player : BasePlayer {
 
             transform.rotation = Quaternion.LookRotation(new Vector3(_movement.x, 0, _movement.z));
         }
-        _agent.Move(_movement * Time.deltaTime);
+
+        if (_agent.enabled)
+        {
+            _agent.Move(_movement * Time.deltaTime);
+        }
     }
+            
 
 }

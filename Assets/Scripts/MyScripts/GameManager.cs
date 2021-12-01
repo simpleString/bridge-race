@@ -7,6 +7,9 @@ public class GameManager : MonoBehaviour {
 
     public float bonusTime = 5f;
 
+    public float brickForce = 1000f;
+    public float playersForce = 1000f;
+
 
     public enum MyColor {
         blue,
@@ -58,8 +61,6 @@ public class GameManager : MonoBehaviour {
     public List<BasePlayer> players = new List<BasePlayer>();
 
     public MyColor playerColor = MyColor.blue;  // TODO:: Need to set by user!!!
-
-    public Transform basePlatform;
 
     public Bot botPrefab;
 

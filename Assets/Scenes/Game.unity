@@ -26,7 +26,7 @@ RenderSettings:
   m_AmbientIntensity: 1
   m_AmbientMode: 0
   m_SubtractiveShadowColor: {r: 0.42, g: 0.478, b: 0.627, a: 1}
-  m_SkyboxMaterial: {fileID: 10304, guid: 0000000000000000f000000000000000, type: 0}
+  m_SkyboxMaterial: {fileID: 2100000, guid: 1c856852ea0d49444b91cd2ecc76403d, type: 2}
   m_HaloStrength: 0.5
   m_FlareStrength: 1
   m_FlareFadeSpeed: 3
@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.18028334, g: 0.2257134, b: 0.30692226, a: 1}
+  m_IndirectSpecularColor: {r: 0.17901368, g: 0.1971187, b: 0.26076376, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -341,8 +341,18 @@ PrefabInstance:
       objectReference: {fileID: 6806216714553715441}
     - target: {fileID: 4115202813683830938, guid: 11ddabdd57e0575498ad74c3f98a0c12,
         type: 3}
+      propertyPath: brickForce
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 4115202813683830938, guid: 11ddabdd57e0575498ad74c3f98a0c12,
+        type: 3}
       propertyPath: playersCount
-      value: 6
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4115202813683830938, guid: 11ddabdd57e0575498ad74c3f98a0c12,
+        type: 3}
+      propertyPath: playersForce
+      value: 40
       objectReference: {fileID: 0}
     - target: {fileID: 4115202813683830938, guid: 11ddabdd57e0575498ad74c3f98a0c12,
         type: 3}
@@ -2148,6 +2158,11 @@ PrefabInstance:
       propertyPath: _floatingJoystick
       value: 
       objectReference: {fileID: 6806216712947662991}
+    - target: {fileID: 7235423015408942057, guid: fe9f5ce1f970e4247b60c2475594b9dc,
+        type: 3}
+      propertyPath: looping
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: fe9f5ce1f970e4247b60c2475594b9dc, type: 3}
 --- !u!4 &1978667851 stripped

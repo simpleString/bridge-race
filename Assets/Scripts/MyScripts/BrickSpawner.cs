@@ -41,6 +41,7 @@ public class BrickSpawner : MonoBehaviour {
             var basePlayer = collider.GetComponent<BasePlayer>();
             _playerDict.Add((int)basePlayer.color, 0);
             basePlayer.actionPlayerLostBrick += OnPlayerLostBrick;
+            basePlayer.actionPlayerGetBrick += OnPlayerGetBrick;
             _currentPlayersOnSpawner.Add(collider.gameObject);
             if (_isActive) {
                 UpdateBricksArray();
@@ -54,6 +55,8 @@ public class BrickSpawner : MonoBehaviour {
             StartCoroutine(GenerateBonus());
         }
     }
+
+
 
     void InitBricks() {
 
@@ -76,8 +79,14 @@ public class BrickSpawner : MonoBehaviour {
     }
 
 
+    private void OnPlayerGetBrick(BasePlayer player, Brick brick)
+    {
+        
+    }
+    
     private void OnPlayerLostBrick(GameManager.MyColor color) {
         // TODO:: needs to check if it's active now it's decrease from all spawners
+        
         if (_playerDict[(int)color] > 0) {
             _playerDict[(int)color]--;
             UpdateBricksArray();
@@ -122,7 +131,7 @@ public class BrickSpawner : MonoBehaviour {
     void SetupColorForBrick(Brick brick, int colorInt, int x, int y) {
 
         var color = (GameManager.MyColor)colorInt;
-        brick.Init(color, x, y);
+        brick.Init(color, x, y, this);
     }
 
     // Generate bonus. Now it's generate only one bonus per platform

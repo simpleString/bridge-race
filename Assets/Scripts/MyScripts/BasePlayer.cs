@@ -11,6 +11,7 @@ public class BasePlayer : MonoBehaviour {
 
     public Action<GameManager.MyColor> actionPlayerLostBrick;
     public Action<BasePlayer> actionPlayerDead;
+    public Action<BasePlayer, Brick> actionPlayerGetBrick;
 
 
     private bool _isDoubleBonusActive = false;
@@ -23,17 +24,17 @@ public class BasePlayer : MonoBehaviour {
     public Transform portableBrick;
     protected NavMeshAgent _agent;
 
+    protected ParticleSystem _particleSystem;
+
     protected Renderer _renderer;
 
     private Rigidbody _rb;
     private CapsuleCollider _collider;
-
-    public float brickForce = 100f;
-
-    public float playerForce = 1000f;
+    
 
     protected void Awake()
     {
+        _particleSystem = GetComponentInChildren<ParticleSystem>();
         _renderer = GetComponentInChildren<Renderer>();
         _animator = GetComponent<Animator>();
         _agent = GetComponent<NavMeshAgent>();
@@ -52,16 +53,14 @@ public class BasePlayer : MonoBehaviour {
         else 
             _animator.SetBool("IsRun", false);
         
-        // _animator.SetFloat("VelocityZ", velocityZ, 0.1f, Time.deltaTime);
-        // _animator.SetFloat("VelocityX", velocityX, 0.1f, Time.deltaTime);
 
     }
 
     public Stack<Transform> bricks = new Stack<Transform>();
 
     protected void AddBrickToBridge(GameObject brick) {
-        var brickStript = brick.GetComponent<Stair>();
-        brickStript.ChangeColor(color);
+        var brickScript = brick.GetComponent<Stair>();
+        brickScript.ChangeColor(color);
         Destroy(bricks.Pop().gameObject);
         actionPlayerLostBrick?.Invoke(color);
     }
@@ -104,18 +103,19 @@ public class BasePlayer : MonoBehaviour {
         var otherBasePlayerScript = collider.GetComponent<BasePlayer>();
         if (otherBasePlayerScript.bricks.Count > bricks.Count) {
             DropBricks();
-            StartCoroutine(KickPlayer());
+            StartCoroutine(KickPlayer(collider));
         }
     }
 
     private void DropBricks() {
         foreach (var brick in bricks) {
-            brick.GetComponent<Brick>().InitAfterDrop(GameManager.MyColor.black);
+            var brickScript = brick.GetComponent<Brick>();
+            brickScript.InitAfterDrop(GameManager.MyColor.black);
             brick.GetComponent<Collider>().isTrigger = false;
             brick.tag = "Free";
             brick.transform.parent = null;
             var rb = brick.gameObject.AddComponent<Rigidbody>();
-            rb.AddForce(new Vector3(Random.Range(-2f, 3f), Random.Range(0, 3f), Random.Range(-2f, 3f)) * brickForce);
+            rb.AddForce(new Vector3(Random.Range(-2f, 3f), Random.Range(0, 3f), Random.Range(-2f, 3f)) * GameManager.Instance.brickForce);
             actionPlayerLostBrick?.Invoke(color);
         }
         bricks.Clear();
@@ -178,24 +178,45 @@ public class BasePlayer : MonoBehaviour {
 
     public IEnumerator MagnetPlayer() {
         // FIXME:: now it's increase main collider. NEeds add another collider for picking bricks
-        var initRadius = _collider.radius;
-        _collider.radius *= 2;
+        var radius = _collider.radius;
+        var initRadius = radius;
+        radius *= 2;
         yield return new WaitForSeconds(GameManager.Instance.bonusTime);
-        _collider.radius = initRadius;
+        radius = initRadius;
+        _collider.radius = radius;
     }
 
-    private IEnumerator KickPlayer() {
-        // TODO:: Need's set jump force and add checking onFloor trigger!!!
-        // _agent.isStopped = true;
-        // _agent.enabled = false;
-        // _rb.isKinematic = false;
+    private IEnumerator KickPlayer(Collider collider) {
+        _agent.enabled = false;
+        _rb.isKinematic = false;
+        Debug.Log("Kick hit");
         // _collider.isTrigger = false;
-        // _rb.AddForce(new Vector3(transform.forward.x, 10, transform.forward.z) * playerForce);
-        // yield return new WaitForSeconds(1f);
+        var forward = transform.forward;
+        var normalForward = forward.normalized;
+        // Get forward of hit, and start particle effect
+        var enemyNormal = collider.transform.forward;
+        // _particleSystem.transform.position = enemyNormal;
+        // _particleSystem.Play();
+        _rb.AddForce(new Vector3(normalForward.x, 10, normalForward.z) * GameManager.Instance.playersForce);
+
+        NavMeshHit hit;
+        bool isOnAir = true;
+        while (isOnAir)
+        {
+            if (NavMesh.SamplePosition(_agent.transform.position, out hit, 1, NavMesh.AllAreas))
+            {
+                isOnAir = (_agent.transform.position.y - 0.5f >= hit.position.y && 
+                           Mathf.Approximately(hit.position.x, _agent.transform.position.x) && 
+                           Mathf.Approximately(hit.position.z, _agent.transform.position.z));
+                
+            }
+
+            yield return null;
+        }
+        
         // _collider.isTrigger = true;
-        // _rb.isKinematic = true;
-        // _agent.enabled = true;
-        // _agent.isStopped = false;
+        _rb.isKinematic = true;
+        _agent.enabled = true;
         yield return null;
     }
 }
