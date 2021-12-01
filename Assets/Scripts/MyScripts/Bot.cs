@@ -96,6 +96,8 @@ public class Bot : BasePlayer {
                     } // Do nothing
                     else if (bricks.Count > 1) { // If in spawner ends bricks, go to ladder
                         _currentBotState = BotState.TakeLadder;
+                    } else {
+                        _currentTarget = null;
                     }
                 }
                 break;
@@ -297,7 +299,7 @@ public class Bot : BasePlayer {
     NearBrick GetNearBrick() {
         NearBrick nBrick = null;
         foreach (var brickScript in GameObject.FindObjectsOfType<Brick>()) {
-            if (brickScript.CompareTag(color.ToString()) || brickScript.CompareTag("Free")) {
+            if (brickScript.CompareTag(color.ToString()) || brickScript.CompareTag("Free") && brickScript.transform.position.y < transform.position.y) {
                 var tempDistance = Vector3.Distance(transform.position, brickScript.transform.position);
                 if (nBrick == null || (tempDistance < nBrick.distance)) {
                     nBrick = new NearBrick

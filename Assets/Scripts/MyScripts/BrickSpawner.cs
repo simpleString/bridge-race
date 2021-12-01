@@ -89,12 +89,12 @@ public class BrickSpawner : MonoBehaviour {
         // TODO:: needs to check if it's active now it's decrease from all spawners
 
         // Debug.LogWarning("Color count " + color + "    " + _playerDict[(int)color]);
-        if (_playerDict[(int)color] > 0) {
-            _playerDict[(int)color]--;
-            UpdateByColor(color);
-            // UpdateBricksArray();
-            // UpdateOneRandomBrick();
-        }
+        // if (_playerDict[(int)color] > 0) {
+        // _playerDict[(int)color]--;
+        UpdateByColor(color);
+        // UpdateBricksArray();
+        // UpdateOneRandomBrick();
+        // }
 
     }
 
@@ -126,7 +126,8 @@ public class BrickSpawner : MonoBehaviour {
     }
 
 
-    void UpdateOneRandomBrick() {
+    public void UpdateOneRandomBrick() {
+        if (!_isActive) return;
         var nullBrickArray = new List<Vector2Int>();
         for (var y = 0; y < _yCount; y++) {
             for (var x = 0; x < _xCount; x++) {

@@ -5,6 +5,8 @@ using UnityEngine.AI;
 using Random = UnityEngine.Random;
 using System.Collections;
 using static GameManager;
+using DG.Tweening;
+
 
 public class BasePlayer : MonoBehaviour {
     public GameManager.MyColor color;
@@ -57,10 +59,14 @@ public class BasePlayer : MonoBehaviour {
 
     public Stack<Transform> bricks = new Stack<Transform>();
 
-    protected void AddBrickToBridge(GameObject brick) {
-        var brickScript = brick.GetComponent<Stair>();
-        brickScript.ChangeColor(color);
-        Destroy(bricks.Pop().gameObject);
+    protected void AddBrickToBridge(GameObject stair) {
+        var stairScript = stair.GetComponent<Stair>();
+        stairScript.ChangeColor(color);
+
+        var deletedBrick = bricks.Pop();
+        deletedBrick.GetComponent<Renderer>().material.DOFade(0, .2f).OnComplete(() => {
+            Destroy(deletedBrick.gameObject);
+        });
         actionPlayerLostBrick?.Invoke(color);
     }
 
@@ -191,13 +197,13 @@ public class BasePlayer : MonoBehaviour {
         _agent.enabled = false;
         _rb.isKinematic = false;
         Debug.Log("Kick hit");
-        // _collider.isTrigger = false;
+        _collider.isTrigger = false;
         var forward = transform.forward;
         var normalForward = forward.normalized;
         // Get forward of hit, and start particle effect
-        var enemyNormal = collider.transform.forward;
+        // var enemyNormal = collider.transform.forward;
         // _particleSystem.transform.position = enemyNormal;
-        // Instantiate(_particleSystem).Play();
+        // Instantiate(_particleSystem, transform).Play();
         // _particleSystem.Play();
         _rb.AddForce(new Vector3(normalForward.x * 10, 5, normalForward.z) * GameManager.Instance.playersForce);
 
@@ -214,7 +220,7 @@ public class BasePlayer : MonoBehaviour {
             yield return null;
         }
 
-        // _collider.isTrigger = true;
+        _collider.isTrigger = true;
         _rb.isKinematic = true;
         _agent.enabled = true;
         yield return null;

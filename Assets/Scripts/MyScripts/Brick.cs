@@ -1,5 +1,7 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using DG.Tweening;
 using UnityEngine;
 
 public class Brick : MonoBehaviour {
@@ -31,7 +33,8 @@ public class Brick : MonoBehaviour {
 
     public void InitAfterDrop(GameManager.MyColor color) {
         tag = color.ToString();
-        _material.color = GameManager.GetUnityColorByMyColor(color);
+        _material.DOColor(GameManager.GetUnityColorByMyColor(color), 1f);
+        // _material.color = GameManager.GetUnityColorByMyColor(color);
         isPickable = false;
 
     }
