@@ -200,6 +200,8 @@ public class BasePlayer : MonoBehaviour {
         _collider.isTrigger = false;
         var forward = transform.forward;
         var normalForward = forward.normalized;
+        _animator.SetTrigger("IsKickTrigger");
+        // _animator.SetBool("IsKick", true);
         // Get forward of hit, and start particle effect
         // var enemyNormal = collider.transform.forward;
         // _particleSystem.transform.position = enemyNormal;

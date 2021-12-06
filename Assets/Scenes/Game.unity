@@ -2937,6 +2937,11 @@ PrefabInstance:
       propertyPath: m_SkinnedMotionVectors
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 4552958494528196773, guid: fe9f5ce1f970e4247b60c2475594b9dc,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5596420359202632937, guid: fe9f5ce1f970e4247b60c2475594b9dc,
         type: 3}
       propertyPath: _floatingJoystick
@@ -3382,6 +3387,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_StaticEditorFlags
       value: 4294967295
+      objectReference: {fileID: 0}
+    - target: {fileID: 4464965138573593208, guid: ae5f105dc1e938a49aced8ce57e3dc99,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 28.18
       objectReference: {fileID: 0}
     - target: {fileID: 7159859133481314257, guid: ae5f105dc1e938a49aced8ce57e3dc99,
         type: 3}

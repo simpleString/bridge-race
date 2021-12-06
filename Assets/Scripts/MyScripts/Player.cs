@@ -50,8 +50,8 @@ public class Player : BasePlayer {
     }
 
     new void Start() {
+        color = GameManager.Instance.playerColor; // Needs to be upper that base Start method!!!
         base.Start();
-        color = GameManager.Instance.playerColor;
     }
 
 
@@ -64,14 +64,13 @@ public class Player : BasePlayer {
         var horizontal = _floatingJoystick.Horizontal;
 #endif
         _movement = new Vector3(horizontal, 0f, vertical);
-        
+
 
         _animator.SetBool("IsRun", _movement.magnitude > 0);
     }
 
-    void FixedUpdate()
-    {
-        
+    void FixedUpdate() {
+
         if (_movement.magnitude > 0) {
             _movement.Normalize();
             _movement *= _speed;
@@ -80,11 +79,10 @@ public class Player : BasePlayer {
             transform.rotation = Quaternion.LookRotation(new Vector3(_movement.x, 0, _movement.z));
         }
 
-        if (_agent.enabled)
-        {
+        if (_agent.enabled) {
             _agent.Move(_movement * Time.deltaTime);
         }
     }
-            
+
 
 }

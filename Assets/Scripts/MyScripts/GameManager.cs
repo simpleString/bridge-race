@@ -60,8 +60,7 @@ public class GameManager : MonoBehaviour {
 
     public List<BasePlayer> players = new List<BasePlayer>();
 
-    public MyColor playerColor = MyColor.blue;  // TODO:: Need to set by user!!!
-
+    public MyColor playerColor;
     public Bot botPrefab;
 
     public static GameManager Instance;
@@ -72,8 +71,7 @@ public class GameManager : MonoBehaviour {
     public float enemyBullingThreshold = 2; // collider radius multiplier for player bulling
 
     void Awake() {
-        if (Store.Store.PlayerColor != null)
-            playerColor = Store.Store.PlayerColor;
+        playerColor = Store.Store.PlayerColor;
         Time.timeScale = 1;
         if (Instance != null) {
             DestroyImmediate(this);
@@ -105,11 +103,11 @@ public class GameManager : MonoBehaviour {
 
     public void GameWin(GameObject player) {
         if (IsPlayedWithPlayer) {
-            if (player.GetComponent<BasePlayer>().color == playerColor) {
-                managerUI.OnWinTrigger();
-            } else {
-                managerUI.OnLoseTrigger();
-            }
+            // if (player.GetComponent<BasePlayer>().color == playerColor) {
+            managerUI.OnWinTrigger();
+            // } else {
+            //     managerUI.OnLoseTrigger();
+            // }
         } else {
             // TODO:: Reload this scene again
         }

@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -10,13 +11,12 @@ namespace UI {
         public int countOfCells;
 
         void Awake() {
-            var i = 0;
-            while (i < countOfCells) {
-                Instantiate(shopCell, transform);
-                i++;
+            foreach (GameManager.MyColor item in Enum.GetValues(typeof(GameManager.MyColor))) {
+                if (item == GameManager.MyColor.black) continue;
+                var newShopCell = Instantiate(shopCell, transform);
+                newShopCell.GetComponent<ButtonShopScript>().Init(GameManager.GetUnityColorByMyColor(item), item);
             }
         }
 
     }
 }
-

@@ -466,7 +466,7 @@ public class Bot : BasePlayer {
 
             // Debug.Log("Ladder position " + tempNearLadder.transform.position.y + " bot position: " + transform.position.y);
             if ((bestLadder == null && tempNearLadder.transform.position.y - 2 > transform.position.y) ||
-                (tempNearLadder.colorCount >= bestLadder?.colorCount && tempNearLadder.transform.position.y - 2 > transform.position.y && tempNearLadder.transform.position.y <= bestLadder?.transform.position.y)) {
+                (tempNearLadder.colorCount >= bestLadder?.colorCount && tempNearLadder.transform.position.y - 2 > transform.position.y && tempNearLadder.transform.position.y - 2 <= bestLadder?.transform.position.y)) {
 
                 bestLadder = tempNearLadder;
             }

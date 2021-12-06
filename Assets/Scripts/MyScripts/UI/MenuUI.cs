@@ -12,9 +12,9 @@ namespace UI {
 
 
 
-        void Awake() {
+        void Start() {
+            FindObjectOfType<AudioManager>().Play("Theme");
         }
-
         public void OnPlayButtonClicked() {
             SceneManager.LoadScene("Game");
         }

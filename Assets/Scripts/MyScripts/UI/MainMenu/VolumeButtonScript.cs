@@ -16,13 +16,17 @@ namespace UI {
             UpdateImage();
         }
 
-        void UpdateImage()
-        {
+        void UpdateImage() {
             image.sprite = Store.Store.IsSoundOn ? ActiveImage : DisableImage;
         }
 
         public void OnButtonClick() {
             Store.Store.IsSoundOn = !Store.Store.IsSoundOn;
+            if (!Store.Store.IsSoundOn) {
+                FindObjectOfType<AudioManager>().StopAll();
+            } else {
+                FindObjectOfType<AudioManager>().Play("Theme");
+            }
             UpdateImage();
         }
     }

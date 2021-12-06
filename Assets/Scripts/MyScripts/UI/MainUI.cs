@@ -12,6 +12,8 @@ namespace UI {
         public GameObject winMenu;
         public GameObject loseMenu;
 
+
+
         public void OnSettingButtonClicked() {
             isMenuOpen = true;
             pauseMenu.SetActive(isMenuOpen);
