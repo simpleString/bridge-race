@@ -29,11 +29,115 @@ public class Bot : BasePlayer {
         _currentBotState = BotState.Idle;
     }
 
-    private Coroutine bullingCoroutineStatus;
+    //Control bulling state
+    private bool isBulling = false;
+    private PlayerScriptAndDistancePlusTranform targetPlayer = null;
+
+    //Control state when bot stay on brick and don't pick it
     private Vector3 _botPosition;
     private bool _checkStayBrick = false;
 
+    public float multiplyBy; // For bot excaping
 
+    IEnumerator StateMachine() {
+        while (true) {
+            NearBrick nearBrickTarget = null;
+            BestLadder bestLadderTarget = null;
+
+
+            var nearPlayer = GetNearPlayerWithBricksMoreThatMe();
+            // antiBulling checking
+            if (nearPlayer != null && _agent.enabled) {
+                transform.rotation = Quaternion.LookRotation(transform.position - nearPlayer.player.transform.position);
+                Vector3 runTo = transform.position + transform.forward * multiplyBy;
+                NavMeshHit hit;
+                if (NavMesh.SamplePosition(runTo, out hit, 5, NavMesh.AllAreas)) {
+                    _agent.SetDestination(hit.position);
+                }
+            }
+
+            switch (_currentBotState) {
+                case BotState.Idle:
+                    //TODO:: Now it check only one state. Needs add more
+                    nearBrickTarget = GetNearBrick();
+                    if (nearBrickTarget != null) {
+                        _currentTarget = nearBrickTarget.transform;
+                        _currentBotState = BotState.TakeBrick;
+                    }
+                    break;
+
+                case BotState.TakeLadder:
+                    // Check that bot has bricks
+                    if (bricks.Count < 2) {
+                        _currentBotState = BotState.TakeBrick;
+                    }
+                    bestLadderTarget = GetBestLadder();
+
+                    _currentTarget = bestLadderTarget.transform;
+                    break;
+
+                case BotState.TakeBrick:
+
+                    // TODO:: Check bulling transaction
+                    targetPlayer = CheckEnemiesBricks();
+                    if (targetPlayer != null) {
+
+                        isBulling = true;
+                        _currentBotState = BotState.Bulling;
+                    }
+
+                    // Check that bot has enouth bricks
+                    if (bricks.Count > botBricksThreshold) {
+                        // Check that near hasn't any bricks
+                        nearBrickTarget = GetNearBrick();
+                        if (nearBrickTarget != null && nearBrickTarget.distance < .5f) {
+                            _currentTarget = nearBrickTarget.transform;
+                        } else {
+                            // If not blocks find best ladder
+                            _currentBotState = BotState.TakeLadder;
+                        }
+                    } else {
+                        nearBrickTarget = GetNearBrick();
+                        if (nearBrickTarget != null) {
+                            _currentTarget = nearBrickTarget.transform;
+                        } // Do nothing
+                        else if (bricks.Count > 1) { // If in spawner ends bricks, go to ladder
+                            _currentBotState = BotState.TakeLadder;
+                        } else {
+                            _currentTarget = null;
+                        }
+                    }
+                    break;
+                case BotState.Bulling:
+                    if (isBulling) {
+                        if (targetPlayer.playerScript.bricks.Count < bricks.Count && targetPlayer.playerScript.bricks.Count > 0 &&
+                Vector3.Distance(targetPlayer.transform.position, transform.position) <= GameManager.Instance.enemyBullingThreshold) {
+                            _currentTarget = targetPlayer.transform;
+                        } else {
+                            targetPlayer = null;
+                            isBulling = false;
+                            _currentBotState = BotState.Idle;
+                            StopCoroutine(TimeToEnemyBulling());
+                        }
+                    } else {
+                        StartCoroutine(TimeToEnemyBulling());
+                    }
+
+                    break;
+                    // // if already doing bulling
+                    // if (bullingCoroutineStatus != null) return;
+                    // targetPlayer = CheckEnemiesBricks();
+                    // if (targetPlayer == null) _currentBotState = BotState.Idle;
+                    // bullingCoroutineStatus = StartCoroutine(EnemyBulling(targetPlayer));
+                    // if (bullingCoroutineStatus == null) {
+                    //     _currentBotState = BotState.Idle;
+                    // }
+                    // break;
+            }
+
+            yield return new WaitForSeconds(.1f);
+        }
+    }
 
 
     new void Update() {
@@ -41,78 +145,94 @@ public class Bot : BasePlayer {
 
 
 
-        NearBrick nearBrickTarget = null;
-        BestLadder bestLadderTarget = null;
-        PlayerScriptAndDistancePlusTranform targetPlayer = null;
+        // NearBrick nearBrickTarget = null;
+        // BestLadder bestLadderTarget = null;
 
-        var nearPlayer = GetNearPlayerWithBricksMoreThatMe();
-        // antiBulling checking
-        if (nearPlayer != null) {
-            Debug.Log("start avoiding");
-        }
 
-        switch (_currentBotState) {
-            case BotState.Idle:
-                //TODO:: Now it check only one state. Needs add more
-                nearBrickTarget = GetNearBrick();
-                if (nearBrickTarget != null) {
-                    _currentTarget = nearBrickTarget.transform;
-                    _currentBotState = BotState.TakeBrick;
-                }
-                break;
+        // var nearPlayer = GetNearPlayerWithBricksMoreThatMe();
+        // // antiBulling checking
+        // if (nearPlayer != null) {
 
-            case BotState.TakeLadder:
-                // Check that bot has bricks
-                if (bricks.Count < 2) {
-                    _currentBotState = BotState.TakeBrick;
-                }
-                bestLadderTarget = GetBestLadder();
+        // }
 
-                _currentTarget = bestLadderTarget.transform;
-                break;
+        // switch (_currentBotState) {
+        //     case BotState.Idle:
+        //         //TODO:: Now it check only one state. Needs add more
+        //         nearBrickTarget = GetNearBrick();
+        //         if (nearBrickTarget != null) {
+        //             _currentTarget = nearBrickTarget.transform;
+        //             _currentBotState = BotState.TakeBrick;
+        //         }
+        //         break;
 
-            case BotState.TakeBrick:
+        //     case BotState.TakeLadder:
+        //         // Check that bot has bricks
+        //         if (bricks.Count < 2) {
+        //             _currentBotState = BotState.TakeBrick;
+        //         }
+        //         bestLadderTarget = GetBestLadder();
 
-                // TODO:: Check bulling transaction
-                // targetPlayer = CheckEnemiesBricks();
-                // if (targetPlayer != null) {
-                //     _currentBotState = BotState.Bulling;
-                // }
+        //         _currentTarget = bestLadderTarget.transform;
+        //         break;
 
-                // Check that bot has enouth bricks
-                if (bricks.Count > botBricksThreshold) {
-                    // Check that near hasn't any bricks
-                    nearBrickTarget = GetNearBrick();
-                    if (nearBrickTarget != null && nearBrickTarget.distance < .5f) {
-                        _currentTarget = nearBrickTarget.transform;
-                    } else {
-                        // If not blocks find best ladder
-                        _currentBotState = BotState.TakeLadder;
-                    }
-                } else {
-                    nearBrickTarget = GetNearBrick();
-                    if (nearBrickTarget != null) {
-                        _currentTarget = nearBrickTarget.transform;
-                    } // Do nothing
-                    else if (bricks.Count > 1) { // If in spawner ends bricks, go to ladder
-                        _currentBotState = BotState.TakeLadder;
-                    } else {
-                        _currentTarget = null;
-                    }
-                }
-                break;
-            case BotState.Bulling:
-                break;
-                // // if already doing bulling
-                // if (bullingCoroutineStatus != null) return;
-                // targetPlayer = CheckEnemiesBricks();
-                // if (targetPlayer == null) _currentBotState = BotState.Idle;
-                // bullingCoroutineStatus = StartCoroutine(EnemyBulling(targetPlayer));
-                // if (bullingCoroutineStatus == null) {
-                //     _currentBotState = BotState.Idle;
-                // }
-                // break;
-        }
+        //     case BotState.TakeBrick:
+
+        //         // TODO:: Check bulling transaction
+        //         targetPlayer = CheckEnemiesBricks();
+        //         if (targetPlayer != null) {
+
+        //             isBulling = true;
+        //             _currentBotState = BotState.Bulling;
+        //         }
+
+        //         // Check that bot has enouth bricks
+        //         if (bricks.Count > botBricksThreshold) {
+        //             // Check that near hasn't any bricks
+        //             nearBrickTarget = GetNearBrick();
+        //             if (nearBrickTarget != null && nearBrickTarget.distance < .5f) {
+        //                 _currentTarget = nearBrickTarget.transform;
+        //             } else {
+        //                 // If not blocks find best ladder
+        //                 _currentBotState = BotState.TakeLadder;
+        //             }
+        //         } else {
+        //             nearBrickTarget = GetNearBrick();
+        //             if (nearBrickTarget != null) {
+        //                 _currentTarget = nearBrickTarget.transform;
+        //             } // Do nothing
+        //             else if (bricks.Count > 1) { // If in spawner ends bricks, go to ladder
+        //                 _currentBotState = BotState.TakeLadder;
+        //             } else {
+        //                 _currentTarget = null;
+        //             }
+        //         }
+        //         break;
+        //     case BotState.Bulling:
+        //         if (isBulling) {
+        //             if (targetPlayer.playerScript.bricks.Count < bricks.Count && targetPlayer.playerScript.bricks.Count > 0 &&
+        //     Vector3.Distance(targetPlayer.transform.position, transform.position) <= GameManager.Instance.enemyBullingThreshold) {
+        //                 _currentTarget = targetPlayer.transform;
+        //             } else {
+        //                 targetPlayer = null;
+        //                 isBulling = false;
+        //                 _currentBotState = BotState.Idle;
+        //                 StopCoroutine(TimeToEnemyBulling());
+        //             }
+        //         } else {
+        //             StartCoroutine(TimeToEnemyBulling());
+        //         }
+
+        //         break;
+        //         // // if already doing bulling
+        //         // if (bullingCoroutineStatus != null) return;
+        //         // targetPlayer = CheckEnemiesBricks();
+        //         // if (targetPlayer == null) _currentBotState = BotState.Idle;
+        //         // bullingCoroutineStatus = StartCoroutine(EnemyBulling(targetPlayer));
+        //         // if (bullingCoroutineStatus == null) {
+        //         //     _currentBotState = BotState.Idle;
+        //         // }
+        //         // break;
+        // }
 
 
     }
@@ -126,6 +246,7 @@ public class Bot : BasePlayer {
 
     new void Start() {
         base.Start();
+        StartCoroutine(StateMachine());
         StartCoroutine(UpdateDestination());
 
     }
@@ -210,6 +331,11 @@ public class Bot : BasePlayer {
         _currentBotState = BotState.TakeBrick;
         // FindNearBrick();
         yield return null;
+    }
+
+    IEnumerator TimeToEnemyBulling() {
+        yield return new WaitForSeconds(3);
+        isBulling = false;
     }
 
 

@@ -26,62 +26,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="06d18977-fa0e-43c1-8d22-cdfdeb726e68" name="Default Changelist" comment="Before rewrite bot logic script">
-      <change afterPath="$PROJECT_DIR$/Assets/Assets Store Packages/GrassFlowers.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Assets Store Packages/GrassFlowers/Demo.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Assets Store Packages/GrassFlowers/Demo/DemoGrassFlowers.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Assets Store Packages/GrassFlowers/Demo/DemoGrassFlowers.unity" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Assets Store Packages/GrassFlowers/Demo/DemoGrassFlowers.unity.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Assets Store Packages/GrassFlowers/Demo/DemoGrassFlowers/LightingData.asset" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Assets Store Packages/GrassFlowers/Demo/DemoGrassFlowers/LightingData.asset.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Assets Store Packages/GrassFlowers/Demo/DemoGrassFlowers/ReflectionProbe-0.exr" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Assets Store Packages/GrassFlowers/Demo/DemoGrassFlowers/ReflectionProbe-0.exr.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Assets Store Packages/GrassFlowers/Demo/DemoGrassFlowersSettings.lighting" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Assets Store Packages/GrassFlowers/Demo/DemoGrassFlowersSettings.lighting.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Assets Store Packages/GrassFlowers/Post-Processing For GrassFlowers.asset" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Assets Store Packages/GrassFlowers/Post-Processing For GrassFlowers.asset.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Assets Store Packages/GrassFlowers/Textures.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Assets Store Packages/GrassFlowers/Textures/GrassFlowers.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Assets Store Packages/GrassFlowers/Textures/GrassFlowers/grass01.tga" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Assets Store Packages/GrassFlowers/Textures/GrassFlowers/grass01.tga.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Assets Store Packages/GrassFlowers/Textures/GrassFlowers/grass02.tga" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Assets Store Packages/GrassFlowers/Textures/GrassFlowers/grass02.tga.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Assets Store Packages/GrassFlowers/Textures/GrassFlowers/grassFlower01.tga" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Assets Store Packages/GrassFlowers/Textures/GrassFlowers/grassFlower01.tga.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Assets Store Packages/GrassFlowers/Textures/GrassFlowers/grassFlower02.tga" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Assets Store Packages/GrassFlowers/Textures/GrassFlowers/grassFlower02.tga.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Assets Store Packages/GrassFlowers/Textures/GrassFlowers/grassFlower03.tga" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Assets Store Packages/GrassFlowers/Textures/GrassFlowers/grassFlower03.tga.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Assets Store Packages/GrassFlowers/Textures/GrassFlowers/grassFlower04.tga" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Assets Store Packages/GrassFlowers/Textures/GrassFlowers/grassFlower04.tga.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Assets Store Packages/GrassFlowers/Textures/GrassFlowers/grassFlower05.tga" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Assets Store Packages/GrassFlowers/Textures/GrassFlowers/grassFlower05.tga.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Assets Store Packages/GrassFlowers/Textures/GrassFlowers/grassFlower06.tga" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Assets Store Packages/GrassFlowers/Textures/GrassFlowers/grassFlower06.tga.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Assets Store Packages/GrassFlowers/Textures/GrassFlowers/grassFlower07.tga" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Assets Store Packages/GrassFlowers/Textures/GrassFlowers/grassFlower07.tga.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Assets Store Packages/GrassFlowers/Textures/GrassFlowers/grassFlower08.tga" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Assets Store Packages/GrassFlowers/Textures/GrassFlowers/grassFlower08.tga.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Assets Store Packages/GrassFlowers/Textures/GrassFlowers/grassFlower09.tga" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Assets Store Packages/GrassFlowers/Textures/GrassFlowers/grassFlower09.tga.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Assets Store Packages/GrassFlowers/Textures/GrassFlowers/grassFlower10.tga" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Assets Store Packages/GrassFlowers/Textures/GrassFlowers/grassFlower10.tga.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Assets Store Packages/GrassFlowers/Textures/Ground.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Assets Store Packages/GrassFlowers/Textures/Ground/Grass01_BigUV.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Assets Store Packages/GrassFlowers/Textures/Ground/Grass01_BigUV.png.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/MyModels/Grass.mat" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/MyModels/Grass.mat.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/MyScripts/SideScript.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/MyScripts/SideScript.cs.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/_TerrainAutoUpgrade.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/_TerrainAutoUpgrade/layer_Grass01_BigUVd261c09ae55ba1e3.terrainlayer" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/_TerrainAutoUpgrade/layer_Grass01_BigUVd261c09ae55ba1e3.terrainlayer.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.simple-bridge-race/.idea/contentModel.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.simple-bridge-race/.idea/contentModel.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.simple-bridge-race/.idea/indexLayout.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.simple-bridge-race/.idea/indexLayout.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.simple-bridge-race/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.simple-bridge-race/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scenes/Game.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/Game.unity" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/MyScripts/BasePlayer.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/MyScripts/BasePlayer.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/MyScripts/Bot.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/MyScripts/Bot.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/MyScripts/Brick.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/MyScripts/Brick.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/MyScripts/BrickSpawner.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/MyScripts/BrickSpawner.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scenes/Menu.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/Menu.unity" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -180,7 +127,7 @@
       <workItem from="1638112748410" duration="6168000" />
       <workItem from="1638172496618" duration="3661000" />
       <workItem from="1638269589985" duration="16543000" />
-      <workItem from="1638339579859" duration="5382000" />
+      <workItem from="1638339579859" duration="6571000" />
     </task>
     <task id="LOCAL-00001" summary="Before rewrite bot logic script">
       <created>1638339955677</created>

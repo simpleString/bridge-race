@@ -9,11 +9,10 @@ namespace UI {
         public GameObject SettingsMenu;
         public GameObject MainMenu;
         public GameObject ShopMenu;
-        
+
 
 
         void Awake() {
-            // VolumeImageObject.GetComponent<ImageConversion>
         }
 
         public void OnPlayButtonClicked() {
@@ -30,8 +29,7 @@ namespace UI {
             MainMenu.SetActive(true);
         }
 
-        public void OnShopButtonClicked()
-        {
+        public void OnShopButtonClicked() {
             MainMenu.SetActive(false);
             ShopMenu.SetActive(true);
         }

@@ -256,6 +256,7 @@ MonoBehaviour:
     type: 3}
   botBricksThreshold: 15
   _currentBotState: 1
+  multiplyBy: 5
 --- !u!1 &2227436355017003152
 GameObject:
   m_ObjectHideFlags: 0
