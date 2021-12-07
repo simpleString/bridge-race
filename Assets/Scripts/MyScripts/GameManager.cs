@@ -32,9 +32,9 @@ public class GameManager : MonoBehaviour {
 
     public List<Transform> bonuses;
 
-    public static void Vibrate() {
+    public static void Vibrate(int timeInMs) {
         if (Store.Store.IsVibrationOn)
-            Handheld.Vibrate();
+            Vibration.Vibrate(timeInMs);
     }
 
     public static Color GetUnityColorByMyColor(MyColor color) {

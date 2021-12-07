@@ -6,6 +6,7 @@ public class Player : BasePlayer {
 
     //////////////////////////////////// Base properties
     [SerializeField] FloatingJoystick _floatingJoystick;
+    [SerializeField] int vibrationTimeInMs = 25;
 
     public static Player Instance = null;
     ///////////////////////////////////
@@ -19,7 +20,7 @@ public class Player : BasePlayer {
     private void OnTriggerEnter(Collider collider) {
         if (collider.gameObject.layer == LayerMask.NameToLayer("Stairs") && !collider.CompareTag(color.ToString())) {
             if (bricks.Count > 0) {
-                GameManager.Vibrate();
+                GameManager.Vibrate(vibrationTimeInMs);
                 AddBrickToBridge(collider.gameObject);
             } else {
                 // Don't let player go to stairs
@@ -29,10 +30,10 @@ public class Player : BasePlayer {
             if (!Physics.Raycast(transform.position, Vector3.down, 10f, LayerMask.NameToLayer("Stairs"))) return;
             CheckPlayerCollision(collider);
         } else if ((collider.tag == color.ToString() || collider.tag == "Free") && collider.gameObject.layer != LayerMask.NameToLayer("Stairs")) {
-            GameManager.Vibrate();
+            GameManager.Vibrate(vibrationTimeInMs);
             AddBrickToPlayer(collider.gameObject);
         } else if (collider.CompareTag("Bonus")) {
-            GameManager.Vibrate();
+            GameManager.Vibrate(vibrationTimeInMs);
             var bonusScript = collider.GetComponent<Bonus>();
             GetBunusEffect(bonusScript.type);
             bonusScript.Destory();

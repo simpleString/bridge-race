@@ -3,10 +3,18 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class FollowCamera : MonoBehaviour {
-    public Transform target;
-    public Vector3 offset = new Vector3(0, 2, -5);
-
+    [SerializeField] private float SmoothTime = 0.3f;
+    [SerializeField] private Transform target;
+    private Vector3 offset = new Vector3(0, 2, -5);
+    private Vector3 velocity = Vector3.zero;
     private Renderer _texture;
+
+    private void Start() {
+        offset = transform.position - target.position;
+        Vector3 targetPosition = target.position + offset;
+        transform.position = targetPosition;
+    }
+
     void Update() {
         RaycastHit raycastHit;
         if (Physics.Raycast(transform.position, transform.forward, out raycastHit, 100000f)) {
@@ -20,6 +28,11 @@ public class FollowCamera : MonoBehaviour {
                 _texture = null;
             }
         }
-        transform.position = target.position + offset;
+    }
+
+    private void LateUpdate() {
+        Vector3 targetPosition = target.position + offset;
+        transform.position = Vector3.SmoothDamp(transform.position, targetPosition, ref velocity, SmoothTime);
+        transform.LookAt(target);
     }
 }
