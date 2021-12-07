@@ -207,7 +207,7 @@ public class BasePlayer : MonoBehaviour {
         // _particleSystem.transform.position = enemyNormal;
         // Instantiate(_particleSystem, transform).Play();
         // _particleSystem.Play();
-        _rb.AddForce(new Vector3(normalForward.x * 10, 5, normalForward.z) * GameManager.Instance.playersForce);
+        _rb.AddForce(new Vector3(normalForward.x * 10, 0, normalForward.z) * GameManager.Instance.playersForce);
 
         NavMeshHit hit;
         bool isOnAir = true;

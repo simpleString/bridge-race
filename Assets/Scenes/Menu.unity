@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.18028378, g: 0.22571412, b: 0.30692285, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028334, g: 0.2257134, b: 0.30692226, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -896,7 +896,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bonusPlaces: []
-  brickPrefab: {fileID: 5151990165357570883, guid: 79a1690dd2204244989126c2518f8fee,
+  brickPrefab: {fileID: 1504072961809438021, guid: 33ae87c644db044468a6177e89fc3ae8,
     type: 3}
   basePool: {fileID: 613821122}
   xUserOffset: 1.5
@@ -1032,7 +1032,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 492193990}
   m_HandleRect: {fileID: 492193989}
   m_Direction: 0
-  m_Value: 0
+  m_Value: 1
   m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
@@ -2110,7 +2110,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: -0.000030517578}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &395679595
@@ -2639,8 +2639,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: -17, y: 0}
+  m_AnchoredPosition: {x: 0, y: -29.823}
+  m_SizeDelta: {x: -17, y: -29.823}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &492216590
 MonoBehaviour:
@@ -3452,8 +3452,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 2.0789795, y: -246.75406}
-  m_SizeDelta: {x: -45.62319, y: -554.81836}
+  m_AnchoredPosition: {x: 2.0789795, y: -261.666}
+  m_SizeDelta: {x: -45.623, y: -584.641}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &571950820
 MonoBehaviour:
@@ -6209,6 +6209,8 @@ GameObject:
   - component: {fileID: 1286795321}
   - component: {fileID: 1286795326}
   - component: {fileID: 1286795325}
+  - component: {fileID: 1286795322}
+  - component: {fileID: 1286795323}
   m_Layer: 5
   m_Name: SettingsMenu
   m_TagString: Untagged
@@ -6236,6 +6238,31 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
+--- !u!222 &1286795322
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1286795320}
+  m_CullTransparentMesh: 1
+--- !u!114 &1286795323
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1286795320}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dc42784cf147c0c48a680349fa168899, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_IgnoreReversedGraphics: 1
+  m_BlockingObjects: 0
+  m_BlockingMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
 --- !u!114 &1286795325
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7772,7 +7799,7 @@ MonoBehaviour:
   bonusPlaces:
   - {fileID: 1450571620}
   - {fileID: 1213964347}
-  brickPrefab: {fileID: 5151990165357570883, guid: 79a1690dd2204244989126c2518f8fee,
+  brickPrefab: {fileID: 1504072961809438021, guid: 33ae87c644db044468a6177e89fc3ae8,
     type: 3}
   basePool: {fileID: 1652439040}
   xUserOffset: 1.5
@@ -9868,8 +9895,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: -0.00012207031}
-  m_SizeDelta: {x: 0, y: -737.0917}
+  m_AnchoredPosition: {x: 0, y: 0.00036621094}
+  m_SizeDelta: {x: 0, y: -677.44604}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!114 &2129752516
 MonoBehaviour:
@@ -9944,7 +9971,7 @@ MonoBehaviour:
   m_ChildAlignment: 0
   m_StartCorner: 0
   m_StartAxis: 0
-  m_CellSize: {x: 200, y: 200}
+  m_CellSize: {x: 180, y: 180}
   m_Spacing: {x: 9.01, y: 2.61}
   m_Constraint: 0
   m_ConstraintCount: 2

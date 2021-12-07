@@ -101,7 +101,16 @@ public class GameManager : MonoBehaviour {
 
     }
 
+    public void StopGame() {
+        Time.timeScale = 0f;
+    }
+
+    public void ResumeGame() {
+        Time.timeScale = 1f;
+    }
+
     public void GameWin(GameObject player) {
+        StopGame();
         if (IsPlayedWithPlayer) {
             // if (player.GetComponent<BasePlayer>().color == playerColor) {
             managerUI.OnWinTrigger();

@@ -252,7 +252,7 @@ MonoBehaviour:
   color: 0
   _speed: 6
   brickHolder: {fileID: 7664437924763702933}
-  portableBrick: {fileID: 5151990165357570883, guid: 79a1690dd2204244989126c2518f8fee,
+  portableBrick: {fileID: 1504072961809438021, guid: 33ae87c644db044468a6177e89fc3ae8,
     type: 3}
   botBricksThreshold: 15
   _currentBotState: 1
