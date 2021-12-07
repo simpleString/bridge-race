@@ -14,7 +14,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &2648471324013146410
 Transform:
@@ -57,6 +57,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Stair
+      objectReference: {fileID: 0}
+    - target: {fileID: 8821163480601116304, guid: 187c0f836427470499b3bdb209a3a295,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 4294967295
       objectReference: {fileID: 0}
     - target: {fileID: 8821163480601116319, guid: 187c0f836427470499b3bdb209a3a295,
         type: 3}
@@ -133,6 +138,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Stair (13)
       objectReference: {fileID: 0}
+    - target: {fileID: 8821163480601116304, guid: 187c0f836427470499b3bdb209a3a295,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 4294967295
+      objectReference: {fileID: 0}
     - target: {fileID: 8821163480601116319, guid: 187c0f836427470499b3bdb209a3a295,
         type: 3}
       propertyPath: m_RootOrder
@@ -207,6 +217,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Stair (12)
+      objectReference: {fileID: 0}
+    - target: {fileID: 8821163480601116304, guid: 187c0f836427470499b3bdb209a3a295,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 4294967295
       objectReference: {fileID: 0}
     - target: {fileID: 8821163480601116319, guid: 187c0f836427470499b3bdb209a3a295,
         type: 3}
@@ -283,6 +298,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Stair (14)
       objectReference: {fileID: 0}
+    - target: {fileID: 8821163480601116304, guid: 187c0f836427470499b3bdb209a3a295,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 4294967295
+      objectReference: {fileID: 0}
     - target: {fileID: 8821163480601116319, guid: 187c0f836427470499b3bdb209a3a295,
         type: 3}
       propertyPath: m_RootOrder
@@ -357,6 +377,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Stair (4)
+      objectReference: {fileID: 0}
+    - target: {fileID: 8821163480601116304, guid: 187c0f836427470499b3bdb209a3a295,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 4294967295
       objectReference: {fileID: 0}
     - target: {fileID: 8821163480601116319, guid: 187c0f836427470499b3bdb209a3a295,
         type: 3}
@@ -433,6 +458,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Stair (7)
       objectReference: {fileID: 0}
+    - target: {fileID: 8821163480601116304, guid: 187c0f836427470499b3bdb209a3a295,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 4294967295
+      objectReference: {fileID: 0}
     - target: {fileID: 8821163480601116319, guid: 187c0f836427470499b3bdb209a3a295,
         type: 3}
       propertyPath: m_RootOrder
@@ -507,6 +537,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Stair (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 8821163480601116304, guid: 187c0f836427470499b3bdb209a3a295,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 4294967295
       objectReference: {fileID: 0}
     - target: {fileID: 8821163480601116319, guid: 187c0f836427470499b3bdb209a3a295,
         type: 3}
@@ -583,6 +618,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Stair (11)
       objectReference: {fileID: 0}
+    - target: {fileID: 8821163480601116304, guid: 187c0f836427470499b3bdb209a3a295,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 4294967295
+      objectReference: {fileID: 0}
     - target: {fileID: 8821163480601116319, guid: 187c0f836427470499b3bdb209a3a295,
         type: 3}
       propertyPath: m_RootOrder
@@ -657,6 +697,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Stair (6)
+      objectReference: {fileID: 0}
+    - target: {fileID: 8821163480601116304, guid: 187c0f836427470499b3bdb209a3a295,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 4294967295
       objectReference: {fileID: 0}
     - target: {fileID: 8821163480601116319, guid: 187c0f836427470499b3bdb209a3a295,
         type: 3}
@@ -733,6 +778,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Stair (3)
       objectReference: {fileID: 0}
+    - target: {fileID: 8821163480601116304, guid: 187c0f836427470499b3bdb209a3a295,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 4294967295
+      objectReference: {fileID: 0}
     - target: {fileID: 8821163480601116319, guid: 187c0f836427470499b3bdb209a3a295,
         type: 3}
       propertyPath: m_RootOrder
@@ -808,6 +858,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Stair (15)
       objectReference: {fileID: 0}
+    - target: {fileID: 8821163480601116304, guid: 187c0f836427470499b3bdb209a3a295,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 4294967295
+      objectReference: {fileID: 0}
     - target: {fileID: 8821163480601116319, guid: 187c0f836427470499b3bdb209a3a295,
         type: 3}
       propertyPath: m_RootOrder
@@ -880,12 +935,17 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1693183359, guid: 187c0f836427470499b3bdb209a3a295, type: 3}
       propertyPath: m_Enabled
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8821163480601116304, guid: 187c0f836427470499b3bdb209a3a295,
         type: 3}
       propertyPath: m_Name
       value: Stair (5)
+      objectReference: {fileID: 0}
+    - target: {fileID: 8821163480601116304, guid: 187c0f836427470499b3bdb209a3a295,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 4294967295
       objectReference: {fileID: 0}
     - target: {fileID: 8821163480601116319, guid: 187c0f836427470499b3bdb209a3a295,
         type: 3}
@@ -962,6 +1022,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Stair (10)
       objectReference: {fileID: 0}
+    - target: {fileID: 8821163480601116304, guid: 187c0f836427470499b3bdb209a3a295,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 4294967295
+      objectReference: {fileID: 0}
     - target: {fileID: 8821163480601116319, guid: 187c0f836427470499b3bdb209a3a295,
         type: 3}
       propertyPath: m_RootOrder
@@ -1036,6 +1101,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Stair (8)
+      objectReference: {fileID: 0}
+    - target: {fileID: 8821163480601116304, guid: 187c0f836427470499b3bdb209a3a295,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 4294967295
       objectReference: {fileID: 0}
     - target: {fileID: 8821163480601116319, guid: 187c0f836427470499b3bdb209a3a295,
         type: 3}
@@ -1112,6 +1182,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Stair (2)
       objectReference: {fileID: 0}
+    - target: {fileID: 8821163480601116304, guid: 187c0f836427470499b3bdb209a3a295,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 4294967295
+      objectReference: {fileID: 0}
     - target: {fileID: 8821163480601116319, guid: 187c0f836427470499b3bdb209a3a295,
         type: 3}
       propertyPath: m_RootOrder
@@ -1186,6 +1261,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Stair (9)
+      objectReference: {fileID: 0}
+    - target: {fileID: 8821163480601116304, guid: 187c0f836427470499b3bdb209a3a295,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 4294967295
       objectReference: {fileID: 0}
     - target: {fileID: 8821163480601116319, guid: 187c0f836427470499b3bdb209a3a295,
         type: 3}

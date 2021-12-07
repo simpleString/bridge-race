@@ -228,6 +228,7 @@ public class BrickSpawner : MonoBehaviour {
         bool isGiveBonus = false;
         while (!isGiveBonus) {
             if (_currentPlayersOnSpawner.Count > 2) {
+                if (bonusPlaces.Count == 0) yield break;
                 // get place for bonus
                 var place = bonusPlaces[Random.Range(0, bonusPlaces.Count)];
                 // get random bonus

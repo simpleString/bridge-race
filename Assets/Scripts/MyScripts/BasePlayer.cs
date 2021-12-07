@@ -197,7 +197,7 @@ public class BasePlayer : MonoBehaviour {
         _agent.enabled = false;
         _rb.isKinematic = false;
         Debug.Log("Kick hit");
-        _collider.isTrigger = false;
+        // _collider.isTrigger = false;
         var forward = transform.forward;
         var normalForward = forward.normalized;
         _animator.SetTrigger("IsKickTrigger");
@@ -222,7 +222,7 @@ public class BasePlayer : MonoBehaviour {
             yield return null;
         }
 
-        _collider.isTrigger = true;
+        // _collider.isTrigger = true;
         _rb.isKinematic = true;
         _agent.enabled = true;
         yield return null;
