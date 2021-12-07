@@ -36,7 +36,16 @@ public class Brick : MonoBehaviour {
         _material.DOColor(GameManager.GetUnityColorByMyColor(color), 1f);
         // _material.color = GameManager.GetUnityColorByMyColor(color);
         isPickable = false;
+        StartCoroutine(StartDeathTimer());
+    }
 
+    IEnumerator StartDeathTimer() {
+        yield return new WaitForSeconds(3f);
+        Destroy(this.gameObject);
+        foreach (var item in GameObject.FindObjectsOfType<BrickSpawner>()) {
+            Debug.Log("Randomize bricks on platforms");
+            item.UpdateOneRandomBrick();
+        }
     }
 
     private void OnCollisionEnter(Collision collision) {
@@ -47,6 +56,7 @@ public class Brick : MonoBehaviour {
 
 
     public void Destroy() {
+        StopAllCoroutines();
         Destroy(this.gameObject);
     }
 }

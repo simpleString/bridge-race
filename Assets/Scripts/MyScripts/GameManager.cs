@@ -70,14 +70,33 @@ public class GameManager : MonoBehaviour {
     public UI.MainUI managerUI;
     public float enemyBullingThreshold = 2; // collider radius multiplier for player bulling
 
+    public GameMode currentGameMode = GameMode.Game;
+
+    public enum GameMode {
+        Game,
+        Menu
+    }
+
     void Awake() {
-        playerColor = Store.Store.PlayerColor;
-        Time.timeScale = 1;
+        var level = FindObjectOfType<LevelManager>();
+        if (level != null) {
+            currentGameMode = GameMode.Menu;
+            FindObjectOfType<Player>().gameObject.SetActive(false);
+            FindObjectOfType<UI.MainUI>().gameObject.SetActive(false);
+            FindObjectsOfType<Camera>()[1].gameObject.SetActive(false);
+            FindObjectsOfType<Light>()[1].gameObject.SetActive(false);
+            IsPlayedWithPlayer = false;
+            Debug.Log("Hello i'm in menu mode");
+        } else {
+            playerColor = Store.Store.PlayerColor;
+            Time.timeScale = 1;
+        }
         if (Instance != null) {
             DestroyImmediate(this);
         }
         Instance = this;
         InitGame();
+
     }
 
     void InitGame() {
@@ -112,11 +131,15 @@ public class GameManager : MonoBehaviour {
     public void GameWin(GameObject player) {
         StopGame();
         if (IsPlayedWithPlayer) {
-            // if (player.GetComponent<BasePlayer>().color == playerColor) {
-            managerUI.OnWinTrigger();
-            // } else {
-            //     managerUI.OnLoseTrigger();
-            // }
+            if (player.GetComponent<BasePlayer>().color == playerColor) {
+                var number = System.Int32.Parse(Store.Store.CurrentLevel.Split('_')[1]);
+                if (++number <= System.Int32.Parse(Store.Store.MaxLevel.Split('_')[1])) {
+                    Store.Store.CurrentLevel = "Level_" + number;
+                }
+                managerUI.OnWinTrigger();
+            } else {
+                managerUI.OnWinTrigger();
+            }
         } else {
             // TODO:: Reload this scene again
         }

@@ -79,12 +79,12 @@ public class Bot : BasePlayer {
                 case BotState.TakeBrick:
 
                     // TODO:: Check bulling transaction
-                    targetPlayer = CheckEnemiesBricks();
-                    if (targetPlayer != null) {
+                    // targetPlayer = CheckEnemiesBricks();
+                    // if (targetPlayer != null) {
 
-                        isBulling = true;
-                        _currentBotState = BotState.Bulling;
-                    }
+                    //     isBulling = true;
+                    //     _currentBotState = BotState.Bulling;
+                    // }
 
                     // Check that bot has enouth bricks
                     if (bricks.Count > botBricksThreshold) {
@@ -110,9 +110,10 @@ public class Bot : BasePlayer {
                     break;
                 case BotState.Bulling:
                     if (isBulling) {
-                        if (targetPlayer.playerScript.bricks.Count < bricks.Count && targetPlayer.playerScript.bricks.Count > 0 &&
-                Vector3.Distance(targetPlayer.transform.position, transform.position) <= GameManager.Instance.enemyBullingThreshold) {
-                            _currentTarget = targetPlayer.transform;
+                        //         if (targetPlayer.playerScript.bricks.Count < bricks.Count && targetPlayer.playerScript.bricks.Count > 0 &&
+                        // Vector3.Distance(targetPlayer.transform.position, transform.position) <= GameManager.Instance.enemyBullingThreshold) {
+                        //             _currentTarget = targetPlayer.transform;
+                        if (targetPlayer.playerScript.bricks.Count < bricks.Count && targetPlayer.playerScript.bricks.Count > 0) {
                         } else {
                             targetPlayer = null;
                             isBulling = false;

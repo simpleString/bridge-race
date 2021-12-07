@@ -10,13 +10,19 @@ namespace UI {
         public GameObject MainMenu;
         public GameObject ShopMenu;
 
-
+        void Awake() {
+            // Init store!!!
+            Store.Store.Init();
+            Time.timeScale = 1f;
+        }
 
         void Start() {
-            FindObjectOfType<AudioManager>().Play("Theme");
+            // #if !UNITY_EDITOR
+            if (Store.Store.IsSoundOn) FindObjectOfType<AudioManager>().Play("Theme");
+            // #endif
         }
         public void OnPlayButtonClicked() {
-            SceneManager.LoadScene("Game");
+            SceneManager.LoadSceneAsync(Store.Store.CurrentLevel);
         }
 
         public void OnSettingsButtonClicked() {
