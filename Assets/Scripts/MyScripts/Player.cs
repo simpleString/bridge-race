@@ -27,8 +27,11 @@ public class Player : BasePlayer {
                 _agent.Move(collider.gameObject.transform.right * collisionOffset);
             }
         } else if (collider.tag == "Player") {
-            if (!Physics.Raycast(transform.position, Vector3.down, 10f, LayerMask.NameToLayer("Stairs"))) return;
-            CheckPlayerCollision(collider);
+            RaycastHit ray;
+            if (Physics.Raycast(transform.position, Vector3.down, out ray, 10f)) {
+                if (ray.transform.gameObject.layer == LayerMask.NameToLayer("Stairs")) return;
+                CheckPlayerCollision(collider);
+            }
         } else if ((collider.tag == color.ToString() || collider.tag == "Free") && collider.gameObject.layer != LayerMask.NameToLayer("Stairs")) {
             GameManager.Vibrate(vibrationTimeInMs);
             AddBrickToPlayer(collider.gameObject);

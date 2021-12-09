@@ -7,6 +7,8 @@ using Random = UnityEngine.Random;
 
 public class BrickSpawner : MonoBehaviour {
 
+    public LayerMask layer; // Trigger layer
+
     public List<Transform> bonusPlaces; // places where can spawn bonuses
 
     public Transform brickPrefab; // prefab of brick which used by spawner
@@ -39,6 +41,10 @@ public class BrickSpawner : MonoBehaviour {
     void OnTriggerEnter(Collider collider) {
         if (collider.CompareTag("Player") && !_currentPlayersOnSpawner.Contains(collider.gameObject)) {
             var basePlayer = collider.GetComponent<BasePlayer>();
+            var player = basePlayer as Player;
+            if (player != null) {
+                FindObjectOfType<FollowCamera>().TriggerEnter(layer);
+            }
             _playerDict.Add((int)basePlayer.color, 0);
             basePlayer.actionPlayerLostBrick += OnPlayerLostBrick;
             basePlayer.actionPlayerGetBrick += OnPlayerGetBrick;

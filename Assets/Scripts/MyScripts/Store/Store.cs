@@ -37,7 +37,7 @@ namespace Store {
             _currentLevel = PlayerPrefs.GetString("CurrentLevel", "Level_1");
         }
 
-        public static string MaxLevel = "Level_2";
+        public static string MaxLevel = "Level_3";
         static string _currentLevel;
         public static string CurrentLevel {
             set {

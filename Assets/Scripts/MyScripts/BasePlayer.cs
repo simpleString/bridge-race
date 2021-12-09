@@ -200,14 +200,15 @@ public class BasePlayer : MonoBehaviour {
         // _collider.isTrigger = false;
         var forward = transform.forward;
         var normalForward = forward.normalized;
-        _animator.SetTrigger("IsKickTrigger");
-        // _animator.SetBool("IsKick", true);
+
+        // _animator.SetTrigger("IsKickTrigger");
+        _animator.SetBool("IsKick", true);
         // Get forward of hit, and start particle effect
         // var enemyNormal = collider.transform.forward;
         // _particleSystem.transform.position = enemyNormal;
         // Instantiate(_particleSystem, transform).Play();
         // _particleSystem.Play();
-        _rb.AddForce(new Vector3(normalForward.x * 10, 0, normalForward.z) * GameManager.Instance.playersForce);
+        // _rb.AddForce(new Vector3(normalForward.x * 10, 0, normalForward.z) * GameManager.Instance.playersForce);
 
         NavMeshHit hit;
         bool isOnAir = true;
@@ -225,6 +226,6 @@ public class BasePlayer : MonoBehaviour {
         // _collider.isTrigger = true;
         _rb.isKinematic = true;
         _agent.enabled = true;
-        yield return null;
+        _animator.SetBool("IsKick", false);
     }
 }

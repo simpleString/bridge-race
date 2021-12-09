@@ -402,8 +402,11 @@ public class Bot : BasePlayer {
                 _agent.velocity = Vector3.zero;
             }
         } else if (collider.tag == "Player") {
-            if (!Physics.Raycast(transform.position, Vector3.down, 10f, LayerMask.NameToLayer("Stairs"))) return;
-            CheckPlayerCollision(collider);
+            RaycastHit ray;
+            if (Physics.Raycast(transform.position, Vector3.down, out ray, 10f)) {
+                if (ray.transform.gameObject.layer == LayerMask.NameToLayer("Stairs")) return;
+                CheckPlayerCollision(collider);
+            }
             // if (bricks.Count < 1) {
             //     FindNearBrick();
             // }
@@ -426,7 +429,8 @@ public class Bot : BasePlayer {
     NearBrick GetNearBrick() {
         NearBrick nBrick = null;
         foreach (var brickScript in GameObject.FindObjectsOfType<Brick>()) {
-            if (brickScript.CompareTag(color.ToString()) || brickScript.CompareTag("Free") && brickScript.transform.position.y < transform.position.y) {
+            if (brickScript.CompareTag(color.ToString()) || brickScript.CompareTag("Free")
+                && brickScript.transform.position.y < transform.position.y - 0.5f) {
                 var tempDistance = Vector3.Distance(transform.position, brickScript.transform.position);
                 if (nBrick == null || (tempDistance < nBrick.distance)) {
                     nBrick = new NearBrick

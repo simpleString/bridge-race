@@ -8,6 +8,7 @@ public class Brick : MonoBehaviour {
 
     Material _material;
     Renderer _renderer;
+    Collider _collider;
 
     public BrickSpawner spawner;
 
@@ -19,6 +20,7 @@ public class Brick : MonoBehaviour {
     public System.Action<Brick> onDestroy;
 
     void Awake() {
+        _collider = GetComponent<Collider>();
         _renderer = GetComponent<Renderer>();
         _material = _renderer.material;
     }
@@ -50,8 +52,12 @@ public class Brick : MonoBehaviour {
 
     private void OnCollisionEnter(Collision collision) {
         Debug.Log(collision.gameObject.layer);
-        if (!collision.gameObject.CompareTag("Player") || !collision.gameObject.CompareTag("Untagged"))
+        if (collision.gameObject.CompareTag("platform"))
+            // if (!collision.gameObject.CompareTag("Player") || !collision.gameObject.CompareTag("Untagged"))
             isPickable = true;
+        // if (collision.gameObject.CompareTag("Player")) {
+        //     Physics.IgnoreCollision(collision.collider, _collider);
+        // }
     }
 
 

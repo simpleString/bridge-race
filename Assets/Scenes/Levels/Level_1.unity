@@ -385,7 +385,7 @@ GameObject:
   - component: {fileID: 246584723}
   m_Layer: 0
   m_Name: HolderThird
-  m_TagString: Untagged
+  m_TagString: platform
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -429,6 +429,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3be9f080d077ab24aa52650754d2aead, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  layer:
+    serializedVersion: 2
+    m_Bits: 0
   bonusPlaces: []
   brickPrefab: {fileID: 1504072961809438021, guid: 33ae87c644db044468a6177e89fc3ae8,
     type: 3}
@@ -594,7 +597,7 @@ PrefabInstance:
     - target: {fileID: 4115202813683830938, guid: 11ddabdd57e0575498ad74c3f98a0c12,
         type: 3}
       propertyPath: playersCount
-      value: 6
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 4115202813683830938, guid: 11ddabdd57e0575498ad74c3f98a0c12,
         type: 3}
@@ -1731,7 +1734,7 @@ GameObject:
   - component: {fileID: 1594616006}
   m_Layer: 0
   m_Name: HolderSecond
-  m_TagString: Untagged
+  m_TagString: platform
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1775,6 +1778,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3be9f080d077ab24aa52650754d2aead, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  layer:
+    serializedVersion: 2
+    m_Bits: 0
   bonusPlaces:
   - {fileID: 1450571620}
   - {fileID: 1213964347}
@@ -4098,6 +4104,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: HolderFirst
+      objectReference: {fileID: 0}
+    - target: {fileID: 2787363456769634223, guid: 50b8f74d1856c7b4f94968d36704dc83,
+        type: 3}
+      propertyPath: m_TagString
+      value: platform
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 50b8f74d1856c7b4f94968d36704dc83, type: 3}
