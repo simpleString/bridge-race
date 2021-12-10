@@ -14,8 +14,8 @@ public class BrickSpawner : MonoBehaviour {
     public Transform brickPrefab; // prefab of brick which used by spawner
     public Transform basePool;
 
-    public float xUserOffset; // additional user offset between brick
-    public float yUserOffset;
+    public float xUserOffset = 1.5f; // additional user offset between brick
+    public float yUserOffset = 1.5f;
 
     private bool _isActive = false;
     Brick[,] _bricksMap;
@@ -68,9 +68,9 @@ public class BrickSpawner : MonoBehaviour {
 
     void InitBricks() {
 
-        _lengthX = (float)Math.Round(GetComponent<Renderer>().bounds.size.x, 2);
-        _lengthY = (float)Math.Round(GetComponent<Renderer>().bounds.size.z, 2);
-        _lengthZ = (float)Math.Round(GetComponent<Renderer>().bounds.size.y, 2);
+        _lengthX = (float)Math.Round(basePool.GetComponent<Renderer>().bounds.size.x, 2);
+        _lengthY = (float)Math.Round(basePool.GetComponent<Renderer>().bounds.size.z, 2);
+        _lengthZ = (float)Math.Round(basePool.GetComponent<Renderer>().bounds.size.y, 2);
 
 
         _offsetY = (float)Math.Round(brickPrefab.GetComponent<Renderer>().bounds.size.z, 2);
@@ -120,9 +120,9 @@ public class BrickSpawner : MonoBehaviour {
 
         Transform newBrick = Instantiate(brickPrefab,
                                new Vector3(
-                                   transform.position.x - _lengthX / 2f + randomPosition.x * (_offsetX + xUserOffset),
-                                   basePool.position.y + _lengthZ / 3f,
-                                   transform.position.z - _lengthY / 2f + randomPosition.y * (_offsetY + yUserOffset)),
+                                   basePool.position.x - _lengthX / 2f + randomPosition.x * (_offsetX + xUserOffset),
+                                   transform.position.y + _lengthZ / 3f,
+                                   basePool.position.z - _lengthY / 2f + randomPosition.y * (_offsetY + yUserOffset)),
                                    Quaternion.identity
                                );
         newBrick.parent = basePool;
@@ -149,9 +149,9 @@ public class BrickSpawner : MonoBehaviour {
 
         Transform newBrick = Instantiate(brickPrefab,
                                new Vector3(
-                                   transform.position.x - _lengthX / 2f + randomPosition.x * (_offsetX + xUserOffset),
-                                   basePool.position.y + _lengthZ / 3f,
-                                   transform.position.z - _lengthY / 2f + randomPosition.y * (_offsetY + yUserOffset)),
+                                   basePool.position.x - _lengthX / 2f + randomPosition.x * (_offsetX + xUserOffset),
+                                   transform.position.y + _lengthZ / 3f,
+                                   basePool.position.z - _lengthY / 2f + randomPosition.y * (_offsetY + yUserOffset)),
                                    Quaternion.identity
                                );
         newBrick.parent = basePool;
@@ -177,9 +177,9 @@ public class BrickSpawner : MonoBehaviour {
 
             Transform newBrick = Instantiate(brickPrefab,
                                    new Vector3(
-                                       transform.position.x - _lengthX / 2f + randomPosition.x * (_offsetX + xUserOffset),
-                                       basePool.position.y + _lengthZ / 3f,
-                                       transform.position.z - _lengthY / 2f + randomPosition.y * (_offsetY + yUserOffset)),
+                                       basePool.position.x - _lengthX / 2f + randomPosition.x * (_offsetX + xUserOffset),
+                                       transform.position.y + _lengthZ / 3f,
+                                       basePool.position.z - _lengthY / 2f + randomPosition.y * (_offsetY + yUserOffset)),
                                        Quaternion.identity
                                    );
             newBrick.parent = basePool;
@@ -209,9 +209,9 @@ public class BrickSpawner : MonoBehaviour {
 
                 Transform newBrick = Instantiate(brickPrefab,
                                     new Vector3(
-                                        transform.position.x - _lengthX / 2f + randomPosition.x * (_offsetX + xUserOffset),
-                                        basePool.position.y + _lengthZ / 3f,
-                                        transform.position.z - _lengthY / 2f + randomPosition.y * (_offsetY + yUserOffset)),
+                                        basePool.position.x - _lengthX / 2f + randomPosition.x * (_offsetX + xUserOffset),
+                                        transform.position.y + _lengthZ / 3f,
+                                        basePool.position.z - _lengthY / 2f + randomPosition.y * (_offsetY + yUserOffset)),
                                         Quaternion.identity
                                     );
                 newBrick.parent = basePool;

@@ -40,11 +40,11 @@ public class GameManager : MonoBehaviour {
     public static Color GetUnityColorByMyColor(MyColor color) {
         switch (color) {
             case MyColor.blue:
-                return Color.blue;
+                return new Color(.13f, .36f, .94f);
             case MyColor.green:
-                return Color.green;
+                return new Color(.19f, 1f, .15f);
             case MyColor.red:
-                return Color.red;
+                return new Color(1f, .15f, .15f);
             case MyColor.brown:
                 return new Color(0.64f, .16f, .16f);
             case MyColor.orange:
@@ -52,7 +52,7 @@ public class GameManager : MonoBehaviour {
             case MyColor.purple:
                 return new Color(0.5f, 0, 0.5f);
             case MyColor.yellow:
-                return Color.yellow;
+                return new Color(1f, 1, .15f);
             default:
                 return Color.black;
         }

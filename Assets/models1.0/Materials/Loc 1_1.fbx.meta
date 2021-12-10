@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 41c00563aa3e74b4583d053135a42af9
+guid: f0b5b178b8241ae4096f70caf0b9cf8a
 ModelImporter:
   serializedVersion: 20200
   internalIDToNameTable: []
@@ -8,27 +8,27 @@ ModelImporter:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
       name: 2 floors
-    second: {fileID: 2100000, guid: 3fd8052aef8724845bed9fcb3882069f, type: 2}
+    second: {fileID: 2100000, guid: a8c25cf8d0dde3841971c10ac610c44d, type: 2}
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
       name: Door 1
-    second: {fileID: 2100000, guid: 7335bdb3ce0786a44917ba5303bbb892, type: 2}
+    second: {fileID: 2100000, guid: 851d11d5ba2d6334ab22af53bce9063d, type: 2}
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
       name: Door 2
-    second: {fileID: 2100000, guid: 7d0cc6a3d6fbd4e4fb0b332881477400, type: 2}
+    second: {fileID: 2100000, guid: 1be368d3310478344ad2af7077cd909d, type: 2}
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
       name: Material
-    second: {fileID: 2100000, guid: 2b1237b717ea30f4eb9ffe4142460bc5, type: 2}
+    second: {fileID: 2100000, guid: 349fa07dd4dbe6343bf2ce1d7115d2b4, type: 2}
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
       name: Material.001
-    second: {fileID: 2100000, guid: 73e54358f0b2d4346b7fdbb753ffa0ae, type: 2}
+    second: {fileID: 2100000, guid: 9ba744b8912e99f4ebaa88c7954206ea, type: 2}
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
@@ -38,12 +38,12 @@ ModelImporter:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
       name: Steel
-    second: {fileID: 2100000, guid: f3b866ef608f39e4bba58a627f16bc9b, type: 2}
+    second: {fileID: 2100000, guid: 11d2784e695d01640a105cf1a1f4961f, type: 2}
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
       name: Steps
-    second: {fileID: 2100000, guid: 9320647b0d62cd44cba977119f97f63c, type: 2}
+    second: {fileID: 2100000, guid: 9ee9e692e21db944284e371781aa2cf5, type: 2}
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule

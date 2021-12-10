@@ -36,7 +36,7 @@ public class BasePlayer : MonoBehaviour {
 
     protected void Awake() {
         _particleSystem = GetComponentInChildren<ParticleSystem>();
-        _renderer = GetComponentInChildren<Renderer>();
+        _renderer = GetComponentInChildren<SkinnedMeshRenderer>();
         _animator = GetComponent<Animator>();
         _agent = GetComponent<NavMeshAgent>();
         _rb = GetComponent<Rigidbody>();
@@ -80,8 +80,9 @@ public class BasePlayer : MonoBehaviour {
             brickHolder.position.y + portableBrick.GetComponent<Renderer>().bounds.size.y * bricks.Count,
             brickHolder.position.z
         ), Quaternion.Euler(Vector3.down));
-        newPortableBrick.tag = MyConstants.TagNull; // it's save us from bugs, but it's not required
-        newPortableBrick.GetComponent<Renderer>().material.color = GameManager.GetUnityColorByMyColor(color);
+        newPortableBrick.GetComponent<Brick>().InitPortableBrick(color);
+        // newPortableBrick.tag = MyConstants.TagNull; // it's save us from bugs, but it's not required
+        // newPortableBrick.GetComponent<Renderer>().material.color = GameManager.GetUnityColorByMyColor(color);
         newPortableBrick.parent = brickHolder;
         bricks.Push(newPortableBrick);
         //FIXME:: WFT???
@@ -91,17 +92,20 @@ public class BasePlayer : MonoBehaviour {
             brickHolder.position.y + portableBrick.GetComponent<Renderer>().bounds.size.y * bricks.Count,
             brickHolder.position.z
         ), Quaternion.Euler(Vector3.down));
-            newPortableBrick.tag = MyConstants.TagNull; // it's save us from bugs, but it's not required
-            newPortableBrick.GetComponent<Renderer>().material.color = GameManager.GetUnityColorByMyColor(color);
+            newPortableBrick.GetComponent<Brick>().InitPortableBrick(color);
+            // newPortableBrick.tag = MyConstants.TagNull; // it's save us from bugs, but it's not required
+            // newPortableBrick.GetComponent<Renderer>().material.color = GameManager.GetUnityColorByMyColor(color);
             newPortableBrick.parent = brickHolder;
             bricks.Push(newPortableBrick);
         }
     }
 
     protected void Start() {
-        foreach (var material in _renderer.materials) {
-            material.color = GameManager.GetUnityColorByMyColor(color);
-        }
+        Debug.Log("Count of materials " + _renderer.materials.Length);
+        _renderer.materials[2].color = GameManager.GetUnityColorByMyColor(color);
+        // foreach (var material in _renderer.materials) {
+        //     material.color = GameManager.GetUnityColorByMyColor(color);
+        // }
         // _renderer.material.color = GameManager.GetUnityColorByMyColor(color);
     }
 

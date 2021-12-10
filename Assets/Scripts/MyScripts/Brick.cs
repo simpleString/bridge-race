@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using DG.Tweening;
 using UnityEngine;
+using static GameManager;
 
 public class Brick : MonoBehaviour {
 
@@ -22,7 +23,12 @@ public class Brick : MonoBehaviour {
     void Awake() {
         _collider = GetComponent<Collider>();
         _renderer = GetComponent<Renderer>();
-        _material = _renderer.material;
+        _material = _renderer.materials[2];
+    }
+
+    public void InitPortableBrick(MyColor color) {
+        _material.color = GameManager.GetUnityColorByMyColor(color);
+        tag = MyConstants.TagNull;
     }
 
     public void Init(GameManager.MyColor color, int _x, int _y, BrickSpawner _spawner) {

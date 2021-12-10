@@ -225,7 +225,8 @@ PrefabInstance:
       propertyPath: m_StaticEditorFlags
       value: 4294967295
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 2787363456769634210, guid: 50b8f74d1856c7b4f94968d36704dc83, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 50b8f74d1856c7b4f94968d36704dc83, type: 3}
 --- !u!4 &15189734 stripped
 Transform:
@@ -1585,6 +1586,27 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 3717711707056887608, guid: 58961789ceb215e45a283b76443a82cb, type: 3}
+--- !u!114 &984191607
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 984191602}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3be9f080d077ab24aa52650754d2aead, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  layer:
+    serializedVersion: 2
+    m_Bits: 0
+  bonusPlaces: []
+  brickPrefab: {fileID: 1504072961809438021, guid: 33ae87c644db044468a6177e89fc3ae8,
+    type: 3}
+  basePool: {fileID: 2114757272}
+  xUserOffset: 0.5
+  yUserOffset: 0.5
 --- !u!1001 &1091816780
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1675,7 +1697,7 @@ Animator:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1121329295}
   m_Enabled: 1
-  m_Avatar: {fileID: 0}
+  m_Avatar: {fileID: 9000000, guid: a748c05dab997ed43a865791f073163d, type: 3}
   m_Controller: {fileID: 9100000, guid: df4f512094b2fc441a7cba4882379524, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
@@ -2227,6 +2249,27 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 3717711707056887608, guid: 58961789ceb215e45a283b76443a82cb, type: 3}
+--- !u!114 &1395619198
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1395619193}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3be9f080d077ab24aa52650754d2aead, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  layer:
+    serializedVersion: 2
+    m_Bits: 0
+  bonusPlaces: []
+  brickPrefab: {fileID: 1504072961809438021, guid: 33ae87c644db044468a6177e89fc3ae8,
+    type: 3}
+  basePool: {fileID: 1570423148}
+  xUserOffset: 0.5
+  yUserOffset: 0.5
 --- !u!1001 &1443129182
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2342,6 +2385,27 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 3717711707056887608, guid: 58961789ceb215e45a283b76443a82cb, type: 3}
+--- !u!114 &1443129189
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1443129184}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3be9f080d077ab24aa52650754d2aead, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  layer:
+    serializedVersion: 2
+    m_Bits: 0
+  bonusPlaces: []
+  brickPrefab: {fileID: 1504072961809438021, guid: 33ae87c644db044468a6177e89fc3ae8,
+    type: 3}
+  basePool: {fileID: 15189734}
+  xUserOffset: 0.5
+  yUserOffset: 0.5
 --- !u!1 &1543611293
 GameObject:
   m_ObjectHideFlags: 0
@@ -3575,7 +3639,8 @@ PrefabInstance:
       propertyPath: m_StaticEditorFlags
       value: 4294967295
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 2787363456769634210, guid: 50b8f74d1856c7b4f94968d36704dc83, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 50b8f74d1856c7b4f94968d36704dc83, type: 3}
 --- !u!1 &2094584811
 GameObject:
@@ -3713,7 +3778,8 @@ PrefabInstance:
       propertyPath: m_StaticEditorFlags
       value: 4294967295
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 2787363456769634210, guid: 50b8f74d1856c7b4f94968d36704dc83, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 50b8f74d1856c7b4f94968d36704dc83, type: 3}
 --- !u!4 &2114757272 stripped
 Transform:

@@ -1037,7 +1037,7 @@ Animator:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1121329295}
   m_Enabled: 1
-  m_Avatar: {fileID: 0}
+  m_Avatar: {fileID: 9000000, guid: a748c05dab997ed43a865791f073163d, type: 3}
   m_Controller: {fileID: 9100000, guid: df4f512094b2fc441a7cba4882379524, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
@@ -3251,6 +3251,7 @@ GameObject:
   - component: {fileID: 6625808349472790997}
   - component: {fileID: 2838741292372036150}
   - component: {fileID: 613821123}
+  - component: {fileID: 1187218096992095770}
   m_Layer: 0
   m_Name: 3rd
   m_TagString: platform
@@ -3258,6 +3259,27 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 4294967295
   m_IsActive: 1
+--- !u!114 &1187218096992095770
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1187218096992095769}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3be9f080d077ab24aa52650754d2aead, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  layer:
+    serializedVersion: 2
+    m_Bits: 0
+  bonusPlaces: []
+  brickPrefab: {fileID: 1504072961809438021, guid: 33ae87c644db044468a6177e89fc3ae8,
+    type: 3}
+  basePool: {fileID: 246584722}
+  xUserOffset: 1.5
+  yUserOffset: 1.5
 --- !u!4 &1203302097239697405
 Transform:
   m_ObjectHideFlags: 0
@@ -4110,7 +4132,8 @@ PrefabInstance:
       propertyPath: m_TagString
       value: platform
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 2787363456769634210, guid: 50b8f74d1856c7b4f94968d36704dc83, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 50b8f74d1856c7b4f94968d36704dc83, type: 3}
 --- !u!23 &2838741292372036150
 MeshRenderer:
@@ -4337,6 +4360,7 @@ GameObject:
   - component: {fileID: 7567408026472160111}
   - component: {fileID: 6896883607016273911}
   - component: {fileID: 1081192329}
+  - component: {fileID: 3360114307187429843}
   m_Layer: 0
   m_Name: 1st
   m_TagString: platform
@@ -4344,6 +4368,30 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 4294967295
   m_IsActive: 1
+--- !u!114 &3360114307187429843
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3360114307187429842}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3be9f080d077ab24aa52650754d2aead, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  layer:
+    serializedVersion: 2
+    m_Bits: 0
+  bonusPlaces:
+  - {fileID: 1567687235}
+  - {fileID: 255153769}
+  - {fileID: 1653590378}
+  brickPrefab: {fileID: 1504072961809438021, guid: 33ae87c644db044468a6177e89fc3ae8,
+    type: 3}
+  basePool: {fileID: 2045654648}
+  xUserOffset: 1.5
+  yUserOffset: 1.5
 --- !u!23 &3360588699016192761
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -8559,6 +8607,7 @@ GameObject:
   - component: {fileID: 822903800943512503}
   - component: {fileID: 179891827539352200}
   - component: {fileID: 1652439041}
+  - component: {fileID: 8291730282488254978}
   m_Layer: 0
   m_Name: 2nd
   m_TagString: platform
@@ -8566,6 +8615,29 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 4294967294
   m_IsActive: 1
+--- !u!114 &8291730282488254978
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8291730282488254977}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3be9f080d077ab24aa52650754d2aead, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  layer:
+    serializedVersion: 2
+    m_Bits: 0
+  bonusPlaces:
+  - {fileID: 1450571620}
+  - {fileID: 1213964347}
+  brickPrefab: {fileID: 1504072961809438021, guid: 33ae87c644db044468a6177e89fc3ae8,
+    type: 3}
+  basePool: {fileID: 1594616004}
+  xUserOffset: 1.5
+  yUserOffset: 1.5
 --- !u!33 &8294020718689888910
 MeshFilter:
   m_ObjectHideFlags: 0
