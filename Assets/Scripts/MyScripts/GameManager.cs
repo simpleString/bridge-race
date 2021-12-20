@@ -78,6 +78,9 @@ public class GameManager : MonoBehaviour {
     }
 
     void Awake() {
+
+        Vibration.Init();
+
         var level = FindObjectOfType<LevelManager>();
         if (level != null) {
             currentGameMode = GameMode.Menu;
